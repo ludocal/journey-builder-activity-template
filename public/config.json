@@ -31,24 +31,24 @@
         }
     },
     "configurationArguments": {
-      "applicationExtensionKey": "__application_key_from_appcenter_here__",
+      "applicationExtensionKey": "931bcc00-6365-49e6-afb2-4174c8291a1e",
       "save": {
-        "url": "https://<your-domain-here>/journeybuilder/save",
+        "url": "https://customactivitymarketingcloud.herokuapp.com/journeybuilder/save",
           "verb": "POST",
         "useJwt": true
        },
        "publish": {
-        "url": "https://<your-domain-here>/journeybuilder/publish",
+        "url": "https://customactivitymarketingcloud.herokuapp.com/journeybuilder/publish",
            "verb": "POST",
         "useJwt": true
        },
       "stop": {
-        "url": "https://<your-domain-here>/journeybuilder/stop",
+        "url": "https://customactivitymarketingcloud.herokuapp.com/journeybuilder/stop",
            "verb": "POST",
         "useJwt": true
       },
       "validate": {
-        "url": "https://<your-domain-here>/journeybuilder/validate",
+        "url": "https://customactivitymarketingcloud.herokuapp.com/journeybuilder/validate",
         "verb": "POST",
         "useJwt": true
       }
