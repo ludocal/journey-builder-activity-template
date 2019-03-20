@@ -21,7 +21,7 @@
                 }									
 			],
           "outArguments": [],
-          "url": "https://<your-domain-here>/journeybuilder/execute",
+          "url": "https://customactivitymarketingcloud.herokuapp.com/ourneybuilder/execute",
            "verb": "POST",
             "body": "",
             "header": "",
