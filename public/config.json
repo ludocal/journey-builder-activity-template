@@ -20,7 +20,11 @@
                     "emailAddress": "{{Contact.Attribute.CustomActivity.EmailAddress}}"
                 }									
 			],
-          "outArguments": [],
+          "outArguments": [
+            {
+              "PathTrue": ""
+          }	
+          ],
           "url": "https://customactivitymarketingcloud.herokuapp.com/journeybuilder/execute",
            "verb": "POST",
             "body": "",
@@ -54,7 +58,8 @@
       }
     },
     "wizardSteps": [
-        { "label": "Configure Activity", "key": "step1" }
+        { "label": "Configure Activity", "key": "step1" },
+        { "label": "Configure Activity 2", "key": "step2" }
     ],
     "userInterfaces": {
         "configModal": {
