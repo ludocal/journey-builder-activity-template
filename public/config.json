@@ -21,7 +21,7 @@
                 }									
 			],
           "outArguments": [],
-          "url": "https://customactivitymarketingcloud.herokuapp.com/ourneybuilder/execute",
+          "url": "https://customactivitymarketingcloud.herokuapp.com/journeybuilder/execute",
            "verb": "POST",
             "body": "",
             "header": "",
