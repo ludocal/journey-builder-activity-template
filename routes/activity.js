@@ -55,7 +55,8 @@ exports.edit = function (req, res) {
     // Data from the req and put it in an array accessible to the main app.
     //console.log( req.body );
     logData(req);
-    res.send(200, 'Edit');
+    //res.send(200, 'Edit');
+    res.status(200).send('body');
 };
 
 /*
@@ -65,7 +66,8 @@ exports.save = function (req, res) {
     // Data from the req and put it in an array accessible to the main app.
     //console.log( req.body );
     logData(req);
-    res.send(200, 'Save');
+    //res.send(200, 'Save');
+    res.status(200).send('Save');
 };
 
 /*
@@ -88,7 +90,8 @@ exports.execute = function (req, res) {
             var decodedArgs = decoded.inArguments[0];
             
             logData(req);
-            res.send(200, 'Execute');
+            //res.send(200, 'Execute');
+            res.status(200).send('Execute');
         } else {
             console.error('inArguments invalid.');
             return res.status(400).end();
@@ -104,7 +107,8 @@ exports.publish = function (req, res) {
     // Data from the req and put it in an array accessible to the main app.
     //console.log( req.body );
     logData(req);
-    res.send(200, 'Publish');
+    //res.send(200, 'Publish');
+    res.status(200).send('Publish');
 };
 
 /*
@@ -114,5 +118,6 @@ exports.validate = function (req, res) {
     // Data from the req and put it in an array accessible to the main app.
     //console.log( req.body );
     logData(req);
-    res.send(200, 'Validate');
+    //res.send(200, 'Validate');
+    res.status(200).send('Validate');
 };
