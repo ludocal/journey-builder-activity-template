@@ -71,7 +71,15 @@
     "schema": {
         "arguments": {
             "execute": {
-                "inArguments": [],
+                "inArguments": [
+                  {
+                    "emailAddress": {
+                        "dataType": "Email",
+                        "isNullable": false,
+                        "direction": "in"
+                    }
+                }
+                ],
                 "outArguments": []
             }
         }
