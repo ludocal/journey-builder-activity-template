@@ -11,6 +11,7 @@ exports.index = function(req, res){
         res.render( 'index', {
             title: 'Unauthenticated',
             errorMessage: 'This app may only be loaded via Salesforce Marketing Cloud',
+            configVar: process.env.config,
         });
     } else {
         res.render( 'index', {
