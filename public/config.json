@@ -1,89 +1,102 @@
 {
-    "workflowApiVersion": "1.1",
-    "metaData": {
-        "icon": "images/icon.png",
-        "iconSmall": "images/iconSmall.png",
-        "category": "message"
-    },
-    "type": "REST",
-    "lang": {
-        "en-US": {
-            "name": "Send Push",
-          "description": "A Template for a custom Journey Builder activity",
-          "step1Label": "Configure Activity"
-        }
-    },
-    "arguments": {
-        "execute": {
-           "inArguments":[
-				{
-                    "emailAddress": "{{Contact.Attribute.CustomActivity.EmailAddress}}"
-                }									
-			],
-          "outArguments": [
-            {
-              "PathTrue": ""
-          }	
-          ],
-          "url": "https://customactivitymarketingcloud.herokuapp.com/journeybuilder/execute",
-           "verb": "POST",
-            "body": "",
-            "header": "",
-            "format": "json",
-            "useJwt": true,
-            "timeout": 10000
-        }
-    },
-    "configurationArguments": {
-      "applicationExtensionKey": "931bcc00-6365-49e6-afb2-4174c8291a1e",
-      "save": {
-        "url": "https://customactivitymarketingcloud.herokuapp.com/journeybuilder/save",
-          "verb": "POST",
-        "useJwt": true
-       },
-       "publish": {
-        "url": "https://customactivitymarketingcloud.herokuapp.com/journeybuilder/publish",
-           "verb": "POST",
-        "useJwt": true
-       },
-      "stop": {
-        "url": "https://customactivitymarketingcloud.herokuapp.com/journeybuilder/stop",
-           "verb": "POST",
-        "useJwt": true
-      },
-      "validate": {
-        "url": "https://customactivitymarketingcloud.herokuapp.com/journeybuilder/validate",
-        "verb": "POST",
-        "useJwt": true
-      }
-    },
-    "wizardSteps": [
-      { "label": "Step 1", "key": "step1" },
-      { "label": "Step 2", "key": "step2" },
-      { "label": "Step 3", "key": "step3" },
-      { "label": "Step 4", "key": "step4", "active": false }
-    ],
-    "userInterfaces": {
-        "configModal": {
-            "height": 400,
-            "width": 1000,
-          "fullscreen": false
-        }
-    },
-    "schema": {
-        "arguments": {
-            "execute": {
-                "inArguments": [
-                  {
-                    "emailAddress": {
-                        "dataType": "Email",
-                        "isNullable": false,
-                        "direction": "in"
-                    }
-                }
-                ],
-                "outArguments": []
-            }
-        }
+  "workflowApiVersion": "1.1",
+  "metaData": {
+    "icon": "images/icon.png",
+    "iconSmall": "images/iconSmall.png",
+    "category": "message"
+  },
+  "type": "REST",
+  "lang": {
+    "en-US": {
+      "name": "Send Push",
+      "description": "A Template for a custom Journey Builder activity",
+      "step1Label": "Configure Activity"
     }
+  },
+  "arguments": {
+    "execute": {
+      "inArguments": [
+        {
+          "emailAddress": "{{Contact.Attribute.CustomActivity.EmailAddress}}"
+        }
+      ],
+      "outArguments": [
+        {
+          "PathTrue": ""
+        }
+      ],
+      "url": "https://customactivitymarketingcloud.herokuapp.com/journeybuilder/execute",
+      "verb": "POST",
+      "body": "",
+      "header": "",
+      "format": "json",
+      "useJwt": true,
+      "timeout": 10000
+    }
+  },
+  "configurationArguments": {
+    "applicationExtensionKey": "931bcc00-6365-49e6-afb2-4174c8291a1e",
+    "save": {
+      "url": "https://customactivitymarketingcloud.herokuapp.com/journeybuilder/save",
+      "verb": "POST",
+      "useJwt": true
+    },
+    "publish": {
+      "url": "https://customactivitymarketingcloud.herokuapp.com/journeybuilder/publish",
+      "verb": "POST",
+      "useJwt": true
+    },
+    "stop": {
+      "url": "https://customactivitymarketingcloud.herokuapp.com/journeybuilder/stop",
+      "verb": "POST",
+      "useJwt": true
+    },
+    "validate": {
+      "url": "https://customactivitymarketingcloud.herokuapp.com/journeybuilder/validate",
+      "verb": "POST",
+      "useJwt": true
+    }
+  },
+  "wizardSteps": [
+    {
+      "label": "Step 1",
+      "key": "step1"
+    },
+    {
+      "label": "Step 2",
+      "key": "step2"
+    },
+    {
+      "label": "Step 3",
+      "key": "step3"
+    },
+    {
+      "label": "Step 4",
+      "key": "step4",
+      "active": false
+    }
+  ],
+  "userInterfaces": {
+    "configModal": {
+      "height": 400,
+      "width": 1000,
+      "fullscreen": false
+    }
+  },
+  "schema": {
+    "arguments": {
+      "execute": {
+        "inArguments": [
+          {
+            "emailAddress": {
+              "dataType": "Email",
+              "isNullable": false,
+              "direction": "in"
+            }
+          }
+        ],
+        "outArguments": []
+      }
+    }
+  }
 }
