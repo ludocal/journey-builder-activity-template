@@ -21,7 +21,6 @@
 
             require(config, dependencies);
         })();
-        console.log(<%= configVar %>);
     </script>
 </head>
 
@@ -32,7 +31,7 @@
             <main class="slds-col">
                
                 <h1>welcome to your activity!</h1>
-
+                <%= configVar %>
                 Select the Priority for this Desk.com Case: 
 		<select id="select1">
 			<option value="">Select an option</option>
