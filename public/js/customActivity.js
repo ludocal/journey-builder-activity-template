@@ -55,8 +55,8 @@ define([
 
     function readConfig()
     {
-       this.config = JSON.parse(process.env.config);
-       console.log(this.config);
+       //this.config = JSON.parse(process.env.config);
+       console.log('read config');
     }
 
     function initialize (data) {
