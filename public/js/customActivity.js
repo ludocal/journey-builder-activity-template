@@ -53,7 +53,7 @@ define([
         });
     }
 
-    function readConfig();
+    function readConfig()
     {
        this.config = JSON.parse(process.env.config);
        console.log(this.config);
