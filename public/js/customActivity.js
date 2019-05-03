@@ -7,6 +7,7 @@ define([
 
     var connection = new Postmonger.Session();
     var payload = {};
+    var config = [];
     var lastStepEnabled = false;
     var steps = [ // initialize to the same value as what's set in config.json for consistency
         { "label": "Step 1", "key": "step1" },
@@ -27,6 +28,7 @@ define([
     connection.on('gotoStep', onGotoStep);
 
     function onRender() {
+        readConfig();
         // JB will respond the first time 'ready' is called with 'initActivity'
         connection.trigger('ready');
 
@@ -49,6 +51,12 @@ define([
 
             connection.trigger('updateSteps', steps);
         });
+    }
+
+    function readConfig();
+    {
+       this.config = JSON.parse(process.env.config);
+       console.log(this.config);
     }
 
     function initialize (data) {
@@ -88,12 +96,12 @@ define([
 
     function onGetTokens (tokens) {
         // Response: tokens = { token: <legacy token>, fuel2token: <fuel api token> }
-        // console.log(tokens);
+         console.log(tokens);
     }
 
     function onGetEndpoints (endpoints) {
         // Response: endpoints = { restHost: <url> } i.e. "rest.s1.qa1.exacttarget.com"
-        // console.log(endpoints);
+         console.log(endpoints);
     }
 
     function onClickedNext () {
