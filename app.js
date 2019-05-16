@@ -12,6 +12,9 @@ var activity    = require('./routes/activity');
 
 var app = express();
 
+// set the view engine to ejs
+app.set('view engine', 'ejs');
+
 // Configure Express
 app.set('port', process.env.PORT || 3000);
 app.use(bodyParser.raw({type: 'application/jwt'}));
