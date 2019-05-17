@@ -86,6 +86,15 @@ define([
             });
         });
         console.log(formatSelection);
+        if (formatSelection && formatSelection === "new")
+        {
+            $('.slds-visual-picker>input[name="new"]').attr('checked', 'checked');
+        }
+        if (formatSelection && formatSelection === "template")
+        {
+            $('.slds-visual-picker>input[name="template"]').attr('checked', 'checked');
+        }
+
         // If there is no message selected, disable the next button
         if (!message) {
             showStep(null, 1);
