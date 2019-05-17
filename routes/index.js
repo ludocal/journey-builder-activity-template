@@ -10,7 +10,7 @@ var appAvailable = [
     },
     {
         name: 'BATCH STORE ANDROID',
-        id: '001'
+        id: '002'
     }
 ];
 
