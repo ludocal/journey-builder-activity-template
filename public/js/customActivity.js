@@ -89,7 +89,7 @@ define([
         // If there is no message selected, disable the next button
         if (!message) {
             showStep(null, 1);
-            connection.trigger('updateButton', { button: 'next', enabled: false });
+            connection.trigger('updateButton', { button: 'next', enabled: true });
             // If there is a message, skip to the summary step
         } else {
             $('#select1').find('option[value='+ message +']').attr('selected', 'selected');
