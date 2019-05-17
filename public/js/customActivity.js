@@ -66,6 +66,8 @@ define([
 
         var message;
         var formatSelection;
+        var appSelection;
+
         var hasInArguments = Boolean(
             payload['arguments'] &&
             payload['arguments'].execute &&
@@ -83,9 +85,14 @@ define([
                 if (key === 'formatSelection') {
                     formatSelection = val;
                 }
+                if (key === 'appSelection') {
+                    appSelection = val;
+                }
             });
         });
         console.log(formatSelection);
+        console.log(appSelection);
+        
         if (formatSelection && formatSelection === "new")
         {
             $('.slds-visual-picker>input[name="new"]').attr('checked', 'checked');
@@ -95,16 +102,16 @@ define([
             $('.slds-visual-picker>input[name="template"]').attr('checked', 'checked');
         }
 
-        // If there is no message selected, disable the next button
+       /* If there is no message selected, disable the next button
         if (!message) {
             showStep(null, 1);
             connection.trigger('updateButton', { button: 'next', enabled: true });
-            // If there is a message, skip to the summary step
+            If there is a message, skip to the summary step
         } else {
             $('#select1').find('option[value='+ message +']').attr('selected', 'selected');
             $('#message').html(message);
             showStep(null, 3);
-        }
+        }*/
     }
 
     function onGetTokens (tokens) {
