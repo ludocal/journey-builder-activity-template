@@ -65,6 +65,7 @@ define([
         }
 
         var message;
+        var formatSelection;
         var hasInArguments = Boolean(
             payload['arguments'] &&
             payload['arguments'].execute &&
@@ -79,9 +80,12 @@ define([
                 if (key === 'message') {
                     message = val;
                 }
+                if (key === 'formatSelection') {
+                    formatSelection = val;
+                }
             });
         });
-
+        console.log(formatSelection);
         // If there is no message selected, disable the next button
         if (!message) {
             showStep(null, 1);
@@ -186,14 +190,24 @@ define([
     function save() {
         var name = $('#select1').find('option:selected').html();
         var value = getMessage();
-
+        var formatSelection = '';
+        try {
+            formatSelection = $('.slds-visual-picker>input:checked')[0].name;
+        } catch (error) {
+            
+        }
         // 'payload' is initialized on 'initActivity' above.
         // Journey Builder sends an initial payload with defaults
         // set by this activity's config.json file.  Any property
         // may be overridden as desired.
         payload.name = name;
 
-        payload['arguments'].execute.inArguments = [{ "message": value }];
+        payload['arguments'].execute.inArguments = [
+            {
+                 "message": value,
+                 "formatSelection": formatSelection
+            }
+        ];
 
         payload['metaData'].isConfigured = true;
 
