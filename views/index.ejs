@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/design-system/2.9.2/styles/salesforce-lightning-design-system.min.css"/>
     <script
       type="text/javascript"
-      src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"
+      src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"
     ></script>
     <script type="text/javascript" src="js/require.js"></script>
     <script type="text/javascript">
@@ -23,6 +23,16 @@
         require(config, dependencies);
       })();
     </script>
+    <script>
+        function updateApp(checkbox){
+            if (checkbox.checked){
+                checkbox.setAttribute("checked", "true");
+            }
+            else{
+                checkbox.setAttribute("checked", "true");
+            }
+        }
+        </script>
   </head>
 
   <body>
@@ -30,33 +40,77 @@
       <div class="slds-grid">
         <main class="slds-col">
           <h1>welcome to your activity!</h1>
-          <fieldset class="slds-form-element">
-            <legend class="slds-form-element__legend slds-form-element__label">
-              Select Apps
-            </legend>
-            <div class="slds-form-element__control">
-              <div class="slds-checkbox_button-group">
-                <% configVar.forEach(function(item) { %>
-                    <span class="slds-button slds-checkbox_button">
-                        <input
-                          type="checkbox"
-                          id="<%= item.id %>"
-                          value="<%= item.name %>"
-                          name="checkbox"
-                        />
-                        <label class="slds-checkbox_button__label" for="<%= item.name %>">
-                          <span class="slds-checkbox_faux"><%= item.name %></span>
-                        </label>
-                      </span>
-                <% }); %>
-              </div>
-            </div>
-          </fieldset>
+        
+        <% configVar.forEach(function(item) { %>
+        <div class="slds-form-element">
+            <label class="slds-checkbox_toggle slds-grid">
+              <span class="slds-form-element__label slds-m-bottom_none"><%= item.name %></span>
+              <input type="checkbox" name="checkbox-toggle-14" value="<%= item.id %>" aria-describedby="checkbox-toggle-14" />
+              <span id="checkbox-toggle-14" class="slds-checkbox_faux_container" aria-live="assertive">
+                <span class="slds-checkbox_faux"></span>
+                <span class="slds-checkbox_on">Enabled</span>
+                <span class="slds-checkbox_off">Disabled</span>
+              </span>
+            </label>
+          </div>
+          <% }); %>
         </main>
       </div>
     </div>
     <div id="step2" class="step">
-      Here's a second page with some info on it.
+        <fieldset class="slds-form-element">
+            <legend class="slds-form-element__legend slds-form-element__label">Template or new ?</legend>
+            <div class="slds-form-element__control">
+              <div class="slds-visual-picker slds-visual-picker_medium">
+                <input type="radio" id="visual-picker-60" value="visual-picker-60" name="options" />
+                <label for="visual-picker-60">
+                  <span class="slds-visual-picker__figure slds-visual-picker__icon slds-align_absolute-center">
+                    <span class="slds-is-selected">
+                      <span class="slds-icon_container">
+                        <svg class="slds-icon slds-icon_large slds-icon-action-check" aria-hidden="true">
+                          <use xlink:href="images/symbols.svg#check"></use>
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="slds-is-not-selected">
+                      <span class="slds-icon_container">
+                        <svg class="slds-icon slds-icon-utility-search slds-icon_large slds-icon-text-default" aria-hidden="true">
+                          <use xlink:href="images/symbols.svg#search"></use>
+                        </svg>
+                      </span>
+                    </span>
+                  </span>
+                  <span class="slds-visual-picker__body">
+                    <span class="slds-text-title">Template</span>
+                  </span>
+                </label>
+              </div>
+              <div class="slds-visual-picker slds-visual-picker_medium">
+                <input type="radio" id="visual-picker-61" value="visual-picker-61" name="options" />
+                <label for="visual-picker-61">
+                  <span class="slds-visual-picker__figure slds-visual-picker__icon slds-align_absolute-center">
+                    <span class="slds-is-selected">
+                      <span class="slds-icon_container">
+                        <svg class="slds-icon slds-icon_large slds-icon-action-check" aria-hidden="true">
+                          <use xlink:href="images/symbols.svg#check"></use>
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="slds-is-not-selected">
+                      <span class="slds-icon_container">
+                        <svg class="slds-icon slds-icon-utility-insert_template slds-icon_large slds-icon-text-default" aria-hidden="true">
+                          <use xlink:href="images/symbols.svg#insert_template"></use>
+                        </svg>
+                      </span>
+                    </span>
+                  </span>
+                  <span class="slds-visual-picker__body">
+                    <span class="slds-text-title">New push</span>
+                  </span>
+                </label>
+              </div>
+            </div>
+          </fieldset>
     </div>
     <div id="step3" class="step">
       You chose the message:
@@ -66,5 +120,16 @@
       Hey, here's a fourth step, just for you. Toggle this on or off from step
       1.
     </div>
+    <script>
+        $('#checkboxApp').on('change',function() {
+            console.log('change input');
+            //The syntax inside the if statement below returns true for toggle checked and false for toggle unchecked
+                   if(j$(this).prop('checked')){
+                       j$('#toggleValue1').text('On');
+                   }else{
+                       j$('#toggleValue1').text('Off');
+                   }
+            });
+    </script>
   </body>
 </html>
