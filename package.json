@@ -32,6 +32,7 @@
     "jsonwebtoken": "^8.0.1",
     "request": "^2.81.0",
     "require": "^2.4.20",
-    "ejs": "1.0.0"
+    "ejs": "1.0.0",
+    "@salesforce-ux/design-system": "^2.9.2"
   }
 }

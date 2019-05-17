@@ -3,6 +3,17 @@
 // Deps
 var activity = require('./activity');
 
+var appAvailable = [
+    {
+        name:'Batch STORE IOS',
+        id: '001'
+    },
+    {
+        name: 'BATCH STORE ANDROID',
+        id: '001'
+    }
+];
+
 /*
  * GET home page.
  */
@@ -17,7 +28,7 @@ exports.index = function(req, res){
         res.render( 'index', {
             title: 'Journey Builder Activity',
             results: activity.logExecuteData,
-            'configVar': 'test conf',
+            configVar: appAvailable,
         });
     }
 };
