@@ -101,7 +101,17 @@ define([
         {
             $('.slds-visual-picker>input[name="template"]').attr('checked', 'checked');
         }
-
+        if (appSelection)
+        {
+            appSelection.each(function(){
+                var stringSelector = '.slds-checkbox_toggle>input[id="' + this.id + '"])';
+                try {
+                    $(stringSelector).attr('checked', 'checked');
+                } catch (error) {
+                    
+                }
+            });
+        }
        /* If there is no message selected, disable the next button
         if (!message) {
             showStep(null, 1);
@@ -214,7 +224,10 @@ define([
         }
         var appSelection = [];
         $('.slds-checkbox_toggle>input:checked').each(function(i){
-            appSelection.push(this.id);
+            appSelection.push({
+                id: this.id,
+                templateId: undefined
+            });
         });
         // 'payload' is initialized on 'initActivity' above.
         // Journey Builder sends an initial payload with defaults
