@@ -92,7 +92,7 @@ define([
         });
         console.log(formatSelection);
         console.log(appSelection);
-        
+
         if (formatSelection && formatSelection === "new")
         {
             $('.slds-visual-picker>input[name="new"]').attr('checked', 'checked');
@@ -214,7 +214,7 @@ define([
         }
         var appSelection = [];
         $('.slds-checkbox_toggle>input:checked').each(function(i){
-            appSelection.push($(this).id);
+            appSelection.push(this.id);
         });
         // 'payload' is initialized on 'initActivity' above.
         // Journey Builder sends an initial payload with defaults
