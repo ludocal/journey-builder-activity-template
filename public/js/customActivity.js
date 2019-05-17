@@ -103,8 +103,8 @@ define([
         }
         if (appSelection)
         {
-            appSelection.each(function(){
-                var stringSelector = '.slds-checkbox_toggle>input[id="' + this.id + '"])';
+            appSelection.forEach(function(element){
+                var stringSelector = '.slds-checkbox_toggle>input[id="' + element.id + '"])';
                 try {
                     $(stringSelector).attr('checked', 'checked');
                 } catch (error) {
