@@ -215,7 +215,7 @@ define([
     }
 
     function getMessage() {
-        return $('#select1').find('option:selected').attr('value').trim();
+        return 'Send Push';
     }
 
 });
