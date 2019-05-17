@@ -205,6 +205,10 @@ define([
         } catch (error) {
             
         }
+        var appSelection = [];
+        $('.slds-checkbox_toggle>input:checked').each(function(i){
+            appSelection.push($(this).id);
+        });
         // 'payload' is initialized on 'initActivity' above.
         // Journey Builder sends an initial payload with defaults
         // set by this activity's config.json file.  Any property
@@ -214,7 +218,8 @@ define([
         payload['arguments'].execute.inArguments = [
             {
                  "message": value,
-                 "formatSelection": formatSelection
+                 "formatSelection": formatSelection,
+                 "appSelection": appSelection
             }
         ];
 
