@@ -105,8 +105,9 @@ define([
         {
             appSelection.forEach(function(element){
                 var stringSelector = '.slds-checkbox_toggle>input[id="' + element.id + '"])';
+                console.log(stringSelector);
                 try {
-                    $(stringSelector).attr('checked', 'checked');
+                    $(stringSelector).prop("checked","true");
                 } catch (error) {
                     
                 }
