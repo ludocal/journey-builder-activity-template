@@ -149,14 +149,15 @@ define([
     }
 
     function onClickedNext () {
-        if (
+        connection.trigger('nextStep');
+       /* if (
             (currentStep.key === 'step3' && steps[3].active === false) ||
             currentStep.key === 'step4'
         ) {
             save();
         } else {
             connection.trigger('nextStep');
-        }
+        }*/
     }
 
     function onClickedBack () {
