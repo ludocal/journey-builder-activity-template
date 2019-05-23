@@ -36,10 +36,15 @@ define([
         connection.trigger('requestEndpoints');
 
         // Disable the next button if a value isn't selected
+        $("#step1 input[type=checkbox]").change(function(input) {
+            console.log('change : '+ input.currentTarget.value);
+            
+            connection.trigger('updateButton', { button: 'next', enabled: true });
+        });
         $("#step2 input[type=radio]").change(function(input) {
             console.log('change : '+ input.currentTarget.value);
             var message = getMessage();
-            connection.trigger('updateButton', { button: 'next', enabled: Boolean(message) });
+            connection.trigger('updateButton', { button: 'next', enabled: true });
 
             $('#message').html(message);
         });
@@ -113,6 +118,9 @@ define([
                     
                 }
             });
+            connection.trigger('updateButton', { button: 'next', enabled: true });
+        }else{
+            connection.trigger('updateButton', { button: 'next', enabled: false });
         }
        /* If there is no message selected, disable the next button
         if (!message) {
