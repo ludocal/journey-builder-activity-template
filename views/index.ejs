@@ -1,232 +1,232 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title></title>
-    <meta charset="utf-8" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="css/styles.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/design-system/2.9.2/styles/salesforce-lightning-design-system.min.css"/>
-    <script
-      type="text/javascript"
-      src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"
-    /></script>
-    <script type="text/javascript" src="js/require.js"></script>
-    <script type="text/javascript">
-      (function() {
-        var config = {
-          baseUrl: "js"
-        };
 
-        var dependencies = ["customActivity"];
+<head>
+  <title></title>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/design-system/2.9.2/styles/salesforce-lightning-design-system.min.css" />
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" />
+  </script>
+  <script type="text/javascript" src="js/require.js"></script>
+  <script type="text/javascript">
+    (function () {
+      var config = {
+        baseUrl: "js"
+      };
 
-        require(config, dependencies);
-      })();
-    </script>
-    <script>
-        function updateApp(checkbox){
-          console.log(checkbox);
-        }
-        $("#step2 input[type=radio]").change(function() {
-          alert( "Handler for .change() called." );
-        });
-        </script>
-  </head>
+      var dependencies = ["customActivity"];
 
-  <body>
-    <div id="step1" class="step">
-      <div class="slds-grid">
-        <main class="slds-col">  
+      require(config, dependencies);
+    })();
+  </script>
+  <script>
+    function updateApp(checkbox) {
+      console.log(checkbox);
+    }
+    $("#step2 input[type=radio]").change(function () {
+      alert("Handler for .change() called.");
+    });
+  </script>
+</head>
+
+<body>
+  <div id="step1" class="step">
+    <div class="slds-grid">
+      <main class="slds-col">
         <% configVar.forEach(function(item) { %>
         <div class="slds-form-element">
-            <label class="slds-checkbox_toggle slds-grid">
-              <span class="slds-form-element__label slds-m-bottom_none"><%= item.name %></span>
-              <input id="<%= item.id %>" type="checkbox" name="checkbox-toggle-14" value="<%= item.id %>" aria-describedby="checkbox-toggle-14" />
-              <span id="checkbox-toggle-14" class="slds-checkbox_faux_container" aria-live="assertive">
-                <span class="slds-checkbox_faux"></span>
-                <span class="slds-checkbox_on">Enabled</span>
-                <span class="slds-checkbox_off">Disabled</span>
+          <label class="slds-checkbox_toggle slds-grid">
+            <span class="slds-form-element__label slds-m-bottom_none"><%= item.name %></span>
+            <input id="<%= item.id %>" type="checkbox" name="checkbox-toggle-14" value="<%= item.id %>"
+              aria-describedby="checkbox-toggle-14" />
+            <span id="checkbox-toggle-14" class="slds-checkbox_faux_container" aria-live="assertive">
+              <span class="slds-checkbox_faux"></span>
+              <span class="slds-checkbox_on">Enabled</span>
+              <span class="slds-checkbox_off">Disabled</span>
+            </span>
+          </label>
+        </div>
+        <% }); %>
+      </main>
+    </div>
+  </div>
+  <div id="step2" class="step">
+    <fieldset class="slds-form-element">
+      <legend class="slds-form-element__legend slds-form-element__label">Template or new ?</legend>
+      <div class="slds-form-element__control">
+        <div class="slds-visual-picker slds-visual-picker_medium">
+          <input type="radio" id="visual-picker-60" value="template" name="newOrTemplate" />
+          <label for="visual-picker-60">
+            <span class="slds-visual-picker__figure slds-visual-picker__icon slds-align_absolute-center">
+              <span class="slds-is-selected">
+                <span class="slds-icon_container">
+                  <svg class="slds-icon slds-icon_large slds-icon-action-check" aria-hidden="true">
+                    <use xlink:href="images/symbols.svg#check"></use>
+                  </svg>
+                </span>
               </span>
-            </label>
-          </div>
-          <% }); %>
-        </main>
+              <span class="slds-is-not-selected">
+                <span class="slds-icon_container">
+                  <svg class="slds-icon slds-icon-utility-search slds-icon_large slds-icon-text-default"
+                    aria-hidden="true">
+                    <use xlink:href="images/symbols.svg#search"></use>
+                  </svg>
+                </span>
+              </span>
+            </span>
+            <span class="slds-visual-picker__body">
+              <span class="slds-text-title">Template</span>
+            </span>
+          </label>
+        </div>
+        <div class="slds-visual-picker slds-visual-picker_medium">
+          <input type="radio" id="visual-picker-61" value="new" name="newOrTemplate" />
+          <label for="visual-picker-61">
+            <span class="slds-visual-picker__figure slds-visual-picker__icon slds-align_absolute-center">
+              <span class="slds-is-selected">
+                <span class="slds-icon_container">
+                  <svg class="slds-icon slds-icon_large slds-icon-action-check" aria-hidden="true">
+                    <use xlink:href="images/symbols.svg#check"></use>
+                  </svg>
+                </span>
+              </span>
+              <span class="slds-is-not-selected">
+                <span class="slds-icon_container">
+                  <svg class="slds-icon slds-icon-utility-insert_template slds-icon_large slds-icon-text-default"
+                    aria-hidden="true">
+                    <use xlink:href="images/symbols.svg#insert_template"></use>
+                  </svg>
+                </span>
+              </span>
+            </span>
+            <span class="slds-visual-picker__body">
+              <span class="slds-text-title">New push</span>
+            </span>
+          </label>
+        </div>
       </div>
-    </div>
-    <div id="step2" class="step">
-        <fieldset class="slds-form-element">
-            <legend class="slds-form-element__legend slds-form-element__label">Template or new ?</legend>
+    </fieldset>
+  </div>
+  <div id="step3" class="step">
+    <div class="slds-grid slds-gutters">
+      <div class="slds-col slds-size_1-of-3">
+        <div class="slds-form">
+          <div class="slds-form-element">
+            <label class="slds-form-element__label" for="combobox-unique-id-25">Search</label>
             <div class="slds-form-element__control">
-              <div class="slds-visual-picker slds-visual-picker_medium">
-                <input type="radio" id="visual-picker-60" value="template" name="newOrTemplate"  />
-                <label for="visual-picker-60">
-                  <span class="slds-visual-picker__figure slds-visual-picker__icon slds-align_absolute-center">
-                    <span class="slds-is-selected">
-                      <span class="slds-icon_container">
-                        <svg class="slds-icon slds-icon_large slds-icon-action-check" aria-hidden="true">
-                          <use xlink:href="images/symbols.svg#check"></use>
-                        </svg>
-                      </span>
+              <div class="slds-combobox_container slds-size_small">
+                <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-combobox-picklist"
+                  aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                  <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                    <input type="text" class="slds-input slds-combobox__input" id="combobox-unique-id-25"
+                      aria-controls="listbox-unique-id" autoComplete="off" role="textbox" placeholder="Select an Option"
+                      readonly="" />
+                    <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right"
+                      title="Description of icon when needed">
+                      <svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default" aria-hidden="true">
+                        <use xlink:href="images/symbols.svg#down"></use>
+                      </svg>
+                      <span class="slds-assistive-text">Description of icon when needed</span>
                     </span>
-                    <span class="slds-is-not-selected">
-                      <span class="slds-icon_container">
-                        <svg class="slds-icon slds-icon-utility-search slds-icon_large slds-icon-text-default" aria-hidden="true">
-                          <use xlink:href="images/symbols.svg#search"></use>
-                        </svg>
-                      </span>
-                    </span>
-                  </span>
-                  <span class="slds-visual-picker__body">
-                    <span class="slds-text-title">Template</span>
-                  </span>
-                </label>
-              </div>
-              <div class="slds-visual-picker slds-visual-picker_medium">
-                <input type="radio" id="visual-picker-61" value="new" name="newOrTemplate" />
-                <label for="visual-picker-61">
-                  <span class="slds-visual-picker__figure slds-visual-picker__icon slds-align_absolute-center">
-                    <span class="slds-is-selected">
-                      <span class="slds-icon_container">
-                        <svg class="slds-icon slds-icon_large slds-icon-action-check" aria-hidden="true">
-                          <use xlink:href="images/symbols.svg#check"></use>
-                        </svg>
-                      </span>
-                    </span>
-                    <span class="slds-is-not-selected">
-                      <span class="slds-icon_container">
-                        <svg class="slds-icon slds-icon-utility-insert_template slds-icon_large slds-icon-text-default" aria-hidden="true">
-                          <use xlink:href="images/symbols.svg#insert_template"></use>
-                        </svg>
-                      </span>
-                    </span>
-                  </span>
-                  <span class="slds-visual-picker__body">
-                    <span class="slds-text-title">New push</span>
-                  </span>
-                </label>
-              </div>
-            </div>
-          </fieldset>
-    </div>
-    <div id="step3" class="step">
-        <div class="slds-grid slds-gutters">
-            <div class="slds-col slds-size_1-of-3">
-          <div class="slds-form">
-              <div class="slds-form-element">
-                  <label class="slds-form-element__label" for="combobox-id-8">Select a template</label>
-                  <div class="slds-form-element__control">
-                    <div class="slds-combobox_container">
-                      <div  class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click"
-                        aria-expanded="false"
-                        aria-haspopup="listbox"
-                        role="combobox">
-                        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
-                          <input type="text"
-                            class="slds-input slds-combobox__input"
-                            id="combobox-id-8"
-                            aria-controls="listbox-id-1"
-                            autoComplete="off"
-                            role="textbox"
-                            placeholder="Select an Option"
-                            readonly=""
-                          />
-                          <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right">
-                            <svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default"
-                              aria-hidden="true"
-                            >
-                              <use
-                                xlink:href="images/symbols.svg#down"
-                              ></use>
+                  </div>
+                  <div id="listbox-unique-id" role="listbox" class="slds-dropdown slds-dropdown_fluid">
+                    <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                      <li role="presentation" class="slds-listbox__item">
+                        <div id="listbox-option-unique-id-01"
+                          class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center"
+                          role="option">
+                          <span class="slds-media__figure">
+                            <svg class="slds-icon slds-icon_x-small slds-listbox__icon-selected" aria-hidden="true">
+                              <use xlink:href="images/symbols.svg#check"></use>
                             </svg>
                           </span>
+                          <span class="slds-media__body">
+                            <span class="slds-truncate" title="Option A"> Option A</span>
+                          </span>
                         </div>
-                        <div
-                          id="listbox-id-1"
-                          class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid"
-                          role="listbox"
-                        >
-                          <ul class="slds-listbox slds-listbox_vertical" role="presentation">
-                            <li role="presentation" class="slds-listbox__item">
-                              <div
-                                id="option1"
-                                class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
-                                role="option"
-                              >
-                                <span
-                                  class="slds-media__figure slds-listbox__option-icon"
-                                ></span>
-                                <span class="slds-media__body">
-                                  <span class="slds-truncate" title="Accounts"> Accounts</span>
-                                </span>
-                              </div>
-                            </li>
-                          </ul>
+                      </li>
+                      <li role="presentation" class="slds-listbox__item">
+                        <div id="listbox-option-unique-id-02"
+                          class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center"
+                          role="option">
+                          <span class="slds-media__figure">
+                            <svg class="slds-icon slds-icon_x-small slds-listbox__icon-selected" aria-hidden="true">
+                              <use xlink:href="images/symbols.svg#check"></use>
+                            </svg>
+                          </span>
+                          <span class="slds-media__body">
+                            <span class="slds-truncate" title="Option B"> Option B</span>
+                          </span>
                         </div>
-                      </div>
-                    </div>
+                      </li>
+                      <li role="presentation" class="slds-listbox__item">
+                        <div id="listbox-option-unique-id-03"
+                          class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center"
+                          role="option">
+                          <span class="slds-media__figure">
+                            <svg class="slds-icon slds-icon_x-small slds-listbox__icon-selected" aria-hidden="true">
+                              <use xlink:href="images/symbols.svg#check"></use>
+                            </svg>
+                          </span>
+                          <span class="slds-media__body">
+                            <span class="slds-truncate" title="Option ABCDEFGHIJKLMNOPQRSTUVWXYZ"> Option
+                              ABCDEFGHIJKLMNOPQRSTUVWXYZ</span>
+                          </span>
+                        </div>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
-            </div>            
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div id="step4" class="step">
-      <div class="slds-form">
-        <div class="slds-form-element slds-form-element_stacked">
-          <label class="slds-form-element__label" for="stacked-input-id-01">Title</label>
-          <div class="slds-form-element__control">
-            <input
-              type="text"
-              id="stacked-input-id-01"
-              placeholder="Placeholder Text"
-              class="slds-input"
-            />
-          </div>
+  </div>
+  <div id="step4" class="step">
+    <div class="slds-form">
+      <div class="slds-form-element slds-form-element_stacked">
+        <label class="slds-form-element__label" for="stacked-input-id-01">Title</label>
+        <div class="slds-form-element__control">
+          <input type="text" id="stacked-input-id-01" placeholder="Placeholder Text" class="slds-input" />
         </div>
-        <div class="slds-form-element slds-form-element_stacked">
-          <label class="slds-form-element__label" for="stacked-input-id-02">Message</label>
-          <div class="slds-form-element__control">
-            <textarea
-              id="stacked-input-id-02"
-              placeholder="Placeholder Text"
-              class="slds-textarea"
-            ></textarea>
-          </div>
+      </div>
+      <div class="slds-form-element slds-form-element_stacked">
+        <label class="slds-form-element__label" for="stacked-input-id-02">Message</label>
+        <div class="slds-form-element__control">
+          <textarea id="stacked-input-id-02" placeholder="Placeholder Text" class="slds-textarea"></textarea>
         </div>
-        <div class="slds-form-element slds-form-element_stacked">
-          <label class="slds-form-element__label" for="stacked-input-id-01">Deep link</label>
-          <div class="slds-form-element__control">
-            <input
-              type="text"
-              id="stacked-input-id-01"
-              placeholder="Placeholder Text"
-              class="slds-input"
-            />
-          </div>
+      </div>
+      <div class="slds-form-element slds-form-element_stacked">
+        <label class="slds-form-element__label" for="stacked-input-id-01">Deep link</label>
+        <div class="slds-form-element__control">
+          <input type="text" id="stacked-input-id-01" placeholder="Placeholder Text" class="slds-input" />
         </div>
-        <div class="slds-form-element slds-form-element_stacked">
-          <label class="slds-form-element__label" for="stacked-input-id-01">Image URL</label>
-          <div class="slds-form-element__control">
-            <input
-              type="text"
-              id="stacked-input-id-01"
-              placeholder="Placeholder Text"
-              class="slds-input"
-            />
-          </div>
+      </div>
+      <div class="slds-form-element slds-form-element_stacked">
+        <label class="slds-form-element__label" for="stacked-input-id-01">Image URL</label>
+        <div class="slds-form-element__control">
+          <input type="text" id="stacked-input-id-01" placeholder="Placeholder Text" class="slds-input" />
         </div>
-      </div>      
+      </div>
     </div>
-    <script>
-        $('#checkboxApp').on('change',function() {
-            console.log('change input');
-            //The syntax inside the if statement below returns true for toggle checked and false for toggle unchecked
-                   if(j$(this).prop('checked')){
-                       j$('#toggleValue1').text('On');
-                   }else{
-                       j$('#toggleValue1').text('Off');
-                   }
-            });
-    </script>
-  </body>
+  </div>
+  <script>
+    $('#checkboxApp').on('change', function () {
+      console.log('change input');
+      //The syntax inside the if statement below returns true for toggle checked and false for toggle unchecked
+      if (j$(this).prop('checked')) {
+        j$('#toggleValue1').text('On');
+      } else {
+        j$('#toggleValue1').text('Off');
+      }
+    });
+  </script>
+</body>
+
 </html>

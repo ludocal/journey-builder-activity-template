@@ -52,6 +52,25 @@ define([
 
             $('#message').html(message);
         });
+        $("#step3 .slds-dropdown-trigger_click").click(function(input) {
+            console.log('click ');
+           
+            if ($(this).hasClass('slds-is-open'))
+            {
+                 $(this).removeClass('slds-is-open');
+            }else{
+                $(this).addClass('slds-is-open');
+            }
+        });
+        $("#step3 .slds-listbox__option").click(function(input) {
+            console.log('click option');
+           
+            $("#step3 .slds-combobox__input").attr('value', $(this).children('.slds-media__body').children()[0].title);
+            console.log($(this).children()[0].title);
+            $(this).hasClass('slds-is-selected');
+        });
+
+        
 
         // Toggle step 4 active/inactive
         // If inactive, wizard hides it and skips over it during navigation
