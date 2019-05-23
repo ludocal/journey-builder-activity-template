@@ -38,8 +38,12 @@ define([
         // Disable the next button if a value isn't selected
         $("#step1 input[type=checkbox]").change(function(input) {
             console.log('change : '+ input.currentTarget.value);
+            if ($("#step1 input[type=checkbox]:checked").length === 0){
+               connection.trigger('updateButton', { button: 'next', enabled: false }); 
+            }else{
+                connection.trigger('updateButton', { button: 'next', enabled: true }); 
+            }
             
-            connection.trigger('updateButton', { button: 'next', enabled: true });
         });
         $("#step2 input[type=radio]").change(function(input) {
             console.log('change : '+ input.currentTarget.value);
