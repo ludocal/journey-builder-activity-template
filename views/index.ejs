@@ -109,8 +109,66 @@
           </fieldset>
     </div>
     <div id="step3" class="step">
-      You chose the message:
-      <div id="message"></div>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_1-of-3">
+          <div class="slds-form">
+              <div class="slds-form-element">
+                  <label class="slds-form-element__label" for="combobox-id-8">Select a template</label>
+                  <div class="slds-form-element__control">
+                    <div class="slds-combobox_container">
+                      <div  class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click"
+                        aria-expanded="false"
+                        aria-haspopup="listbox"
+                        role="combobox">
+                        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                          <input type="text"
+                            class="slds-input slds-combobox__input"
+                            id="combobox-id-8"
+                            aria-controls="listbox-id-1"
+                            autoComplete="off"
+                            role="textbox"
+                            placeholder="Select an Option"
+                            readonly=""
+                          />
+                          <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right">
+                            <svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default"
+                              aria-hidden="true"
+                            >
+                              <use
+                                xlink:href="images/symbols.svg#down"
+                              ></use>
+                            </svg>
+                          </span>
+                        </div>
+                        <div
+                          id="listbox-id-1"
+                          class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid"
+                          role="listbox"
+                        >
+                          <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                            <li role="presentation" class="slds-listbox__item">
+                              <div
+                                id="option1"
+                                class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
+                                role="option"
+                              >
+                                <span
+                                  class="slds-media__figure slds-listbox__option-icon"
+                                ></span>
+                                <span class="slds-media__body">
+                                  <span class="slds-truncate" title="Accounts"> Accounts</span>
+                                </span>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>            
+      </div>
     </div>
     <div id="step4" class="step">
       <div class="slds-form">
