@@ -200,6 +200,18 @@ define([
             case 'step3':
                 $('#step3').show();
                 connection.trigger('updateButton', {
+                    button: 'back',
+                    visible: true
+                });
+                connection.trigger('updateButton', {
+                    button: 'next',
+                    text: 'next',
+                    visible: false
+                });
+                break;
+            case 'step4':
+                $('#step4').show();
+                connection.trigger('updateButton', {
                      button: 'back',
                      visible: true
                 });
@@ -217,8 +229,8 @@ define([
                     });
                 }
                 break;
-            case 'step4':
-                $('#step4').show();
+            case 'step5':
+                $('#step5').show();
                 break;
         }
     }
