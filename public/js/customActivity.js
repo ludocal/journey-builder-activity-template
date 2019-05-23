@@ -36,7 +36,8 @@ define([
         connection.trigger('requestEndpoints');
 
         // Disable the next button if a value isn't selected
-        $('#select1').change(function() {
+        $("#step2 input[type=radio]").change(function(input) {
+            console.log('change : '+ input.currentTarget.value);
             var message = getMessage();
             connection.trigger('updateButton', { button: 'next', enabled: Boolean(message) });
 
