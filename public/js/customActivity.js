@@ -13,6 +13,7 @@ define(['postmonger'], function(Postmonger) {
             name: "BATCH ANDROID"
         }];
     var formatSelection = ""; //selection d'un nouveau template ou existant
+    var messageConfiguration;
     var config = [];
     var lastStepEnabled = false;
     var steps = [ // initialize to the same value as what's set in config.json for consistency
@@ -166,7 +167,11 @@ define(['postmonger'], function(Postmonger) {
             steps[2].active = false;
             connection.trigger('updateSteps', steps);
         }
-       
+        if (currentStep.key === 'step4')
+        {        
+            save();
+        }
+
         connection.trigger('nextStep');
     }
     function loadAppTemplate()
@@ -300,8 +305,6 @@ define(['postmonger'], function(Postmonger) {
     }
 
     function save() {
-        var name = $('#select1').find('option:selected').html();
-        var value = getMessage();       
         try {
             formatSelection = $('.slds-visual-picker>input:checked')[0].name;
         } catch (error) {
@@ -318,13 +321,20 @@ define(['postmonger'], function(Postmonger) {
         // Journey Builder sends an initial payload with defaults
         // set by this activity's config.json file.  Any property
         // may be overridden as desired.
-        payload.name = name;
+        
+        messageConfiguration : {
+            title= $('#messageTitle').val(),
+            body= $('#messageBody').val(),
+            deepLink= $('#messageDeepLink').val(),
+            imageUrl= $('#messageImage').val()
+        }
 
         payload['arguments'].execute.inArguments = [
             {
                  "message": value,
                  "formatSelection": formatSelection,
-                 "appSelection": appSelection
+                 "appSelection": appSelection,
+                 'messageconfiguration': messageConfiguration
             }
         ];
 
