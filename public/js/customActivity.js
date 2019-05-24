@@ -7,6 +7,8 @@ define([
 
     var connection = new Postmonger.Session();
     var payload = {};
+    var appSelection = []; //selection des apps
+    var formatSelection = ""; //selection d'un nouveau template ou existant
     var config = [];
     var lastStepEnabled = false;
     var steps = [ // initialize to the same value as what's set in config.json for consistency
@@ -168,10 +170,10 @@ define([
     }
 
     function onClickedNext () {
-        
-        if (currentStep.key === 'step2')
-        {
-            
+        save();
+        if (currentStep.key === 'step2' && this.formatSelection === 'new')
+        {        
+                showStep(null, 4);
         }else{
             connection.trigger('nextStep');
         }
@@ -268,15 +270,15 @@ define([
     function save() {
         var name = $('#select1').find('option:selected').html();
         var value = getMessage();
-        var formatSelection = '';
+        this.formatSelection = '';
         try {
             formatSelection = $('.slds-visual-picker>input:checked')[0].name;
         } catch (error) {
             
         }
-        var appSelection = [];
+        this.appSelection = [];
         $('.slds-checkbox_toggle>input:checked').each(function(i){
-            appSelection.push({
+            this.appSelection.push({
                 id: this.id,
                 templateId: undefined
             });
@@ -290,8 +292,8 @@ define([
         payload['arguments'].execute.inArguments = [
             {
                  "message": value,
-                 "formatSelection": formatSelection,
-                 "appSelection": appSelection
+                 "formatSelection": this.formatSelection,
+                 "appSelection": this.appSelection
             }
         ];
 
