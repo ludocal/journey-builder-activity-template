@@ -143,8 +143,8 @@ define(['postmonger'], function(Postmonger) {
         }else{
             connection.trigger('updateButton', { button: 'next', enabled: false });
         }
-        $('#messageTitle').attr('value', title);
-        $('#messageBody').attr('value', body);
+        $('#messageTitle').val(title);
+        $('#messageBody').val(body);
        /* If there is no message selected, disable the next button
         if (!message) {
             showStep(null, 1);
