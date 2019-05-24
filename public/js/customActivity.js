@@ -170,7 +170,6 @@ define([
     }
 
     function onClickedNext () {
-        save();
         if (currentStep.key === 'step2' && formatSelection === 'new')
         {        
                 showStep(null, 4);
