@@ -170,9 +170,8 @@ define([
     function onClickedNext () {
         if (currentStep.key === 'step2' && formatSelection === 'new')
         {        
-                showStep(null, 4);
-        }else{
-            connection.trigger('nextStep');
+                steps[3].active = false;
+                connection.trigger('updateSteps', steps);
         }
        /* if (
             (currentStep.key === 'step3' && steps[3].active === false) ||
@@ -182,6 +181,7 @@ define([
         } else {
             connection.trigger('nextStep');
         }*/
+        connection.trigger('nextStep');
     }
 
     function onClickedBack () {
