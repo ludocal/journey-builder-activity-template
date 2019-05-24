@@ -269,8 +269,7 @@ define([
 
     function save() {
         var name = $('#select1').find('option:selected').html();
-        var value = getMessage();
-        this.formatSelection = '';
+        var value = getMessage();       
         try {
             formatSelection = $('.slds-visual-picker>input:checked')[0].name;
         } catch (error) {
@@ -292,8 +291,8 @@ define([
         payload['arguments'].execute.inArguments = [
             {
                  "message": value,
-                 "formatSelection": this.formatSelection,
-                 "appSelection": this.appSelection
+                 "formatSelection": formatSelection,
+                 "appSelection": appSelection
             }
         ];
 
