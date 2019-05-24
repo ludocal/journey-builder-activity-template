@@ -3,32 +3,37 @@
 // Deps
 var activity = require('./activity');
 
-var appAvailable = [
+var configApplication = {
+    apiRestToken: 'dcee600f7a7be131481e28ddb40ae1b0',
+    appAvailable:[
     {
         name:'Batch STORE IOS',
-        id: '001'
+        id: '5CDD1B576095D88F6FE92DA49189D2'
     },
     {
         name: 'BATCH STORE ANDROID',
-        id: '002'
-    }
-];
+        id: '5CDD1B576095D88F6FE92DA49189D2'
+    }]
+};
 
 /*
  * GET home page.
  */
 exports.index = function(req, res){
+    console.log(req);
     if(req.session && !req.session.token ) {
         res.render( 'index', {
             title: 'Unauthenticated',
             errorMessage: 'This app may only be loaded via Salesforce Marketing Cloud',
-            configVar: 'TEST'
+            configVar: configApplication,
+            configVarJson: JSON.stringify(configApplication)
         });
     } else {
         res.render( 'index', {
             title: 'Journey Builder Activity',
             results: activity.logExecuteData,
-            configVar: appAvailable,
+            configVar: configApplication,
+            configVarJson: JSON.stringify(configApplication)
         });
     }
 };

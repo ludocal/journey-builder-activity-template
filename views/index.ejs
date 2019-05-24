@@ -15,7 +15,10 @@
   <script type="text/javascript">
     (function () {
       var config = {
-        baseUrl: "js"
+        baseUrl: "js",
+        'customActivity': {
+         appConfiguration: JSON.parse('<%- configVarJson %>')
+        }
       };
 
       var dependencies = ["customActivity"];
@@ -52,7 +55,7 @@
   <div id="step1" class="step">
     <div class="slds-grid">
       <main class="slds-col">
-        <% configVar.forEach(function(item) { %>
+        <% configVar.appAvailable.forEach(function(item) { %>
         <div class="slds-form-element">
           <label class="slds-checkbox_toggle slds-grid">
             <span class="slds-form-element__label slds-m-bottom_none"><%= item.name %></span>
