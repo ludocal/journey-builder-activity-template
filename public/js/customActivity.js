@@ -1,6 +1,6 @@
 define(['postmonger'], function(Postmonger) {
     'use strict';
-    var appConfiguration = module.config().appConfiguration;
+    //var appConfiguration = module.config().appConfiguration;
     var connection = new Postmonger.Session();
     var payload = {};
     var appSelection = [
