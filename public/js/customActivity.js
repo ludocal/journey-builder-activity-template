@@ -322,19 +322,21 @@ define(['postmonger'], function(Postmonger) {
         // set by this activity's config.json file.  Any property
         // may be overridden as desired.
         
-        messageConfiguration : {
-            "title": $('#messageTitle').val(),
-            "body": $('#messageBody').val(),
-            "deepLink": $('#messageDeepLink').val(),
-            "imageUrl": $('#messageImage').val()
-        }
+      
+        var title = $('#messageTitle').val();
+        var body = $('#messageBody').val();
+        var deepLink = $('#messageDeepLink').val();
+        var imageUrl = $('#messageImage').val();
+        
 
         payload['arguments'].execute.inArguments = [
             {
-                 "message": value,
-                 "formatSelection": formatSelection,
-                 "appSelection": appSelection,
-                 'messageconfiguration': messageConfiguration
+                "message": value,
+                "formatSelection": formatSelection,
+                "appSelection": appSelection,
+                'messageconfiguration': messageConfiguration,
+                "title": title,
+                "body": body 
             }
         ];
 
