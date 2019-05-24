@@ -7,15 +7,15 @@ define([
 
     var connection = new Postmonger.Session();
     var payload = {};
-    var appSelection = []; //selection des apps
+    var appSelection = ["5CDD1B576095D88F6FE92DA49189D2","5CDD1B576095D88F6FE92DA49189D2"]; //selection des apps
     var formatSelection = ""; //selection d'un nouveau template ou existant
     var config = [];
     var lastStepEnabled = false;
     var steps = [ // initialize to the same value as what's set in config.json for consistency
         { "label": "App", "key": "step1" },
         { "label": "template vs new", "key": "step2" },
-        { "label": "Template selection", "key": "step3", "active": false },
-        { "label": "New push", "key": "step4", "active": false }
+        { "label": "Template selection", "key": "step3" },
+        { "label": "New push", "key": "step4" }
     ];
     var currentStep = steps[0].key;
 
@@ -52,23 +52,7 @@ define([
             formatSelection = input.currentTarget.value;
             connection.trigger('updateButton', { button: 'next', enabled: true });            
         });
-        $("#step3 .slds-dropdown-trigger_click").click(function(input) {
-            console.log('click ');
-           
-            if ($(this).hasClass('slds-is-open'))
-            {
-                 $(this).removeClass('slds-is-open');
-            }else{
-                $(this).addClass('slds-is-open');
-            }
-        });
-        $("#step3 .slds-listbox__option").click(function(input) {
-            console.log('click option');
-           
-            $("#step3 .slds-combobox__input").attr('value', $(this).children('.slds-media__body').children()[0].title);
-            console.log($(this).children()[0].title);
-            $(this).hasClass('slds-is-selected');
-        });
+        
 
         
 
@@ -80,6 +64,7 @@ define([
 
             connection.trigger('updateSteps', steps);
         });
+        loadAppTemplate();
     }
 
     function readConfig()
@@ -170,18 +155,60 @@ define([
     function onClickedNext () {
         if (currentStep.key === 'step2' && formatSelection === 'new')
         {        
-                steps[2].active = false;
-                connection.trigger('updateSteps', steps);
+            steps[2].active = false;
+            connection.trigger('updateSteps', steps);
+            loadAppTemplate();
         }
-       /* if (
-            (currentStep.key === 'step3' && steps[3].active === false) ||
-            currentStep.key === 'step4'
-        ) {
-            save();
-        } else {
-            connection.trigger('nextStep');
-        }*/
+       
         connection.trigger('nextStep');
+    }
+    function loadAppTemplate()
+    {
+        
+        
+
+        $.each(appSelection, function(index, obj) {
+            var temp = $.trim($('#containerTemplateItem').html());
+            var tempOption = $.trim($('#optionContainerTemplateItem').html());
+            $.ajax({
+                type: 'GET',            
+                contentType: 'application/json',
+                url: 'https://api.batch.com/1.1/' + obj + '/campaigns/list?limit=20&live=false',
+                headers: {"X-Authorization": "dcee600f7a7be131481e28ddb40ae1b0"},						
+                success: function(data) {
+                    console.log('success');
+                    console.log(JSON.stringify(data));
+                    var options = '';
+
+                    $.each(data, function(index, obj) {
+                        var x = tempOption.replace(/{{optionId}}/ig, obj.campaign_token);
+                        x = x.replace(/{{optionName}}/ig, obj.name);
+                        options = options + x;
+                    });                    
+                    var tempReplace = temp.replace(/{{optionContainerTemplate}}/ig, options);
+                    tempReplace = tempReplace.replace(/{{index}}/ig, index);
+                    $('#containerTemplate').append(tempReplace);
+                }
+            });
+        });
+        $("#step3 .slds-dropdown-trigger_click").click(function(input) {
+            console.log('click ');
+           
+            if ($(this).hasClass('slds-is-open'))
+            {
+                 $(this).removeClass('slds-is-open');
+            }else{
+                $(this).addClass('slds-is-open');
+            }
+        });
+        $("#step3 .slds-listbox__option").click(function(input) {
+            console.log('click option');
+           
+            $("#step3 .slds-combobox__input").attr('value', $(this).children('.slds-media__body').children()[0].title);
+            console.log($(this).children()[0].title);
+            $(this).hasClass('slds-is-selected');
+        });
+        
     }
 
     function onClickedBack () {
