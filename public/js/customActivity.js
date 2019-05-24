@@ -49,10 +49,8 @@ define([
         });
         $("#step2 input[type=radio]").change(function(input) {
             console.log('change : '+ input.currentTarget.value);
-            var message = getMessage();
-            connection.trigger('updateButton', { button: 'next', enabled: true });
-
-            $('#message').html(message);
+            formatSelection = input.currentTarget.value;
+            connection.trigger('updateButton', { button: 'next', enabled: true });            
         });
         $("#step3 .slds-dropdown-trigger_click").click(function(input) {
             console.log('click ');
