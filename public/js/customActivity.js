@@ -275,7 +275,7 @@ define([
         } catch (error) {
             
         }
-        this.appSelection = [];
+        appSelection = [];
         $('.slds-checkbox_toggle>input:checked').each(function(i){
             this.appSelection.push({
                 id: this.id,
