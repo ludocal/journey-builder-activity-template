@@ -331,7 +331,6 @@ define(['postmonger'], function(Postmonger) {
 
         payload['arguments'].execute.inArguments = [
             {
-                "message": value,
                 "formatSelection": formatSelection,
                 "appSelection": appSelection,
                 'messageconfiguration': messageConfiguration,
