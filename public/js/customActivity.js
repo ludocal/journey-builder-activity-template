@@ -323,10 +323,10 @@ define(['postmonger'], function(Postmonger) {
         // may be overridden as desired.
         
         messageConfiguration : {
-            title= $('#messageTitle').val(),
-            body= $('#messageBody').val(),
-            deepLink= $('#messageDeepLink').val(),
-            imageUrl= $('#messageImage').val()
+            "title"= $('#messageTitle').val(),
+            "body"= $('#messageBody').val(),
+            "deepLink"= $('#messageDeepLink').val(),
+            "imageUrl"= $('#messageImage').val()
         }
 
         payload['arguments'].execute.inArguments = [
