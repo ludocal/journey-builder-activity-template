@@ -12,10 +12,10 @@ define([
     var config = [];
     var lastStepEnabled = false;
     var steps = [ // initialize to the same value as what's set in config.json for consistency
-        { "label": "Step 1", "key": "step1" },
-        { "label": "Step 2", "key": "step2" },
-        { "label": "Step 3", "key": "step3" },
-        { "label": "Step 4", "key": "step4" }
+        { "label": "App", "key": "step1" },
+        { "label": "template vs new", "key": "step2" },
+        { "label": "Template selection", "key": "step3" },
+        { "label": "New push", "key": "step4" }
     ];
     var currentStep = steps[0].key;
 
@@ -170,7 +170,7 @@ define([
     function onClickedNext () {
         if (currentStep.key === 'step2' && formatSelection === 'new')
         {        
-                steps[3].active = false;
+                steps[2].active = false;
                 connection.trigger('updateSteps', steps);
         }
        /* if (
