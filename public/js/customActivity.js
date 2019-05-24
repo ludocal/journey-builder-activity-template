@@ -32,6 +32,7 @@ define(['postmonger'], function(Postmonger) {
     connection.on('clickedNext', onClickedNext);
     connection.on('clickedBack', onClickedBack);
     connection.on('gotoStep', onGotoStep);
+    connection.on('requestedTriggerEventDefinition', onRequestedTriggerEventDefinition());
 
     function onRender() {
         readConfig();
@@ -40,6 +41,7 @@ define(['postmonger'], function(Postmonger) {
 
         connection.trigger('requestTokens');
         connection.trigger('requestEndpoints');
+        connection.trigger('requestTriggerEventDefinition');
 
         // Disable the next button if a value isn't selected
         $("#step1 input[type=checkbox]").change(function(input) {
@@ -155,7 +157,9 @@ define(['postmonger'], function(Postmonger) {
         // Response: endpoints = { restHost: <url> } i.e. "rest.s1.qa1.exacttarget.com"
          console.log(endpoints);
     }
-
+    function onRequestedTriggerEventDefinition(requestDefinition){
+        console.log(requestDefinition);
+    }
     function onClickedNext () {
         if (currentStep.key === 'step2' && formatSelection === 'new')
         {        
