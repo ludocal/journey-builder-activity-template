@@ -14,8 +14,8 @@ define([
     var steps = [ // initialize to the same value as what's set in config.json for consistency
         { "label": "App", "key": "step1" },
         { "label": "template vs new", "key": "step2" },
-        { "label": "Template selection", "key": "step3" },
-        { "label": "New push", "key": "step4" }
+        { "label": "Template selection", "key": "step3", "active": false },
+        { "label": "New push", "key": "step4", "active": false }
     ];
     var currentStep = steps[0].key;
 
