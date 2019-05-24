@@ -32,7 +32,7 @@ define(['postmonger'], function(Postmonger) {
     connection.on('clickedNext', onClickedNext);
     connection.on('clickedBack', onClickedBack);
     connection.on('gotoStep', onGotoStep);
-    connection.on('requestedTriggerEventDefinition', onRequestedTriggerEventDefinition());
+    connection.on('requestedTriggerEventDefinition', onRequestedTriggerEventDefinition);
 
     function onRender() {
         readConfig();
