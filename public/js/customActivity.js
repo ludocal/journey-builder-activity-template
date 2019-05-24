@@ -171,7 +171,7 @@ define([
 
     function onClickedNext () {
         save();
-        if (currentStep.key === 'step2' && this.formatSelection === 'new')
+        if (currentStep.key === 'step2' && formatSelection === 'new')
         {        
                 showStep(null, 4);
         }else{
@@ -277,7 +277,7 @@ define([
         }
         appSelection = [];
         $('.slds-checkbox_toggle>input:checked').each(function(i){
-            this.appSelection.push({
+            appSelection.push({
                 id: this.id,
                 templateId: undefined
             });
