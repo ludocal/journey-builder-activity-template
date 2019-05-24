@@ -86,6 +86,8 @@ define(['postmonger'], function(Postmonger) {
         }
 
         var message;
+        var title;
+        var body;
         var formatSelection;
         var appSelection;
 
@@ -100,8 +102,11 @@ define(['postmonger'], function(Postmonger) {
 
         $.each(inArguments, function(index, inArgument) {
             $.each(inArgument, function(key, val) {
-                if (key === 'message') {
-                    message = val;
+                if (key === 'title') {
+                    title = val;
+                }
+                if (key === 'body') {
+                    body = val;
                 }
                 if (key === 'formatSelection') {
                     formatSelection = val;
@@ -137,6 +142,8 @@ define(['postmonger'], function(Postmonger) {
         }else{
             connection.trigger('updateButton', { button: 'next', enabled: false });
         }
+        $('#messageTitle').attr('value', title);
+        $('#messageBody').attr('value', body);
        /* If there is no message selected, disable the next button
         if (!message) {
             showStep(null, 1);
