@@ -13,7 +13,7 @@ define([
         { "label": "Step 1", "key": "step1" },
         { "label": "Step 2", "key": "step2" },
         { "label": "Step 3", "key": "step3" },
-        { "label": "Step 4", "key": "step4", "active": false }
+        { "label": "Step 4", "key": "step4" }
     ];
     var currentStep = steps[0].key;
 
@@ -168,7 +168,13 @@ define([
     }
 
     function onClickedNext () {
-        connection.trigger('nextStep');
+        
+        if (currentStep.key === 'step2')
+        {
+            
+        }else{
+            connection.trigger('nextStep');
+        }
        /* if (
             (currentStep.key === 'step3' && steps[3].active === false) ||
             currentStep.key === 'step4'
