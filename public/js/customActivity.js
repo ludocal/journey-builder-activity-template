@@ -7,7 +7,15 @@ define([
 
     var connection = new Postmonger.Session();
     var payload = {};
-    var appSelection = ["5CDD1B576095D88F6FE92DA49189D2","5CDD1B576095D88F6FE92DA49189D2"]; //selection des apps
+    var appSelection = [
+        {
+          id: "5CDD1B576095D88F6FE92DA49189D2",
+          name: "BATCH IOS"
+        },
+        {
+            id: "5CDD1B576095D88F6FE92DA49189D2",
+            name: "BATCH ANDROID"
+        }];
     var formatSelection = ""; //selection d'un nouveau template ou existant
     var config = [];
     var lastStepEnabled = false;
@@ -167,26 +175,27 @@ define([
         
         
 
-        $.each(appSelection, function(index, obj) {
+        $.each(appSelection, function(index, appItem) {
             var temp = $.trim($('#containerTemplateItem').html());
             var tempOption = $.trim($('#optionContainerTemplateItem').html());
             $.ajax({
                 type: 'GET',            
                 contentType: 'application/json',
-                url: 'https://api.batch.com/1.1/' + obj + '/campaigns/list?limit=20&live=false',
+                url: 'https://api.batch.com/1.1/' + appItem.id + '/campaigns/list?limit=20&live=false',
                 headers: {"X-Authorization": "dcee600f7a7be131481e28ddb40ae1b0"},						
                 success: function(data) {
                     console.log('success');
                     console.log(JSON.stringify(data));
                     var options = '';
 
-                    $.each(data, function(index, obj) {
-                        var x = tempOption.replace(/{{optionId}}/ig, obj.campaign_token);
-                        x = x.replace(/{{optionName}}/ig, obj.name);
+                    $.each(data, function(index, optionItem) {
+                        var x = tempOption.replace(/{{optionId}}/ig, optionItem.campaign_token);
+                        x = x.replace(/{{optionName}}/ig, optionItem.name);
                         options = options + x;
                     });                    
                     var tempReplace = temp.replace(/{{optionContainerTemplate}}/ig, options);
                     tempReplace = tempReplace.replace(/{{index}}/ig, index);
+                    tempReplace = tempReplace.replace(/{{appName}}/ig, appItem.name);
                     $('#containerTemplate').append(tempReplace);
                 }
             });

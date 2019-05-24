@@ -132,7 +132,7 @@
       <div class="slds-col">
         <div class="slds-form">
           <div class="slds-form-element">
-            <label class="slds-form-element__label" for="combobox-unique-id-{{index}}">Search</label>
+            <label class="slds-form-element__label" for="combobox-unique-id-{{index}}">{{appName}}</label>
             <div class="slds-form-element__control">
               <div class="slds-combobox_container slds-size_small">
                 <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-combobox-picklist"
@@ -202,7 +202,7 @@
       }
     });
   </script>
-  <script id="optionContainerTemplateItem">
+  <template id="optionContainerTemplateItem">
       <li role="presentation" class="slds-listbox__item">
         <div id="listbox-option-unique-id-01"
           class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center"
@@ -217,7 +217,7 @@
           </span>
         </div>
       </li>
-    </script>            
+    </template>            
 </body>
 
 </html>
