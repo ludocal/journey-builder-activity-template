@@ -165,7 +165,6 @@ define(['postmonger'], function(Postmonger) {
         {        
             steps[2].active = false;
             connection.trigger('updateSteps', steps);
-            loadAppTemplate();
         }
        
         connection.trigger('nextStep');
