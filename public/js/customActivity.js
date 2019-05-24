@@ -102,6 +102,7 @@ define(['postmonger'], function(Postmonger) {
 
         $.each(inArguments, function(index, inArgument) {
             $.each(inArgument, function(key, val) {
+                console.log('Key :' + key + ' val : ' + val);
                 if (key === 'title') {
                     title = val;
                 }
