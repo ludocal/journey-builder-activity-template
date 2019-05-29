@@ -4,8 +4,10 @@
 var activity = require('./activity');
 var https = require('https');
 
-var configApplication = {
+var configApplication = [{
     apiRestToken: 'dcee600f7a7be131481e28ddb40ae1b0',
+    domain: 'mcwd-d2pprjfdcksy88llpp9dv-4',
+    mid: 500008428,
     appAvailable:[
     {
         name:'Batch STORE IOS',
@@ -15,7 +17,7 @@ var configApplication = {
         name: 'BATCH STORE ANDROID',
         id: '5CDD1B576095D88F6FE92DA49189D2'
     }]
-};
+}];
 
 /*
  * GET home page.
@@ -42,42 +44,53 @@ exports.index = function(req, res){
 exports.getApplicationList = function( req, res ) {
     console.log('getApplicationList');
     console.log( 'req.body: ', req.body );
-    var mid = getMIDfromToken("", "toto");
-    res.json( configApplication.appAvailable );
+    getMIDfromToken("toto", function(error, response){
+        configApplication.forEach(element => {
+        if (response === element.mid)
+        {
+            res.json(element.appAvailable);
+        }
+    });
+    });
+    //res.json( 'ERROR' );
 };
 
-function getMIDfromToken(url, token)
+function getMIDfromToken(token, callback)
 {
-    const options = {
-        hostname: 'mcwd-d2pprjfdcksy88llpp9dv-4.auth.marketingcloudapis.com',
-        path: '/v2/userinfo',
-        method: 'GET',
-        headers : {'Content-Type': "application/json",'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsImtpZCI6IjEiLCJ2ZXIiOiIxIiwidHlwIjoiSldUIn0.eyJhY2Nlc3NfdG9rZW4iOiJYVWVWSGpOTzduaHZmV2o3dTZDWDZneUUiLCJjbGllbnRfaWQiOiI3NWx0cGxhb3Z5Z2tyaHF6cmtiaTI3eWoiLCJlaWQiOjUwMDAwODQyOCwic3RhY2tfa2V5IjoiUzUwIiwicGxhdGZvcm1fdmVyc2lvbiI6MiwiY2xpZW50X3R5cGUiOiJTZXJ2ZXJUb1NlcnZlciJ9.meLLIm3M3KhFhV6vMd96eelugNWgRU6Oo3Cd4go-04I.xrJ-NiucC5qgLSEtDHscBrSjcVBYhs3q99P1mAvCWSsXqZDzF0PQOjUCZ8cSEKL7jrfGOMFQ0D_klD5Xp3KO3tP2FmLrKe9w0jcaVh8G1-cx-gpT_CFpx9hRDoMEeJPCc4n0HPo_D2TIVWWKNXog3rxXJqxnO-GyjE6KmhprbFmkV-KVEbv"}
-      };
-      var responseString = "";
-      var responseObject;
-      const req = https.request(options, (res) => {
-        console.log('statusCode:', res.statusCode);
-        console.log('headers:', res.headers);
-        var str;
-        res.on('data', (d) => {
-            responseString +=d;
-        });
-        res.on('end', (d) => {
-            console.log(responseString);
-            if (res.statusCode === 200)
-            {
-                responseObject = JSON.parse(responseString);
-                return responseObject.organization.enterprise_id;
-            }
+    configApplication.forEach(element => {
+        const options = {
+            hostname: element.domain + '.auth.marketingcloudapis.com',
+            path: '/v2/userinfo',
+            method: 'GET',
+            headers : {'Content-Type': "application/json",'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsImtpZCI6IjEiLCJ2ZXIiOiIxIiwidHlwIjoiSldUIn0.eyJhY2Nlc3NfdG9rZW4iOiJYc3JpUUc5SUxyQjZtb2RJQWoydjJ3WkgiLCJjbGllbnRfaWQiOiI3NWx0cGxhb3Z5Z2tyaHF6cmtiaTI3eWoiLCJlaWQiOjUwMDAwODQyOCwic3RhY2tfa2V5IjoiUzUwIiwicGxhdGZvcm1fdmVyc2lvbiI6MiwiY2xpZW50X3R5cGUiOiJTZXJ2ZXJUb1NlcnZlciJ9.ruPq-lMcNK0gULC2e7d_Dh6cD1hIdwpIP00EULBDaeE.ZS98W_XIQg966hDlVxD7d12qywRNDmBF2kUgSfHXc9eF6QZ6SsDpmlqMF3x60rpyJy05tBt7wVfONoCvp_keo3Y4X24JgC2dwTGqwPbkywiLrSHDnr68CievqxM_OfJhbnQGQXJMaaYAm_Lp0ABg6mt4JPnXWgW3fFVGWdQZXYg_SVGB3om"}
+          };
+          var responseString = "";
+          var responseObject;
+          const req = https.request(options, (res) => {
+            console.log('statusCode:', res.statusCode);
+            console.log('headers:', res.headers);
+            var str;
+            res.on('data', (d) => {
+                responseString +=d;
+            });
+            res.on('end', (d) => {
+                if (res.statusCode >= 400){
+                    callback(null, 500008428);
+                }
+                console.log(responseString);
+                if (res.statusCode === 200)
+                {
+                    responseObject = JSON.parse(responseString);
+                    callback(null, responseObject.organization.enterprise_id);
+                }
+              });
           });
-      });
-      
-      req.on('error', (e) => {
-        console.error(e);
-      });
-      req.end();
-    return  "500008428";
+          
+          req.on('error', (e) => {
+            console.error(e);
+          });
+          req.end();
+    });
 }
 
 

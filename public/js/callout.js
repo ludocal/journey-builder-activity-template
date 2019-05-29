@@ -20,7 +20,7 @@ define(function() {
   async function getAppAvailable(token){
     const response = await fetch('/getApplicationList', {
         method: 'GET',
-        body: JSON.stringify(token),
+        params: {token: token},
       });
       console.log(response);
     const myJson =  await response.json();
@@ -30,9 +30,10 @@ define(function() {
     return {
         getAuthInfo : getAuthInfo,
         getAppAvailable: getAppAvailable,
-      getAuthInfoAjax: function(){
+      getAuthInfoAjax: function(token){
         $.ajax({
           type: 'GET',
+          params: { token: token},
           crossDomain: true,            
           contentType: 'application/json',
           url: '/getApplicationList',

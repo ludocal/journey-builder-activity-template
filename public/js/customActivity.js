@@ -23,13 +23,13 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         { "label": "Template selection", "key": "step3" },
         { "label": "New push", "key": "step4" }
     ];
-    var tokens;
+    var token = "eyJhbGciOiJIUzI1NiIsImtpZCI6IjEiLCJ2ZXIiOiIxIiwidHlwIjoiSldUIn0.eyJhY2Nlc3NfdG9rZW4iOiJYTFdCS2tMS2V5eXhJNGxSMmRYMzdtcHgiLCJjbGllbnRfaWQiOiI3NWx0cGxhb3Z5Z2tyaHF6cmtiaTI3eWoiLCJlaWQiOjUwMDAwODQyOCwic3RhY2tfa2V5IjoiUzUwIiwicGxhdGZvcm1fdmVyc2lvbiI6MiwiY2xpZW50X3R5cGUiOiJTZXJ2ZXJUb1NlcnZlciJ9.ZXM2wvi88yR65YXFl1do1N_3pVBX9UttwMt8CumwqFg.OJExTfVckZh9xjsFd0BaQve888XvthgJvhwLn-13piesslZvgLorsFDwSvL2FjLgyRBdlbwsDIF5J47YUfKrBiAUWcTp68I8kUN1_mwlE6jpKtXdGhBqf6bV9VgsUl5dRUPS4rxt9t5NIAR4tg0VVBTm7ycczuwPqdoeFPVqED7lF7koUjD";
     var currentStep = steps[0].key;
 
     $(window).ready(onRender);
-    callout.getAppAvailable().then(
-        r => loadAppSelection(r)
-    );
+    // callout.getAppAvailable(token).then(
+    //     r => loadAppSelection(r)
+    // );
     
     connection.on('initActivity', initialize);
     connection.on('requestedTokens', onGetTokens);
@@ -164,7 +164,10 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
 
     function onGetTokens (tokens) {
         // Response: tokens = { token: <legacy token>, fuel2token: <fuel api token> }
-        tokens = tokens;
+        token = tokens.token;
+        callout.getAppAvailable(tokens.token).then(
+            r => loadAppSelection(r)
+        );
         console.log(tokens);
     }
 
