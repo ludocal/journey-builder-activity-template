@@ -1,4 +1,4 @@
-define(['postmonger'], function(Postmonger) {
+define(['postmonger', 'callout'], function(Postmonger, callout) {
     'use strict';
     //var appConfiguration = module.config().appConfiguration;
     var connection = new Postmonger.Session();
@@ -12,6 +12,7 @@ define(['postmonger'], function(Postmonger) {
             id: "5CDD1B576095D88F6FE92DA49189D2",
             name: "BATCH ANDROID"
         }];
+
     var formatSelection = ""; //selection d'un nouveau template ou existant
     var messageConfiguration;
     var config = [];
@@ -22,10 +23,14 @@ define(['postmonger'], function(Postmonger) {
         { "label": "Template selection", "key": "step3" },
         { "label": "New push", "key": "step4" }
     ];
+    var tokens;
     var currentStep = steps[0].key;
 
     $(window).ready(onRender);
-
+    callout.getAppAvailable().then(
+        r => loadAppSelection(r)
+    );
+    
     connection.on('initActivity', initialize);
     connection.on('requestedTokens', onGetTokens);
     connection.on('requestedEndpoints', onGetEndpoints);
@@ -159,7 +164,8 @@ define(['postmonger'], function(Postmonger) {
 
     function onGetTokens (tokens) {
         // Response: tokens = { token: <legacy token>, fuel2token: <fuel api token> }
-         console.log(tokens);
+        tokens = tokens;
+        console.log(tokens);
     }
 
     function onGetEndpoints (endpoints) {
@@ -182,11 +188,17 @@ define(['postmonger'], function(Postmonger) {
 
         connection.trigger('nextStep');
     }
+    function loadAppSelection(applicationList){
+        var containerItem = $.trim($('#templateAppSelectionItem').html());
+        $.each(applicationList, function(index, appItem) {
+            var x = containerItem.replace(/{{id}}/ig, appItem.id);
+                x = x.replace(/{{name}}/ig, appItem.name);
+                $('#appSelectionContainer').append(x);
+        });
+       
+    }
     function loadAppTemplate()
     {
-        
-        
-
         $.each(appSelection, function(index, appItem) {
             var temp = $.trim($('#containerTemplateItem').html());
             var tempOption = $.trim($('#optionContainerTemplateItem').html());

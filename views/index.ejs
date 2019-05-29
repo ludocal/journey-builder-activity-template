@@ -54,12 +54,12 @@
 <body>
   <div id="step1" class="step">
     <div class="slds-grid">
-      <main class="slds-col">
-        <% configVar.appAvailable.forEach(function(item) { %>
+      <main class="slds-col" id="appSelectionContainer">
+      <template id="templateAppSelectionItem">
         <div class="slds-form-element">
           <label class="slds-checkbox_toggle slds-grid">
-            <span class="slds-form-element__label slds-m-bottom_none"><%= item.name %></span>
-            <input id="<%= item.id %>" type="checkbox" name="checkbox-toggle-14" value="<%= item.id %>"
+            <span class="slds-form-element__label slds-m-bottom_none">{{name}}</span>
+            <input id="{{id}}" type="checkbox" name="checkbox-toggle-14" value="{{id}}"
               aria-describedby="checkbox-toggle-14" />
             <span id="checkbox-toggle-14" class="slds-checkbox_faux_container" aria-live="assertive">
               <span class="slds-checkbox_faux"></span>
@@ -68,7 +68,7 @@
             </span>
           </label>
         </div>
-        <% }); %>
+      </template>
       </main>
     </div>
   </div>
@@ -131,7 +131,7 @@
   </div>
   <div id="step3" class="step">
     <div id="containerTemplate" class="slds-grid slds-gutters">
-      <script id="containerTemplateItem">
+      <script id="containerTemplateItem" type="text/x-custom-template">
       <div class="slds-col">
         <div class="slds-form">
           <div class="slds-form-element">

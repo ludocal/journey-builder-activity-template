@@ -5,8 +5,10 @@ var express     = require('express');
 var bodyParser  = require('body-parser');
 var errorhandler = require('errorhandler');
 var http        = require('http');
+var https        = require('https');
 var path        = require('path');
 var request     = require('request');
+var cors        = require('cors')
 var routes      = require('./routes');
 var activity    = require('./routes/activity');
 
@@ -31,8 +33,9 @@ if ('development' == app.get('env')) {
 }
 
 // HubExchange Routes
-app.get('/', routes.index );
-app.get('/index.html', routes.index );
+app.get('/',routes.index );
+app.get('/index.html',routes.index );
+app.get('/getApplicationList',routes.getApplicationList);
 app.post('/login', routes.login );
 app.post('/logout', routes.logout );
 
