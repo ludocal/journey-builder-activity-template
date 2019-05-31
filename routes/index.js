@@ -44,7 +44,9 @@ exports.index = function(req, res){
 exports.getApplicationList = function( req, res ) {
     console.log('getApplicationList');
     console.log( 'req.body: ', req.body );
-    getMIDfromToken("X2QFnllyq6PyWK2beszxSWyP", "https://www-mc-s50.exacttargetapis.com",function(error, response){
+    var endpoint = req.query.endpoint;
+    var token = req.query.token;
+    getMIDfromToken(token, endpoint,function(error, response){
         configApplication.forEach(element => {
         if (response === element.mid)
         {
