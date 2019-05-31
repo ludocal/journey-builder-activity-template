@@ -17,10 +17,10 @@ define(function() {
       return 'toto';
   }
   
-  async function getAppAvailable(token){
+  async function getAppAvailable(endpoint, token){
     const response = await fetch('/getApplicationList', {
         method: 'GET',
-        params: {token: token},
+        params: {endpoint: endpoint, token: token},
       });
       console.log(response);
     const myJson =  await response.json();

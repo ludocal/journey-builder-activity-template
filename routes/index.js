@@ -44,7 +44,7 @@ exports.index = function(req, res){
 exports.getApplicationList = function( req, res ) {
     console.log('getApplicationList');
     console.log( 'req.body: ', req.body );
-    getMIDfromToken("toto", function(error, response){
+    getMIDfromToken("X2QFnllyq6PyWK2beszxSWyP", "https://www-mc-s50.exacttargetapis.com",function(error, response){
         configApplication.forEach(element => {
         if (response === element.mid)
         {
@@ -55,14 +55,14 @@ exports.getApplicationList = function( req, res ) {
     //res.json( 'ERROR' );
 };
 
-function getMIDfromToken(token, callback)
+function getMIDfromToken(token, endpoint, callback)
 {
     configApplication.forEach(element => {
         const options = {
-            hostname: element.domain + '.auth.marketingcloudapis.com',
-            path: '/v2/userinfo',
+            hostname: endpoint,
+            path: '/platform/v1/tokenContext',
             method: 'GET',
-            headers : {'Content-Type': "application/json",'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsImtpZCI6IjEiLCJ2ZXIiOiIxIiwidHlwIjoiSldUIn0.eyJhY2Nlc3NfdG9rZW4iOiJYc3JpUUc5SUxyQjZtb2RJQWoydjJ3WkgiLCJjbGllbnRfaWQiOiI3NWx0cGxhb3Z5Z2tyaHF6cmtiaTI3eWoiLCJlaWQiOjUwMDAwODQyOCwic3RhY2tfa2V5IjoiUzUwIiwicGxhdGZvcm1fdmVyc2lvbiI6MiwiY2xpZW50X3R5cGUiOiJTZXJ2ZXJUb1NlcnZlciJ9.ruPq-lMcNK0gULC2e7d_Dh6cD1hIdwpIP00EULBDaeE.ZS98W_XIQg966hDlVxD7d12qywRNDmBF2kUgSfHXc9eF6QZ6SsDpmlqMF3x60rpyJy05tBt7wVfONoCvp_keo3Y4X24JgC2dwTGqwPbkywiLrSHDnr68CievqxM_OfJhbnQGQXJMaaYAm_Lp0ABg6mt4JPnXWgW3fFVGWdQZXYg_SVGB3om"}
+            headers : {'Content-Type': "application/json",'Authorization': "Bearer " + token}
           };
           var responseString = "";
           var responseObject;
@@ -75,13 +75,13 @@ function getMIDfromToken(token, callback)
             });
             res.on('end', (d) => {
                 if (res.statusCode >= 400){
-                    callback(null, 500008428);
+                    callback(null, 0);
                 }
                 console.log(responseString);
                 if (res.statusCode === 200)
                 {
                     responseObject = JSON.parse(responseString);
-                    callback(null, responseObject.organization.enterprise_id);
+                    callback(null, responseObject.organization.id);
                 }
               });
           });
