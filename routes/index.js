@@ -23,7 +23,7 @@ var configApplication = [{
  * GET home page.
  */
 exports.index = function(req, res){
-    console.log(req);
+    //console.log(req);
     if(req.session && !req.session.token ) {
         res.render( 'index', {
             title: 'Unauthenticated',
@@ -43,7 +43,8 @@ exports.index = function(req, res){
 
 exports.getApplicationList = function( req, res ) {
     console.log('getApplicationList');
-    console.log( 'req.body: ', req.body );
+    console.log( 'req.query.endpoint: ', req.query.endpoint );
+    console.log( 'req.query.token: ', req.query.token );
     var endpoint = req.query.endpoint;
     var token = req.query.token;
     getMIDfromToken(token, endpoint,function(error, response){
