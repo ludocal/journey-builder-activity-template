@@ -166,8 +166,10 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
 
     function onGetTokens (tokens) {
         // Response: tokens = { token: <legacy token>, fuel2token: <fuel api token> }
-        token = tokens.token;
-        callout.getAppAvailable(endpoint, tokens.token).then(
+        token = tokens.fuel2token;
+        console('Token : ' + token);
+        console('Token : ' + endpoint);
+        callout.getAppAvailable(endpoint, token).then(
             r => loadAppSelection(r)
         );
         console.log(tokens);
@@ -175,7 +177,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
 
     function onGetEndpoints (endpoints) {
         // Response: endpoints = { restHost: <url> } i.e. "rest.s1.qa1.exacttarget.com"
-        endpoint = endpoints.fuel2token;
+        endpoint = endpoints.fuelapiRestHost;
          console.log(endpoints);
          console.log(endpoint);
     }
