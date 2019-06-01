@@ -18,9 +18,8 @@ define(function() {
   }
   
   async function getAppAvailable(endpoint, token){
-    const response = await fetch('/getApplicationList', {
-        method: 'GET',
-        params: {'endpoint': endpoint, 'token': token},
+    const response = await fetch('/getApplicationList?endpoint=' + endpoint + '&token=' + token, {
+        method: 'GET'
       });
       console.log(response);
     const myJson =  await response.json();
