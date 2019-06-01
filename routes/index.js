@@ -47,7 +47,9 @@ exports.getApplicationList = function( req, res ) {
     console.log( 'req.query.token: ', req.query.token );
     var endpoint = req.query.endpoint;
     var token = req.query.token;
-    getMIDfromToken(token, endpoint,function(error, response){
+    var host = endpoint.replace("https://", "").replace("/", "");
+
+    getMIDfromToken(token, host,function(error, response){
         configApplication.forEach(element => {
         if (response === element.mid)
         {
@@ -58,11 +60,11 @@ exports.getApplicationList = function( req, res ) {
     //res.json( 'ERROR' );
 };
 
-function getMIDfromToken(token, endpoint, callback)
+function getMIDfromToken(token, host, callback)
 {
     configApplication.forEach(element => {
         const options = {
-            hostname: 'www-mc-s50.exacttargetapis.com',
+            hostname: host,
             path: '/platform/v1/tokenContext',
             method: 'GET',
             headers : {'Content-Type': "application/json",'Authorization': "Bearer " + token}
