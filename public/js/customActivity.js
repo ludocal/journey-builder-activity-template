@@ -167,8 +167,8 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
     function onGetTokens (tokens) {
         // Response: tokens = { token: <legacy token>, fuel2token: <fuel api token> }
         token = tokens.fuel2token;
-        console('Token : ' + token);
-        console('Token : ' + endpoint);
+        console.log('Token : ' + token);
+        console.log('Token : ' + endpoint);
         callout.getAppAvailable(endpoint, token).then(
             r => loadAppSelection(r)
         );
