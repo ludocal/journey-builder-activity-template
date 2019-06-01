@@ -62,8 +62,7 @@ function getMIDfromToken(token, endpoint, callback)
 {
     configApplication.forEach(element => {
         const options = {
-            hostname: endpoint,
-            path: '/platform/v1/tokenContext',
+            hostname: endpoint + 'platform/v1/tokenContext',            
             method: 'GET',
             headers : {'Content-Type': "application/json",'Authorization': "Bearer " + token}
           };
