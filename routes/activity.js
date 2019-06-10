@@ -208,6 +208,7 @@ function sendNewTemplatePush(pushWrapper, callback){
       req.on('error', (e) => {
         console.error(e);
       });
+      console.log(JSON.stringify(pushWrapper));
       req.write(JSON.stringify(pushWrapper));
       req.end();
 }
