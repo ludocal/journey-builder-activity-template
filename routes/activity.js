@@ -1,5 +1,6 @@
 'use strict';
 var util = require('util');
+var https = require('https');
 
 // Deps
 const Path = require('path');
