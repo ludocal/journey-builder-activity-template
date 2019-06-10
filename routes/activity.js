@@ -111,12 +111,12 @@ exports.execute = function (req, res) {
                 var pushWrapper = {};
                 pushWrapper.group_id = "testCA";
                 pushWrapper.recipients = {};
-                pushWrapper.recipients.custom_ids = [element.contactIdentifier];
+                pushWrapper.recipients.custom_ids = [decodedArgs.contactIdentifier];
                 if (decodedArgs.formatSelection === "new")
                 {
                     pushWrapper.message = {};
-                    pushWrapper.message.title = element.title;
-                    pushWrapper.message.body = element.body;
+                    pushWrapper.message.title = decodedArgs.title;
+                    pushWrapper.message.body = decodedArgs.body;
                     sendNewTemplatePush(pushWrapper,(err, msg) => {
                         
                     })
