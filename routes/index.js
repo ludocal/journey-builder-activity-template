@@ -7,6 +7,7 @@ var https = require('https');
 var configApplication = [{
     apiRestToken: 'dcee600f7a7be131481e28ddb40ae1b0',
     domain: 'mcwd-d2pprjfdcksy88llpp9dv-4',
+    jwt: 'op8QmUhBtKVlOU2HS6sczo0SnSLxmBp_YllUAYv5hscd9xANRqV1aFdsmqWrP7_5wQ14Luj5pVIBhTdj84Wuf4LdwtfybXu123_BNnhfLWXeiuIj5_kfyvpf7KXkwYIVhFnQtJDNQxpmzP-HhqKSBAtoC-CSGhyDJA6yI2b0vMrCTeSyaLemy8MoOG5YiU3B_TPPFq4KdYEPyz24PSxCBBODlAMLcOSG4XXR5tfLz1CYk2QIExWM1hySosElPQ2',
     mid: 500008428,
     appAvailable:[
     {

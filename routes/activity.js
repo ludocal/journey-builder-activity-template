@@ -8,6 +8,21 @@ var util = require('util');
 var http = require('https');
 
 exports.logExecuteData = [];
+var configApplication = [{
+    apiRestToken: 'dcee600f7a7be131481e28ddb40ae1b0',
+    domain: 'mcwd-d2pprjfdcksy88llpp9dv-4',
+    jwtSecret: 'op8QmUhBtKVlOU2HS6sczo0SnSLxmBp_YllUAYv5hscd9xANRqV1aFdsmqWrP7_5wQ14Luj5pVIBhTdj84Wuf4LdwtfybXu123_BNnhfLWXeiuIj5_kfyvpf7KXkwYIVhFnQtJDNQxpmzP-HhqKSBAtoC-CSGhyDJA6yI2b0vMrCTeSyaLemy8MoOG5YiU3B_TPPFq4KdYEPyz24PSxCBBODlAMLcOSG4XXR5tfLz1CYk2QIExWM1hySosElPQ2',
+    mid: 500008428,
+    appAvailable:[
+    {
+        name:'Batch STORE IOS',
+        id: '5CDD1B576095D88F6FE92DA49189D2'
+    },
+    {
+        name: 'BATCH STORE ANDROID',
+        id: '5CDD1B576095D88F6FE92DA49189D2'
+    }]
+}];
 
 function logData(req) {
     exports.logExecuteData.push({
@@ -75,8 +90,9 @@ exports.save = function (req, res) {
  */
 exports.execute = function (req, res) {
     console.log(JSON.stringify(req.body.toString('utf8')));
+    console.log(JSON.stringify(req.body));
     // example on how to decode JWT
-    JWT(req.body, process.env.jwtSecret, (err, decoded) => {
+    getClientByJWT(req.body, (err, decoded) => {
 
         // verification error -> unauthorized request
         if (err) {
@@ -121,3 +137,22 @@ exports.validate = function (req, res) {
     //res.send(200, 'Validate');
     res.status(200).send('Validate');
 };
+
+function getClientByJWT(reqBody, callback)
+{
+    configApplication.forEach((val, key, configApplication)  => {
+        try {
+            JWT(reqBody, configApplication[key].jwtSecret, (err, decoded) => {
+                if (!err)
+                {
+                    callback(err, decoded);
+                }
+            });
+        } catch (error) {
+            if (Object.is(configApplication.length - 1, key)) {
+                callback("ERROR", null);
+            }
+        }
+        
+    });
+}
