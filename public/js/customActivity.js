@@ -143,16 +143,6 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         $('#messageBody').val(body);
         $('#messageDeepLink').val(deepLink);
         $('#messageImage').val(imageUrl);
-       /* If there is no message selected, disable the next button
-        if (!message) {
-            showStep(null, 1);
-            connection.trigger('updateButton', { button: 'next', enabled: true });
-            If there is a message, skip to the summary step
-        } else {
-            $('#select1').find('option[value='+ message +']').attr('selected', 'selected');
-            $('#message').html(message);
-            showStep(null, 3);
-        }*/
     }
 
     function onGetTokens (tokens) {
@@ -185,7 +175,6 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         {        
             save();
         }
-
         connection.trigger('nextStep');
     }
     function loadAppSelection(applicationList){
@@ -335,11 +324,6 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
     }
 
     function save() {
-        try {
-            formatSelection = $('.slds-visual-picker>input:checked')[0].name;
-        } catch (error) {
-            
-        }
         appSelection = [];
         $('.slds-checkbox_toggle>input:checked').each(function(i){
             appSelection.push({
