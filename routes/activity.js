@@ -200,6 +200,6 @@ function sendNewTemplatePush(pushInfo, callback){
       req.on('error', (e) => {
         console.error(e);
       });
-      req.write(body);
+      req.write(JSON.stringify(body));
       req.end();
 }
