@@ -116,13 +116,9 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         console.log(formatSelection);
         console.log(appSelection);
 
-        if (formatSelection && formatSelection === "new")
+        if (formatSelection)
         {
-            $('.slds-visual-picker>input[name="new"]').attr('checked', 'checked');
-        }
-        if (formatSelection && formatSelection === "template")
-        {
-            $('.slds-visual-picker>input[name="template"]').attr('checked', 'checked');
+            $('#step2').find('input[type=radio]').filter('[value=' + formatSelection + ']').prop('checked', true);
         }
         if (appSelection)
         {
