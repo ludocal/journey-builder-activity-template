@@ -110,9 +110,11 @@ exports.execute = function (req, res) {
             decodedArgs.appSelection.forEach(element => {
                 var pushWrapper = {};
                 pushWrapper.group_id = "testCA";
+                pushWrapper.recipients = {};
                 pushWrapper.recipients.custom_ids = [element.contactIdentifier];
                 if (decodedArgs.formatSelection === "new")
                 {
+                    pushWrapper.message = {};
                     pushWrapper.message.title = element.title;
                     pushWrapper.message.body = element.body;
                     sendNewTemplatePush(pushWrapper,(err, msg) => {
