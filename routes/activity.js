@@ -74,7 +74,7 @@ exports.save = function (req, res) {
  * POST Handler for /execute/ route of Activity.
  */
 exports.execute = function (req, res) {
-    console.log(JSON.stringify(req.body));
+    console.log(JSON.stringify(req.body.toString('utf8')));
     // example on how to decode JWT
     JWT(req.body, process.env.jwtSecret, (err, decoded) => {
 
