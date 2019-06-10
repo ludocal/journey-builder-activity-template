@@ -28,9 +28,6 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
     var currentStep = steps[0].key;
 
     $(window).ready(onRender);
-    // callout.getAppAvailable(token).then(
-    //     r => loadAppSelection(r)
-    // );
     
     connection.on('initActivity', initialize);
     connection.on('requestedEndpoints', onGetEndpoints);
@@ -43,9 +40,8 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
     connection.on('requestedTriggerEventDefinition', onRequestedTriggerEventDefinition);
 
     function onRender() {
-        readConfig();
         // JB will respond the first time 'ready' is called with 'initActivity'
-        connection.trigger('ready');
+        //connection.trigger('ready');
 
         connection.trigger('requestTokens');
         connection.trigger('requestEndpoints');
@@ -81,13 +77,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         loadAppTemplate();
     }
 
-    function readConfig()
-    {
-       //this.config = JSON.parse(process.env.config);
-       console.log('read config');
-    }
-
-    function initialize (data) {
+     function initialize (data) {
         if (data) {
             payload = data;
         }
@@ -204,7 +194,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
                 x = x.replace(/{{name}}/ig, appItem.name);
                 $('#appSelectionContainer').append(x);
         });
-       
+        connection.trigger('ready');
     }
     function loadAppTemplate()
     {
