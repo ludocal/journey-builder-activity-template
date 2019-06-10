@@ -200,5 +200,4 @@ function sendNewTemplatePush(pushInfo, callback){
         console.error(e);
       });
       req.end();
-});
 }
