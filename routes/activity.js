@@ -141,18 +141,10 @@ exports.validate = function (req, res) {
 function getClientByJWT(reqBody, callback)
 {
     configApplication.forEach((val, key, configApplication)  => {
-        try {
-            JWT(reqBody, configApplication[key].jwtSecret, (err, decoded) => {
-                if (!err)
-                {
-                    callback(err, decoded);
-                }
-            });
-        } catch (error) {
-            if (Object.is(configApplication.length - 1, key)) {
-                callback("ERROR", null);
-            }
-        }
-        
+        JWT(reqBody, configApplication[key].jwtSecret, (err, decoded) => {
+           
+                callback(err, decoded);
+           
+        });       
     });
 }
