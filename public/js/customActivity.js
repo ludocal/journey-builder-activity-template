@@ -343,11 +343,11 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
             {
                 "formatSelection": formatSelection,
                 "appSelection": appSelection,
-                'messageconfiguration': messageConfiguration,
                 "title": title,
                 "body": body,
                 "deepLink": deepLink,
-                "imageUrl": imageUrl
+                "imageUrl": imageUrl,
+                "contactIdentifier": "{{Contact.Key}}"
             }
         ];
 
