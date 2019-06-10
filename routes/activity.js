@@ -108,9 +108,14 @@ exports.execute = function (req, res) {
             console.log(JSON.stringify(decodedArgs));
 
             decodedArgs.appSelection.forEach(element => {
+                var pushWrapper = {};
+                pushWrapper.group_id = "testCA";
+                pushWrapper.recipients.custom_ids = [element.contactIdentifier];
                 if (decodedArgs.formatSelection === "new")
                 {
-                    sendNewTemplatePush(null,(err, msg) => {
+                    pushWrapper.message.title = element.title;
+                    pushWrapper.message.body = element.body;
+                    sendNewTemplatePush(pushWrapper,(err, msg) => {
                         
                     })
                 }
@@ -160,17 +165,17 @@ function getClientByJWT(reqBody, callback)
     });
 }
 
-function sendNewTemplatePush(pushInfo, callback){
-    var body = {
-        group_id: "testCA",
-        recipients: {
-            "custom_ids": ["ludovic@texei.com"]
-        },
-        message: {
-            title: "Hello!",
-            body: "How's it going?"
-        }
-    };
+function sendNewTemplatePush(pushWrapper, callback){
+    // var body = {
+    //     group_id: "testCA",
+    //     recipients: {
+    //         "custom_ids": ["ludovic@texei.com"]
+    //     },
+    //     message: {
+    //         title: "Hello!",
+    //         body: "How's it going?"
+    //     }
+    // };
     const options = {
         hostname: 'labs.api.batch.com',
         path: '/1.1/5CDD1B576095D88F6FE92DA49189D2/transactional/send',
@@ -201,6 +206,6 @@ function sendNewTemplatePush(pushInfo, callback){
       req.on('error', (e) => {
         console.error(e);
       });
-      req.write(JSON.stringify(body));
+      req.write(JSON.stringify(pushWrapper));
       req.end();
 }
