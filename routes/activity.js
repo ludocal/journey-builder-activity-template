@@ -161,20 +161,20 @@ function getClientByJWT(reqBody, callback)
 }
 
 function sendNewTemplatePush(pushInfo, callback){
+    var body = {
+        recipients: {
+            "custom_ids": ["ludovic@texei.com"]
+        },
+        message: {
+            title: "Hello!",
+            body: "How's it going?"
+        }
+    };
     const options = {
         hostname: 'labs.api.batch.com',
         path: '/1.1/5CDD1B576095D88F6FE92DA49189D2/transactional/send',
         method: 'POST',
-        headers : {'Content-Type': "application/json",'X-Authorization': "dcee600f7a7be131481e28ddb40ae1b0"},
-        body: {
-            "recipients": {
-                "custom_ids": ["ludovic@texei.com"]
-            },
-            "message": {
-                "title": "Hello!",
-                "body": "How's it going?"
-            }
-        }
+        headers : {'Content-Type': "application/json",'X-Authorization': "dcee600f7a7be131481e28ddb40ae1b0"}
       };
       var responseString = "";
       var responseObject;
@@ -200,5 +200,6 @@ function sendNewTemplatePush(pushInfo, callback){
       req.on('error', (e) => {
         console.error(e);
       });
+      req.write(body);
       req.end();
 }
