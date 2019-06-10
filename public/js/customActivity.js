@@ -47,16 +47,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         connection.trigger('requestEndpoints');
         connection.trigger('requestTriggerEventDefinition');
 
-        // Disable the next button if a value isn't selected
-        $("#step1 input[type=checkbox]").change(function(input) {
-            console.log('change : '+ input.currentTarget.value);
-            if ($("#step1 input[type=checkbox]:checked").length === 0){
-               connection.trigger('updateButton', { button: 'next', enabled: false }); 
-            }else{
-                connection.trigger('updateButton', { button: 'next', enabled: true }); 
-            }
-            
-        });
+        
         $("#step2 input[type=radio]").change(function(input) {
             console.log('change : '+ input.currentTarget.value);
             formatSelection = input.currentTarget.value;
@@ -193,6 +184,16 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
             var x = containerItem.replace(/{{id}}/ig, appItem.id);
                 x = x.replace(/{{name}}/ig, appItem.name);
                 $('#appSelectionContainer').append(x);
+        });
+        // Disable the next button if a value isn't selected
+        $("#step1 input[type=checkbox]").change(function(input) {
+            console.log('change : '+ input.currentTarget.value);
+            if ($("#step1 input[type=checkbox]:checked").length === 0){
+               connection.trigger('updateButton', { button: 'next', enabled: false }); 
+            }else{
+                connection.trigger('updateButton', { button: 'next', enabled: true }); 
+            }
+            
         });
         connection.trigger('ready');
     }
