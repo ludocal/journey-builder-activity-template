@@ -76,6 +76,8 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         var message;
         var title;
         var body;
+        var deepLink;
+        var imageUrl;
         var formatSelection;
         var appSelection;
 
@@ -96,6 +98,12 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
                 }
                 if (key === 'body') {
                     body = val;
+                }
+                if (key === 'deepLink') {
+                    deepLink = val;
+                }
+                if (key === 'imageUrl') {
+                    imageUrl = val;
                 }
                 if (key === 'formatSelection') {
                     formatSelection = val;
@@ -133,6 +141,8 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         }
         $('#messageTitle').val(title);
         $('#messageBody').val(body);
+        $('#messageDeepLink').val(deepLink);
+        $('#messageImage').val(imageUrl);
        /* If there is no message selected, disable the next button
         if (!message) {
             showStep(null, 1);
@@ -355,7 +365,9 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
                 "appSelection": appSelection,
                 'messageconfiguration': messageConfiguration,
                 "title": title,
-                "body": body 
+                "body": body,
+                "deepLink": deepLink,
+                "imageUrl": imageUrl
             }
         ];
 
