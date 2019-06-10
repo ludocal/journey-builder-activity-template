@@ -104,6 +104,7 @@ exports.execute = function (req, res) {
             
             // decoded in arguments
             var decodedArgs = decoded.inArguments[0];
+            console.log(JSON.stringify(decodedArgs));
             
             logData(req);
             //res.send(200, 'Execute');
