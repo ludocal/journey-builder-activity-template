@@ -109,7 +109,7 @@ exports.execute = function (req, res) {
 
             decodedArgs.appSelection.forEach(element => {
                 var pushWrapper = {};
-                pushWrapper.group_id = "testCA";
+                pushWrapper.group_id = "testCA"; //TODO
                 pushWrapper.recipients = {};
                 pushWrapper.recipients.custom_ids = [decodedArgs.contactIdentifier];
                 if (decodedArgs.formatSelection === "new")
@@ -159,11 +159,8 @@ exports.validate = function (req, res) {
 function getClientByJWT(reqBody, callback)
 {
     configApplication.forEach((val, key, configApplication)  => {
-        JWT(reqBody, configApplication[key].jwtSecret, (err, decoded) => {
-           
-                callback(err, decoded);
-           
-        });       
+        var decoded = JWT.verifySync(reqBody, configApplication[key].jwtSecret);
+        callback(null, decoded);
     });
 }
 
