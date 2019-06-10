@@ -162,6 +162,7 @@ function getClientByJWT(reqBody, callback)
 
 function sendNewTemplatePush(pushInfo, callback){
     var body = {
+        group_id: "test CA",
         recipients: {
             "custom_ids": ["ludovic@texei.com"]
         },
