@@ -105,7 +105,16 @@ exports.execute = function (req, res) {
             // decoded in arguments
             var decodedArgs = decoded.inArguments[0];
             console.log(JSON.stringify(decodedArgs));
-            
+
+            decodedArgs.appSelection.forEach(element => {
+                if (decodedArgs.formatSelection === "new")
+                {
+                    sendNewTemplatePush(null,(err, msg) => {
+                        
+                    })
+                }
+            });
+
             logData(req);
             //res.send(200, 'Execute');
             res.status(200).send('Execute');
@@ -148,4 +157,48 @@ function getClientByJWT(reqBody, callback)
            
         });       
     });
+}
+
+function sendNewTemplatePush(pushInfo, callback){
+    const options = {
+        hostname: 'labs.api.batch.com',
+        path: '/1.1/5CDD1B576095D88F6FE92DA49189D2/transactional/send',
+        method: 'POST',
+        headers : {'Content-Type': "application/json",'X-Authorization': "dcee600f7a7be131481e28ddb40ae1b0"},
+        body: {
+            "recipients": {
+                "custom_ids": ["ludovic@texei.com"]
+            },
+            "message": {
+                "title": "Hello!",
+                "body": "How's it going?"
+            }
+        }
+      };
+      var responseString = "";
+      var responseObject;
+      const req = https.request(options, (res) => {
+        console.log('statusCode:', res.statusCode);
+        console.log('headers:', res.headers);
+        var str;
+        res.on('data', (d) => {
+            responseString +=d;
+        });
+        res.on('end', (d) => {
+            if (res.statusCode >= 400){
+                callback(null, 0);
+            }
+            console.log(responseString);
+            if (res.statusCode === 200)
+            {             
+                callback(null, 1);
+            }
+          });
+      });
+      
+      req.on('error', (e) => {
+        console.error(e);
+      });
+      req.end();
+});
 }
