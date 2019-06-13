@@ -142,9 +142,12 @@ exports.execute = function (req, res) {
                     pushWrapper.message.title = decodedArgs.title;
                     pushWrapper.message.body = decodedArgs.body;
                     sendNewTemplatePush(pushWrapper, (err, msg) => {
-                        logPushEvent((err, msg) => {
+                        if (!err){
+                            logPushEvent({appKey: element.id, contactKey: decodedArgs.contactIdentifier, token: msg.token},(err, msg) => {
 
-                        });
+                            });
+                        }
+                        
                     })
                 }
             });
@@ -242,12 +245,12 @@ function initMarketingCloud()
             }
         });
 }
-function logPushEvent(callback) {
+function logPushEvent(dataEvent, callback) {
     const Name = 'BATCH_PUSH';
     const props = {
-        contact_key: 'ludovic@texei.com',
-        app_key: '111111',
-        token: '1232456756'
+        contact_key: dataEvent.contactKey,
+        app_key: dataEvent.appKey,
+        token: dataEvent.token
     };
     clientMC.dataExtensionRow({ Name, props }).post((err, response) => {
         if (err) throw new Error(err);
