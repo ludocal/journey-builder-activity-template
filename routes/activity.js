@@ -196,7 +196,7 @@ function getClientByJWT(reqBody, callback) {
 
         }
     });
-    callback("ERROR", null);
+    //callback("ERROR", null);
 }
 
 function sendNewTemplatePush(pushWrapper, callback) {
