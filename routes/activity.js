@@ -221,7 +221,7 @@ function sendNewTemplatePush(pushWrapper, callback) {
             }
             console.log(responseString);
             if (res.statusCode === 200) {
-                callback(null, 1);
+                callback(null, JSON.parse(responseString));
             }
         });
     });
