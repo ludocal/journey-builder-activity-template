@@ -142,17 +142,17 @@ exports.execute = function (req, res) {
                     pushWrapper.message.title = decodedArgs.title;
                     pushWrapper.message.body = decodedArgs.body;
                     sendNewTemplatePush(pushWrapper, (err, msg) => {
-                        if (!err){
+                        //if (!err){
                             logPushEvent({appKey: element.id, contactKey: decodedArgs.contactIdentifier, token: msg.token},(err, msg) => {
 
                             });
-                        }
+                        //}
                         
-                    })
+                    });
                 }
             });
 
-            logData(req);
+            //logData(req);
             //res.send(200, 'Execute');
             res.status(200).send('Execute');
         } else {
