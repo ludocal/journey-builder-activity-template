@@ -102,7 +102,7 @@ exports.execute = function (req, res) {
         }
 
         if (decoded && decoded.inArguments && decoded.inArguments.length > 0) {
-            
+            console.log(JSON.stringify(decoded));
             // decoded in arguments
             var decodedArgs = decoded.inArguments[0];
             console.log(JSON.stringify(decodedArgs));
@@ -159,9 +159,14 @@ exports.validate = function (req, res) {
 function getClientByJWT(reqBody, callback)
 {
     configApplication.forEach((val, key, configApplication)  => {
-        var decoded = JWT.verifySync(reqBody, configApplication[key].jwtSecret);
-        callback(null, decoded);
+        try {
+            var decoded = JWT.verifySync(reqBody, configApplication[key].jwtSecret);
+            callback(null, decoded);
+        } catch (error) {
+            
+        }
     });
+    callback("ERROR", null);
 }
 
 function sendNewTemplatePush(pushWrapper, callback){
