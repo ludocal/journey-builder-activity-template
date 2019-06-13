@@ -48,7 +48,7 @@ var configApplication = [{
 
 //contextUser = configApplication[0];
 //initMarketingCloud();
-//logPushEvent();
+//logPushEvent({appKey: '11111', contactKey: 'ludovic@texei.com', token: 'aaaaaa'}, (err, res) => {});
 
 function logData(req) {
     exports.logExecuteData.push({
@@ -259,6 +259,7 @@ function logPushEvent(dataEvent, callback) {
             console.log('Error inserting to BATCH_PUSH');
             throw new Error(err);
         }
+        console.log('[DEBUG] INSERTED BATCH_PUSH ROW');
         callback(err, response);
     });
 }
