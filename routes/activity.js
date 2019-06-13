@@ -144,7 +144,7 @@ exports.execute = function (req, res) {
                     sendNewTemplatePush(pushWrapper, (err, msg) => {
                         //if (!err){
                             logPushEvent({appKey: element.id, contactKey: decodedArgs.contactIdentifier, token: msg.token},(err, msg) => {
-
+                                res.status(200).send('Execute');
                             });
                         //}
                         
@@ -154,7 +154,7 @@ exports.execute = function (req, res) {
 
             //logData(req);
             //res.send(200, 'Execute');
-            res.status(200).send('Execute');
+            
         } else {
             console.error('inArguments invalid.');
             return res.status(400).end();
