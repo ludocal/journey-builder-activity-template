@@ -20,11 +20,7 @@
           "emailAddress": "{{Contact.Attribute.CustomActivity.EmailAddress}}"
         }
       ],
-      "outArguments": [
-        {
-          "PathTrue": ""
-        }
-      ],
+      "outArguments": [],
       "url": "https://customactivitymarketingcloud.herokuapp.com/journeybuilder/execute",
       "verb": "POST",
       "body": "",
