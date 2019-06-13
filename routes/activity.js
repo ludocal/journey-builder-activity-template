@@ -115,8 +115,8 @@ exports.save = function (req, res) {
  * POST Handler for /execute/ route of Activity.
  */
 exports.execute = function (req, res) {
-    console.log(JSON.stringify(req.body.toString('utf8')));
-    console.log(JSON.stringify(req.body));
+    //console.log(JSON.stringify(req.body.toString('utf8')));
+    //console.log(JSON.stringify(req.body));
     // example on how to decode JWT
     getClientByJWT(req.body, (err, decoded) => {
 
@@ -236,6 +236,7 @@ function sendNewTemplatePush(pushWrapper, callback) {
 
 function initMarketingCloud()
 {
+    console.log('Init Marketing Cloud Token');
     clientMC = new ET_Client(contextUser.clientId, contextUser.clientSecret, null,
         {
             authOrigin: contextUser.authOrigin,
@@ -245,7 +246,8 @@ function initMarketingCloud()
             }
         });
 }
-function logPushEvent(dataEvent, callback) {
+function logPushEvent(dataEvent, callback) { 
+    console.log('Insert BATCH_PUSH EVENT');
     const Name = 'BATCH_PUSH';
     const props = {
         contact_key: dataEvent.contactKey,
@@ -253,7 +255,10 @@ function logPushEvent(dataEvent, callback) {
         token: dataEvent.token
     };
     clientMC.dataExtensionRow({ Name, props }).post((err, response) => {
-        if (err) throw new Error(err);
+        if (err) {
+            console.log('Error inserting to BATCH_PUSH');
+            throw new Error(err);
+        }
         callback(err, response);
     });
 }
