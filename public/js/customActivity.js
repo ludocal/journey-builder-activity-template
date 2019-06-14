@@ -3,15 +3,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
     //var appConfiguration = module.config().appConfiguration;
     var connection = new Postmonger.Session();
     var payload = {};
-    var appSelection = [
-        {
-          id: "5CDD1B576095D88F6FE92DA49189D2",
-          name: "BATCH IOS"
-        },
-        {
-            id: "5CDD1B576095D88F6FE92DA49189D2",
-            name: "BATCH ANDROID"
-        }];
+    var appSelection = [];
 
     var formatSelection = ""; //selection d'un nouveau template ou existant
     var messageConfiguration;

@@ -32,10 +32,6 @@ var configApplication = [{
         }]
 }];
 
-//contextUser = configApplication[0];
-//initMarketingCloud();
-//logPushEvent({appKey: '11111', contactKey: 'ludovic@texei.com', token: 'aaaaaa'}, (err, res) => {});
-
 function logData(req) {
     exports.logExecuteData.push({
         body: req.body,
