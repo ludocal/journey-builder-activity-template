@@ -11,20 +11,6 @@ var http = require('https');
 var contextUser = {};
 var clientMC = {};
 
-// const props = ['DEVICE_ID', 'EXT_ID'];
-// const filter = {
-//     leftOperand: 'CustomerKey',
-//     operator: 'equals',
-//     rightOperand: 'BATCH_DEVICE'
-// };
-// client.dataExtensionRow({ props, Name: 'BATCH_DEVICE' }).get((err, response) => {
-//     // code
-//     console.log(JSON.stringify(err));
-//     //console.log(JSON.stringify(response));
-//     console.log(response.body.Results);
-// });
-
-
 exports.logExecuteData = [];
 var configApplication = [{
     apiRestToken: 'dcee600f7a7be131481e28ddb40ae1b0',
@@ -133,25 +119,43 @@ exports.execute = function (req, res) {
             console.log(JSON.stringify(decodedArgs));
 
             decodedArgs.appSelection.forEach(element => {
+                //set common values
                 var pushWrapper = {};
-                pushWrapper.group_id = "testCA"; //TODO
+                pushWrapper.group_id = decoded.activityId;
                 pushWrapper.recipients = {};
                 pushWrapper.recipients.custom_ids = [decodedArgs.contactIdentifier];
-                if (decodedArgs.formatSelection === "new") {
-                    pushWrapper.message = {};
-                    pushWrapper.message.title = decodedArgs.title;
-                    pushWrapper.message.body = decodedArgs.body;
-                    sendNewTemplatePush(pushWrapper, (err, msg) => {
-                        res.status(200).send('Execute');
-                    });
-                    logPushEvent({appKey: element.id, contactKey: decodedArgs.contactIdentifier, token: msg.token},(err, msg) => {
-                        
-                    });
+                //set values with template selection
+                if (decodedArgs.formatSelection === "template")
+                {
+                    pushWrapper.template_id = element.templateId;
                 }
+                //set values for new template
+                if (decodedArgs.formatSelection === "new" || (decodedArgs.overrideMessage && decodedArgs.overrideMessage === true )) {
+                    pushWrapper.message = {};
+                    if (decodedArgs.title !== null && decodedArgs.title !== '')
+                    {
+                      pushWrapper.message.title = decodedArgs.title;  
+                    }
+                    if (decodedArgs.body !== null && decodedArgs.body !== '')
+                    {
+                      pushWrapper.message.body = decodedArgs.body;  
+                    }
+                    if (decodedArgs.deepLink !== null && decodedArgs.deepLink !== '')
+                    {
+                      pushWrapper.message.deepLink = decodedArgs.deepLink;  
+                    }
+                    if (decodedArgs.imageUrl !== null && decodedArgs.imageUrl !== '')
+                    {
+                        pushWrapper.media = {};
+                        pushWrapper.media.picture = decodedArgs.imageUrl;
+                        pushWrapper.skip_media_check = true;
+                    }
+                }
+                sendPush(element.id, pushWrapper);
             });
 
             //logData(req);
-            //res.send(200, 'Execute');
+        res.send(200, 'Execute');
             
         } else {
             console.error('inArguments invalid.');
@@ -188,38 +192,45 @@ function getClientByJWT(reqBody, callback) {
         try {
             var decoded = JWT.verifySync(reqBody, configApplication[key].jwtSecret);
             contextUser = configApplication[key];
+            // var decoded = JSON.parse('{"inArguments":[{"formatSelection":"template","appSelection":[{"id":"5CDD1B576095D88F6FE92DA49189D2","templateId":"8bd691a95ab70db950df46a2e44df1f2"}],"title":"Title test","body":"111111111","deepLink":"","imageUrl":"","contactIdentifier":"ludovic@texei.com","overrideMessage":true}],"outArguments":[],"activityObjectID":"9a3e7454-eec9-45c2-914f-5c8c09fab1cf","journeyId":"00a5cbdf-cb71-44fa-92ab-94c436451b65","activityId":"9a3e7454-eec9-45c2-914f-5c8c09fab1cf","definitionInstanceId":"77ac2cf8-f685-4a6c-b826-a7cc6425a9d4","activityInstanceId":"b651971b-47d0-4134-b995-483584e32fa2","keyValue":"ludovic@texei.com","mode":0}');
+            // contextUser = configApplication[0];
             initMarketingCloud();
             callback(null, decoded);
+            return;
         } catch (error) {
-
+            console.log(error);
         }
     });
-    //callback("ERROR", null);
+    // callback("JWT NOT FOUND", null);
+    // return;
 }
 
-function sendNewTemplatePush(pushWrapper, callback) {
+function sendPush(appKey, pushWrapper) {
     const options = {
         hostname: 'labs.api.batch.com',
-        path: '/1.1/5CDD1B576095D88F6FE92DA49189D2/transactional/send',
+        path: '/1.1/' + appKey + '/transactional/send',
         method: 'POST',
-        headers: { 'Content-Type': "application/json", 'X-Authorization': "dcee600f7a7be131481e28ddb40ae1b0" }
+        headers: { 'Content-Type': "application/json", 'X-Authorization': contextUser.apiRestToken }
     };
     var responseString = "";
     var responseObject;
     const req = https.request(options, (res) => {
         console.log('statusCode:', res.statusCode);
-        console.log('headers:', res.headers);
+        //console.log('headers:', res.headers);
         var str;
         res.on('data', (d) => {
             responseString += d;
         });
         res.on('end', (d) => {
+            responseObject = JSON.parse(responseString);
             if (res.statusCode >= 400) {
-                callback(null, 0);
+                logPushEvent({app_key: appKey, contact_key: pushWrapper.recipients.custom_ids[0], 
+                    token: pushWrapper.group_id + Date.now(), accepted_state: false, api_error: responseObject.message, group_id: pushWrapper.group_id},(err, msg) => {});  
             }
             console.log(responseString);
-            if (res.statusCode === 200) {
-                callback(null, JSON.parse(responseString));
+            if (res.statusCode === 201) {
+                  logPushEvent({app_key: appKey, contact_key: pushWrapper.recipients.custom_ids[0], 
+                    token: responseObject.token, accepted_state: true, group_id: pushWrapper.group_id},(err, msg) => {});
             }
         });
     });
@@ -244,17 +255,13 @@ function initMarketingCloud()
             }
         });
 }
-function logPushEvent(dataEvent, callback) { 
+function logPushEvent(props, callback) { 
     console.log('Insert BATCH_PUSH EVENT');
     const Name = 'BATCH_PUSH';
-    const props = {
-        contact_key: dataEvent.contactKey,
-        app_key: dataEvent.appKey,
-        token: dataEvent.token
-    };
     clientMC.dataExtensionRow({ Name, props }).post((err, response) => {
         if (err) {
             console.log('Error inserting to BATCH_PUSH');
+            console.log(err);
             throw new Error(err);
         }
         console.log('[DEBUG] INSERTED BATCH_PUSH ROW');
