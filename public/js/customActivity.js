@@ -57,7 +57,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
 
             connection.trigger('updateSteps', steps);
         });
-        loadAppTemplate();
+        // loadAppTemplate();
     }
 
      function initialize (data) {
@@ -268,6 +268,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
                 });
                 break;
             case 'step3':
+                loadAppTemplate();
                 $('#step3').show();
                 connection.trigger('updateButton', {
                     button: 'back',
