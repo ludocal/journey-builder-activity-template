@@ -189,13 +189,8 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         $.each(appSelection, function(index, appItem) {
             var temp = $.trim($('#containerTemplateItem').html());
             var tempOption = $.trim($('#optionContainerTemplateItem').html());
-            $.ajax({
-                type: 'GET',            
-                contentType: 'application/json',
-                url: 'https://api.batch.com/1.1/' + appItem.id + '/campaigns/list?limit=20&live=false',
-                headers: {"X-Authorization": "dcee600f7a7be131481e28ddb40ae1b0"},						
-                success: function(data) {
-                    console.log('success');
+            callout.getTemplateAvailable(endpoint, token, appItem.id).then(function(data){
+                console.log('success');
                     console.log(JSON.stringify(data));
                     var options = '';
 
@@ -208,8 +203,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
                     tempReplace = tempReplace.replace(/{{index}}/ig, index);
                     tempReplace = tempReplace.replace(/{{appName}}/ig, appItem.name);
                     $('#containerTemplate').append(tempReplace);
-                }
-            });
+                });
         });
         $("#step3 .slds-dropdown-trigger_click").click(function(input) {
             console.log('click ');

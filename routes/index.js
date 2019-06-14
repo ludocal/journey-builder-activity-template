@@ -9,31 +9,31 @@ var configApplication = [{
     domain: 'mcwd-d2pprjfdcksy88llpp9dv-4',
     jwt: 'op8QmUhBtKVlOU2HS6sczo0SnSLxmBp_YllUAYv5hscd9xANRqV1aFdsmqWrP7_5wQ14Luj5pVIBhTdj84Wuf4LdwtfybXu123_BNnhfLWXeiuIj5_kfyvpf7KXkwYIVhFnQtJDNQxpmzP-HhqKSBAtoC-CSGhyDJA6yI2b0vMrCTeSyaLemy8MoOG5YiU3B_TPPFq4KdYEPyz24PSxCBBODlAMLcOSG4XXR5tfLz1CYk2QIExWM1hySosElPQ2',
     mid: 500008428,
-    appAvailable:[
-    {
-        name:'Batch STORE IOS',
-        id: '5CDD1B576095D88F6FE92DA49189D2'
-    },
-    {
-        name: 'BATCH STORE ANDROID',
-        id: '5CDD1B576095D88F6FE92DA49189D2'
-    }]
+    appAvailable: [
+        {
+            name: 'Batch STORE IOS',
+            id: '5CDD1B576095D88F6FE92DA49189D2'
+        },
+        {
+            name: 'BATCH STORE ANDROID',
+            id: '5CDD1B576095D88F6FE92DA49189D2'
+        }]
 }];
 
 /*
  * GET home page.
  */
-exports.index = function(req, res){
+exports.index = function (req, res) {
     //console.log(req);
-    if(req.session && !req.session.token ) {
-        res.render( 'index', {
+    if (req.session && !req.session.token) {
+        res.render('index', {
             title: 'Unauthenticated',
             errorMessage: 'This app may only be loaded via Salesforce Marketing Cloud',
             configVar: configApplication,
             configVarJson: JSON.stringify(configApplication)
         });
     } else {
-        res.render( 'index', {
+        res.render('index', {
             title: 'Journey Builder Activity',
             results: activity.logExecuteData,
             configVar: configApplication,
@@ -42,70 +42,126 @@ exports.index = function(req, res){
     }
 };
 
-exports.getApplicationList = function( req, res ) {
+exports.getApplicationList = function (req, res) {
     console.log('getApplicationList');
-    console.log( 'req.query.endpoint: ', req.query.endpoint );
-    console.log( 'req.query.token: ', req.query.token );
+    console.log('req.query.endpoint: ', req.query.endpoint);
+    console.log('req.query.token: ', req.query.token);
     var endpoint = req.query.endpoint;
     var token = req.query.token;
     var host = endpoint.replace("https://", "").replace("/", "");
 
-    getMIDfromToken(token, host,function(error, response){
+    getMIDfromToken(token, host, function (error, response) {
         configApplication.forEach(element => {
-        if (response === element.mid)
-        {
-            res.json(element.appAvailable);
-        }
-    });
+            if (response === element.mid) {
+                res.json(element.appAvailable);
+            }
+        });
     });
     //res.json( 'ERROR' );
 };
 
-function getMIDfromToken(token, host, callback)
-{
+exports.getTemplateList = function (req, res) {
+    console.log('getTemplateList');
+    console.log('req.query.endpoint: ', req.query.endpoint);
+    console.log('req.query.token: ', req.query.token);
+    var endpoint = req.query.endpoint;
+    var token = req.query.token;
+    var appKey = req.query.appKey;
+    var host = endpoint.replace("https://", "").replace("/", "");
+
+    getMIDfromToken(token, host, function (error, response) {
+        configApplication.forEach(element => {
+            if (response === element.mid) {
+                getTemplateFromBatch(appKey, element.apiRestToken, (err, response) => {
+                    if (err) {
+                        return res.status(400).end();
+                    }
+                    return res.json(response).end();
+                })
+
+            }
+        });
+    });
+    //res.json( 'ERROR' );
+};
+
+function getMIDfromToken(token, host, callback) {
     configApplication.forEach(element => {
         const options = {
             hostname: host,
             path: '/platform/v1/tokenContext',
             method: 'GET',
-            headers : {'Content-Type': "application/json",'Authorization': "Bearer " + token}
-          };
-          var responseString = "";
-          var responseObject;
-          const req = https.request(options, (res) => {
+            headers: { 'Content-Type': "application/json", 'Authorization': "Bearer " + token }
+        };
+        var responseString = "";
+        var responseObject;
+        const req = https.request(options, (res) => {
             console.log('statusCode:', res.statusCode);
             console.log('headers:', res.headers);
             var str;
             res.on('data', (d) => {
-                responseString +=d;
+                responseString += d;
             });
             res.on('end', (d) => {
-                if (res.statusCode >= 400){
+                if (res.statusCode >= 400) {
                     callback(null, 0);
                 }
                 console.log(responseString);
-                if (res.statusCode === 200)
-                {
+                if (res.statusCode === 200) {
                     responseObject = JSON.parse(responseString);
                     callback(null, responseObject.organization.id);
                 }
-              });
-          });
-          
-          req.on('error', (e) => {
+            });
+        });
+
+        req.on('error', (e) => {
             console.error(e);
-          });
-          req.end();
+        });
+        req.end();
     });
 }
 
+function getTemplateFromBatch(appKey, apiRestToken, callback) {
+    const options = {
+        hostname: 'api.batch.com',
+        path: '/1.1/' + appKey + '/campaigns/list?limit=20&live=false',
+        method: 'GET',
+        headers: { 'Content-Type': "application/json", 'X-Authorization': apiRestToken }
+    };
+    var responseString = "";
+    var responseObject;
+    const req = https.request(options, (res) => {
+        console.log('statusCode:', res.statusCode);
+        //console.log('headers:', res.headers);
+        var str;
+        res.on('data', (d) => {
+            responseString += d;
+        });
+        res.on('end', (d) => {
+            responseObject = JSON.parse(responseString);
+            if (res.statusCode >= 400) {
+                console.error(responseObject);
+                callback(responseObject, null);
+            }
+            console.log(responseString);
+            if (res.statusCode === 200) {
+                callback(null, responseObject);
+            }
+        });
+    });
+
+    req.on('error', (e) => {
+        console.error(e);
+    });
+    req.end();
+}
 
 
-exports.login = function( req, res ) {
-    console.log( 'req.body: ', req.body );
-    res.redirect( '/' );
+exports.login = function (req, res) {
+    console.log('req.body: ', req.body);
+    res.redirect('/');
 };
 
-exports.logout = function( req, res ) {
+exports.logout = function (req, res) {
     req.session.token = '';
 };

@@ -36,6 +36,7 @@ if ('development' == app.get('env')) {
 app.get('/',routes.index );
 app.get('/index.html',routes.index );
 app.get('/getApplicationList',routes.getApplicationList);
+app.get('/getTemplateList',routes.getTemplateList);
 app.post('/login', routes.login );
 app.post('/logout', routes.logout );
 
