@@ -186,6 +186,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
     }
     function loadAppTemplate()
     {
+        appSelection = getAppSelected();
         $.each(appSelection, function(index, appItem) {
             var temp = $.trim($('#containerTemplateItem').html());
             var tempOption = $.trim($('#optionContainerTemplateItem').html());
@@ -225,6 +226,15 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         
     }
 
+    function getAppSelected(){
+        var returnArray = [];
+        $("#step1").find("input[type=checkbox]:checked").each(function(i) {
+            var app = {};
+            app.id = i.Id;
+            returnArray.append(app);
+        });
+        return returnArray;
+    }
     function onClickedBack () {
         connection.trigger('prevStep');
     }
