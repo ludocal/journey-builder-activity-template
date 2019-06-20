@@ -16,7 +16,7 @@ var configApplication = [{
         },
         {
             name: 'BATCH STORE ANDROID',
-            id: '5CDD1B576095D88F6FE92DA49189D2'
+            id: '454DD1B576095D88F6FE92DA49189D2'
         }]
 }];
 
