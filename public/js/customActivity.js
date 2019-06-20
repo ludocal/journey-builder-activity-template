@@ -4,6 +4,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
     var connection = new Postmonger.Session();
     var payload = {};
     var appSelection = [];
+    var appSelected = [];
 
     var formatSelection = ""; //selection d'un nouveau template ou existant
     var messageConfiguration;
@@ -139,7 +140,10 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         console.log('Token : ' + token);
         console.log('Token : ' + endpoint);
         callout.getAppAvailable(endpoint, token).then(
-            r => loadAppSelection(r)
+            (r) => {
+                appSelection = r;
+                loadAppSelection(r);
+            }
         );
         console.log(tokens);
     }
