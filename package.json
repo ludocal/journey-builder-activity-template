@@ -1,6 +1,7 @@
 {
   "name": "jb-activity-template",
   "version": "1.0.0",
+  "private": true,
   "description": "Journey Builder Activity Template",
   "engines": {
     "node": "6.11.1"
@@ -11,8 +12,7 @@
   "keywords": [
     "journey",
     "builder",
-    "salesforce marketing cloud",
-    "heroku"
+    "salesforce marketing cloud"
   ],
   "dependencies": {
     "body-parser": "^1.18.2",
