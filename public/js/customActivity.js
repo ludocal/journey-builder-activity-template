@@ -233,10 +233,16 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
     function getAppSelected(){
         var returnArray = [];
         $("#step1").find("input[type=checkbox]:checked").each(function(i) {
-            var app = {};
-            app.id = this.id;
-            returnArray.push(app);
+            var item = {};
+            item.id = this.id;
+            var app = appSelection.find(searchApp => searchApp.id === item.id);
+            if (app)
+            {
+                item.name = app.name;
+            }
+            returnArray.push(item);
         });
+        appSelected = returnArray;
         return returnArray;
     }
     function onClickedBack () {
