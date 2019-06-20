@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title></title>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/design-system/2.9.2/styles/salesforce-lightning-design-system.min.css" />
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" />
+  </script>
+  <script type="text/javascript" src="js/require.js"></script>
+  <script type="text/javascript">
+    (function () {
+      var config = {
+        baseUrl: "js",
+        'customActivity': {
+         appConfiguration: JSON.parse('<%- configVarJson %>')
+        }
+      };
+
+      var dependencies = ["customActivity"];
+
+      require(config, dependencies);
+    })();
+  </script>
+  <script>
+    function updateApp(checkbox) {
+      console.log(checkbox);
+    }
+    $("#step2 input[type=radio]").change(function () {
+      alert("Handler for .change() called.");
+    });
+    function comboboxClick(input)
+    {
+      if ($(input).hasClass('slds-is-open'))
+      {
+           $(input).removeClass('slds-is-open');
+      }else{
+          $(input).addClass('slds-is-open');
+      }
+    }
+    function comboboxSelected(input){
+      console.log('click option');
+           
+      $(input).closest('.slds-combobox').find('.slds-input').attr('value', $(input).children('.slds-media__body').children()[0].title);
+      console.log($(input).children('.slds-media__body').children()[0].title);      
+    }
+  </script>
+</head>
+
+<body>
+  <div id="step1" class="step">
+    <div class="slds-grid">
+      <main class="slds-col" id="appSelectionContainer">
+      <template id="templateAppSelectionItem">
+        <div class="slds-form-element">
+          <label class="slds-checkbox_toggle slds-grid">
+            <span class="slds-form-element__label slds-m-bottom_none">{{name}}</span>
+            <input id="{{id}}" type="checkbox" name="checkbox-toggle-14" value="{{id}}"
+              aria-describedby="checkbox-toggle-14" />
+            <span id="checkbox-toggle-14" class="slds-checkbox_faux_container" aria-live="assertive">
+              <span class="slds-checkbox_faux"></span>
+              <span class="slds-checkbox_on">Enabled</span>
+              <span class="slds-checkbox_off">Disabled</span>
+            </span>
+          </label>
+        </div>
+      </template>
+      </main>
+    </div>
+  </div>
+  <div id="step2" class="step">
+    <fieldset class="slds-form-element">
+      <legend class="slds-form-element__legend slds-form-element__label">Template or new ?</legend>
+      <div class="slds-form-element__control">
+        <div class="slds-visual-picker slds-visual-picker_medium">
+          <input type="radio" id="visual-picker-60" value="template" name="newOrTemplate" />
+          <label for="visual-picker-60">
+            <span class="slds-visual-picker__figure slds-visual-picker__icon slds-align_absolute-center">
+              <span class="slds-is-selected">
+                <span class="slds-icon_container">
+                  <svg class="slds-icon slds-icon_large slds-icon-action-check" aria-hidden="true">
+                    <use xlink:href="images/symbols.svg#check"></use>
+                  </svg>
+                </span>
+              </span>
+              <span class="slds-is-not-selected">
+                <span class="slds-icon_container">
+                  <svg class="slds-icon slds-icon-utility-search slds-icon_large slds-icon-text-default"
+                    aria-hidden="true">
+                    <use xlink:href="images/symbols.svg#search"></use>
+                  </svg>
+                </span>
+              </span>
+            </span>
+            <span class="slds-visual-picker__body">
+              <span class="slds-text-title">Template</span>
+            </span>
+          </label>
+        </div>
+        <div class="slds-visual-picker slds-visual-picker_medium">
+          <input type="radio" id="visual-picker-61" value="new" name="newOrTemplate" />
+          <label for="visual-picker-61">
+            <span class="slds-visual-picker__figure slds-visual-picker__icon slds-align_absolute-center">
+              <span class="slds-is-selected">
+                <span class="slds-icon_container">
+                  <svg class="slds-icon slds-icon_large slds-icon-action-check" aria-hidden="true">
+                    <use xlink:href="images/symbols.svg#check"></use>
+                  </svg>
+                </span>
+              </span>
+              <span class="slds-is-not-selected">
+                <span class="slds-icon_container">
+                  <svg class="slds-icon slds-icon-utility-insert_template slds-icon_large slds-icon-text-default"
+                    aria-hidden="true">
+                    <use xlink:href="images/symbols.svg#insert_template"></use>
+                  </svg>
+                </span>
+              </span>
+            </span>
+            <span class="slds-visual-picker__body">
+              <span class="slds-text-title">New push</span>
+            </span>
+          </label>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  <div id="step3" class="step">
+    <div id="containerTemplate" class="slds-grid slds-gutters slds-wrap">
+      <script id="containerTemplateItem" type="text/x-custom-template">
+      <div class="slds-col">
+        <div class="slds-form">
+          <div class="slds-form-element">
+            <label class="slds-form-element__label" for="combobox-unique-id-{{index}}">{{appName}}</label>
+            <div class="slds-form-element__control">
+              <div class="slds-combobox_container slds-size_small">
+                <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-combobox-picklist"
+                  aria-expanded="false" aria-haspopup="listbox" role="combobox" onclick="comboboxClick(this)">
+                  <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                    <input type="text" class="slds-input slds-combobox__input" id="combobox-unique-id-{{index}}"
+                      aria-controls="listbox-unique-id" autoComplete="off" role="textbox" placeholder="Select an Option"
+                      readonly="" />
+                    <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right"
+                      title="Description of icon when needed">
+                      <svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default" aria-hidden="true">
+                        <use xlink:href="images/symbols.svg#down"></use>
+                      </svg>
+                      <span class="slds-assistive-text">Description of icon when needed</span>
+                    </span>
+                  </div>
+                  <div id="listbox-unique-id" role="listbox" class="slds-dropdown slds-dropdown_fluid">
+                    <ul id="optionContainerTemplate" class="slds-listbox slds-listbox_vertical" role="presentation">
+                      {{optionContainerTemplate}}                                                     
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </script>
+    </div>
+  </div>
+  <div id="step4" class="step">
+    <div class="slds-form">
+      <div class="slds-form-element slds-form-element_stacked">
+        <label class="slds-form-element__label" for="messageTitle">Title</label>
+        <div class="slds-form-element__control">
+          <input type="text" id="messageTitle" placeholder="Placeholder Text" class="slds-input" />
+        </div>
+      </div>
+      <div class="slds-form-element slds-form-element_stacked">
+        <label class="slds-form-element__label" for="messageBody">Message</label>
+        <div class="slds-form-element__control">
+          <textarea id="messageBody" placeholder="Placeholder Text" class="slds-textarea"></textarea>
+        </div>
+      </div>
+      <div class="slds-form-element slds-form-element_stacked">
+        <label class="slds-form-element__label" for="messageDeepLink">Deep link</label>
+        <div class="slds-form-element__control">
+          <input type="text" id="messageDeepLink" placeholder="Placeholder Text" class="slds-input" />
+        </div>
+      </div>
+      <div class="slds-form-element slds-form-element_stacked">
+        <label class="slds-form-element__label" for="messageImage">Image URL</label>
+        <div class="slds-form-element__control">
+          <input type="text" id="messageImage" placeholder="Placeholder Text" class="slds-input" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    $('#checkboxApp').on('change', function () {
+      console.log('change input');
+      //The syntax inside the if statement below returns true for toggle checked and false for toggle unchecked
+      if (j$(this).prop('checked')) {
+        j$('#toggleValue1').text('On');
+      } else {
+        j$('#toggleValue1').text('Off');
+      }
+    });
+  </script>
+  <template id="optionContainerTemplateItem">
+      <li role="presentation" class="slds-listbox__item">
+        <div id="listbox-option-unique-id-01"
+          class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center"
+          role="option" onclick="comboboxSelected(this)">
+          <span class="slds-media__figure">
+            <svg class="slds-icon slds-icon_x-small slds-listbox__icon-selected" aria-hidden="true">
+              <use xlink:href="images/symbols.svg#check"></use>
+            </svg>
+          </span>
+          <span class="slds-media__body">
+            <span class="slds-truncate" id="{{optionId}}" title="{{optionName}}">{{optionName}}</span>
+          </span>
+        </div>
+      </li>
+    </template>            
+</body>
+
+</html>

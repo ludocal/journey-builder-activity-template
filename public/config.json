@@ -20,11 +20,7 @@
           "emailAddress": "{{Contact.Attribute.CustomActivity.EmailAddress}}"
         }
       ],
-      "outArguments": [
-        {
-          "PathTrue": ""
-        }
-      ],
+      "outArguments": [],
       "url": "https://customactivitymarketingcloud.herokuapp.com/journeybuilder/execute",
       "verb": "POST",
       "body": "",
@@ -58,21 +54,20 @@
   },
   "wizardSteps": [
     {
-      "label": "Step 1",
+      "label": "App",
       "key": "step1"
     },
     {
-      "label": "Step 2",
+      "label": "template vs new",
       "key": "step2"
     },
     {
-      "label": "Step 3",
+      "label": "Template selection",
       "key": "step3"
     },
     {
-      "label": "Step 4",
-      "key": "step4",
-      "active": false
+      "label": "New push",
+      "key": "step4"
     }
   ],
   "userInterfaces": {

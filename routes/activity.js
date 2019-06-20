@@ -1,13 +1,36 @@
 'use strict';
 var util = require('util');
+var https = require('https');
+const ET_Client = require('sfmc-fuelsdk-node');
 
 // Deps
 const Path = require('path');
 const JWT = require(Path.join(__dirname, '..', 'lib', 'jwtDecoder.js'));
 var util = require('util');
 var http = require('https');
+var contextUser = {};
+var clientMC = {};
 
 exports.logExecuteData = [];
+var configApplication = [{
+    apiRestToken: 'dcee600f7a7be131481e28ddb40ae1b0',
+    domain: 'mcwd-d2pprjfdcksy88llpp9dv-4',
+    jwtSecret: 'jntkXQazwsJZq_dIZsgz3YRGRMs9jpU-AKEhA3BN42WRmWYAT1jcb3aW5J4lzEmidqtHqc6vqY4Z-qEFIOFQv-GtOUDq4e5D-baF4Tk2mSy4aF66zOSX-vH9GpeFjR2r5VasSAYBC42MYui1GJHZ0mLEVkZbaNfT6sZfH2mth58A9-thITgLqgYXFjJ14V3dFtG8uoERp1RKZXeG_l8n9_iWPtG6DaNPFQWVLV-srtiKpZCe68Qw1NSAWBBc3A2',
+    mid: 500008428,
+    clientId: '75ltplaovygkrhqzrkbi27yj',
+    clientSecret: 'guaLsbOmBEUc6cf11F7npGM3',
+    authOrigin: "https://mcwd-d2pprjfdcksy88llpp9dv-4.auth.marketingcloudapis.com",
+    soapOrigin: "https://mcwd-d2pprjfdcksy88llpp9dv-4.soap.marketingcloudapis.com",
+    appAvailable: [
+        {
+            name: 'Batch STORE IOS',
+            id: '5CDD1B576095D88F6FE92DA49189D2'
+        },
+        {
+            name: 'BATCH STORE ANDROID',
+            id: '5CDD1B576095D88F6FE92DA49189D2'
+        }]
+}];
 
 function logData(req) {
     exports.logExecuteData.push({
@@ -74,9 +97,10 @@ exports.save = function (req, res) {
  * POST Handler for /execute/ route of Activity.
  */
 exports.execute = function (req, res) {
-
+    //console.log(JSON.stringify(req.body.toString('utf8')));
+    //console.log(JSON.stringify(req.body));
     // example on how to decode JWT
-    JWT(req.body, process.env.jwtSecret, (err, decoded) => {
+    getClientByJWT(req.body, (err, decoded) => {
 
         // verification error -> unauthorized request
         if (err) {
@@ -85,13 +109,50 @@ exports.execute = function (req, res) {
         }
 
         if (decoded && decoded.inArguments && decoded.inArguments.length > 0) {
-            
+            console.log(JSON.stringify(decoded));
             // decoded in arguments
             var decodedArgs = decoded.inArguments[0];
+            console.log(JSON.stringify(decodedArgs));
+
+            decodedArgs.appSelection.forEach(element => {
+                //set common values
+                var pushWrapper = {};
+                pushWrapper.group_id = decoded.activityId;
+                pushWrapper.recipients = {};
+                pushWrapper.recipients.custom_ids = [decodedArgs.contactIdentifier];
+                //set values with template selection
+                if (decodedArgs.formatSelection === "template")
+                {
+                    pushWrapper.template_id = element.templateId;
+                }
+                //set values for new template
+                if (decodedArgs.formatSelection === "new" || (decodedArgs.overrideMessage && decodedArgs.overrideMessage === true )) {
+                    pushWrapper.message = {};
+                    if (decodedArgs.title !== null && decodedArgs.title !== '')
+                    {
+                      pushWrapper.message.title = decodedArgs.title;  
+                    }
+                    if (decodedArgs.body !== null && decodedArgs.body !== '')
+                    {
+                      pushWrapper.message.body = decodedArgs.body;  
+                    }
+                    if (decodedArgs.deepLink !== null && decodedArgs.deepLink !== '')
+                    {
+                      pushWrapper.message.deepLink = decodedArgs.deepLink;  
+                    }
+                    if (decodedArgs.imageUrl !== null && decodedArgs.imageUrl !== '')
+                    {
+                        pushWrapper.media = {};
+                        pushWrapper.media.picture = decodedArgs.imageUrl;
+                        pushWrapper.skip_media_check = true;
+                    }
+                }
+                sendPush(element.id, pushWrapper);
+            });
+
+            //logData(req);
+        res.send(200, 'Execute');
             
-            logData(req);
-            //res.send(200, 'Execute');
-            res.status(200).send('Execute');
         } else {
             console.error('inArguments invalid.');
             return res.status(400).end();
@@ -121,3 +182,85 @@ exports.validate = function (req, res) {
     //res.send(200, 'Validate');
     res.status(200).send('Validate');
 };
+
+function getClientByJWT(reqBody, callback) {
+    configApplication.forEach((val, key, configApplication) => {
+        try {
+            var decoded = JWT.verifySync(reqBody, configApplication[key].jwtSecret);
+            contextUser = configApplication[key];
+            // var decoded = JSON.parse('{"inArguments":[{"formatSelection":"template","appSelection":[{"id":"5CDD1B576095D88F6FE92DA49189D2","templateId":"8bd691a95ab70db950df46a2e44df1f2"}],"title":"Title test","body":"111111111","deepLink":"","imageUrl":"","contactIdentifier":"ludovic@texei.com","overrideMessage":true}],"outArguments":[],"activityObjectID":"9a3e7454-eec9-45c2-914f-5c8c09fab1cf","journeyId":"00a5cbdf-cb71-44fa-92ab-94c436451b65","activityId":"9a3e7454-eec9-45c2-914f-5c8c09fab1cf","definitionInstanceId":"77ac2cf8-f685-4a6c-b826-a7cc6425a9d4","activityInstanceId":"b651971b-47d0-4134-b995-483584e32fa2","keyValue":"ludovic@texei.com","mode":0}');
+            // contextUser = configApplication[0];
+            initMarketingCloud();
+            callback(null, decoded);
+            return;
+        } catch (error) {
+            console.log(error);
+        }
+    });
+    // callback("JWT NOT FOUND", null);
+    // return;
+}
+
+function sendPush(appKey, pushWrapper) {
+    const options = {
+        hostname: 'labs.api.batch.com',
+        path: '/1.1/' + appKey + '/transactional/send',
+        method: 'POST',
+        headers: { 'Content-Type': "application/json", 'X-Authorization': contextUser.apiRestToken }
+    };
+    var responseString = "";
+    var responseObject;
+    const req = https.request(options, (res) => {
+        console.log('statusCode:', res.statusCode);
+        //console.log('headers:', res.headers);
+        var str;
+        res.on('data', (d) => {
+            responseString += d;
+        });
+        res.on('end', (d) => {
+            responseObject = JSON.parse(responseString);
+            if (res.statusCode >= 400) {
+                logPushEvent({app_key: appKey, contact_key: pushWrapper.recipients.custom_ids[0], 
+                    token: pushWrapper.group_id + Date.now(), accepted_state: false, api_error: responseObject.message, group_id: pushWrapper.group_id},(err, msg) => {});  
+            }
+            console.log(responseString);
+            if (res.statusCode === 201) {
+                  logPushEvent({app_key: appKey, contact_key: pushWrapper.recipients.custom_ids[0], 
+                    token: responseObject.token, accepted_state: true, group_id: pushWrapper.group_id},(err, msg) => {});
+            }
+        });
+    });
+
+    req.on('error', (e) => {
+        console.error(e);
+    });
+    console.log(JSON.stringify(pushWrapper));
+    req.write(JSON.stringify(pushWrapper));
+    req.end();
+}
+
+function initMarketingCloud()
+{
+    console.log('Init Marketing Cloud Token');
+    clientMC = new ET_Client(contextUser.clientId, contextUser.clientSecret, null,
+        {
+            authOrigin: contextUser.authOrigin,
+            soapOrigin: contextUser.soapOrigin,
+            authOptions: {
+                authVersion: 2
+            }
+        });
+}
+function logPushEvent(props, callback) { 
+    console.log('Insert BATCH_PUSH EVENT');
+    const Name = 'BATCH_PUSH';
+    clientMC.dataExtensionRow({ Name, props }).post((err, response) => {
+        if (err) {
+            console.log('Error inserting to BATCH_PUSH');
+            console.log(err);
+            throw new Error(err);
+        }
+        console.log('[DEBUG] INSERTED BATCH_PUSH ROW');
+        callback(err, response);
+    });
+}
