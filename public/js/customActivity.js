@@ -231,7 +231,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         $("#step1").find("input[type=checkbox]:checked").each(function(i) {
             var app = {};
             app.id = i.Id;
-            returnArray.append(app);
+            returnArray.push(app);
         });
         return returnArray;
     }
