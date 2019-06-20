@@ -1,0 +1,13 @@
+stages:
+  - build
+
+after_script:
+    - docker-compose -p $CI_BUILD_ID down
+    - docker-compose -p $CI_BUILD_ID rm -f
+
+build:
+  stage: build
+  script:
+    - export CI_BUILD_REF_NAME=${CI_BUILD_REF_NAME/\//.}
+    - docker-compose -p $CI_BUILD_ID build --pull --force-rm --no-cache app
+    - docker-compose -p $CI_BUILD_ID push app
