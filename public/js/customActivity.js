@@ -164,7 +164,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
             connection.trigger('updateSteps', steps);
            
         }
-        if (currentStep.key === 'step3'){
+        if (currentStep.key === 'step2' && formatSelection === 'template'){
             loadAppTemplate();
         }
         if (currentStep.key === 'step4')
@@ -194,6 +194,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
     }
     function loadAppTemplate()
     {
+        console.log('Start load App Template');
         $('#containerTemplate').empty();
         appSelected = getAppSelected();
         $.each(appSelected, function(index, appItem) {
