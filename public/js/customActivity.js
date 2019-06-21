@@ -71,8 +71,8 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         var body;
         var deepLink;
         var imageUrl;
-        var formatSelection;
-        var appSelection;
+        //var formatSelection;
+        //var appSelection;
 
         var hasInArguments = Boolean(
             payload['arguments'] &&
