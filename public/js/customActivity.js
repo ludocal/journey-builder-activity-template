@@ -162,12 +162,17 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         {        
             steps[2].active = false;
             connection.trigger('updateSteps', steps);
+            connection.trigger('nextStep');
+        }
+        if (currentStep.key === 'step3'){
+            loadAppTemplate();
         }
         if (currentStep.key === 'step4')
         {        
             save();
+            connection.trigger('nextStep');
         }
-        connection.trigger('nextStep');
+        
     }
     function loadAppSelection(applicationList){
         var containerItem = $.trim($('#templateAppSelectionItem').html());
@@ -291,7 +296,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
                 connection.trigger('ready');
                 break;                
             case 'step3':
-                loadAppTemplate();
+                //loadAppTemplate();
                 $('#step3').show();
                 connection.trigger('updateButton', {
                     button: 'back',
