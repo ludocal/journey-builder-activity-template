@@ -203,7 +203,8 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
     function loadAppTemplate()
     {
         console.log('Start load App Template');
-        $('#step3').find('.slds-col').remove();
+        
+    $('#step3').find('#containerTemplate').find('.slds-col').remove();
         appSelected = getAppSelected();
         $.each(appSelected, function(index, appItem) {
             var temp = $.trim($('#containerTemplateItem').html());
