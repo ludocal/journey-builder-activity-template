@@ -259,8 +259,8 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
     function updateAppSelected(){
         appSelected.forEach(element => {
             var input = $('#step3').find('.slds-combobox').find('.slds-input[id=' + element.id + ']');
-            if (input){
-                element.templateId = input.data-id;
+            if (input.get(0)){
+                element.templateId = $(input.get(0)).attr('data-id');
             }            
         });        
     }
