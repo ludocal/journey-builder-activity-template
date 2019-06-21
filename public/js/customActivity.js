@@ -171,6 +171,10 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
             loadAppTemplate();
             connection.trigger('updateSteps', steps);
         }
+        else if (currentStep === 'step3')
+        {
+            save();
+        }
         else if (currentStep.key === 'step4')
         {        
             save();            
