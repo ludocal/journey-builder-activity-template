@@ -221,7 +221,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
                         var input = $('#step3').find('.slds-combobox').find('.slds-input[id=' + element.id + ']');
                         if (input.get(0)){
                             $(input.get(0)).attr('data-id', element.templateId);
-                            $(input.get(0)).attr('value', element.name);
+                            $(input.get(0)).attr('value', element.templateName);
                         }            
                     }); 
                 });
@@ -274,6 +274,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
             var input = $('#step3').find('.slds-combobox').find('.slds-input[id=' + element.id + ']');
             if (input.get(0)){
                 element.templateId = $(input.get(0)).attr('data-id');
+                element.templateName = $(input.get(0)).attr('value');
             }            
         });        
     }
