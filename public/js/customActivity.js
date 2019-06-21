@@ -338,13 +338,13 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
     }
 
     function save() {
-        appSelection = [];
-        $('.slds-checkbox_toggle>input:checked').each(function(i){
-            appSelection.push({
-                id: this.id,
-                templateId: undefined
-            });
-        });
+        // appSelection = [];
+        // $('.slds-checkbox_toggle>input:checked').each(function(i){
+        //     appSelection.push({
+        //         id: this.id,
+        //         templateId: undefined
+        //     });
+        // });
         // 'payload' is initialized on 'initActivity' above.
         // Journey Builder sends an initial payload with defaults
         // set by this activity's config.json file.  Any property
