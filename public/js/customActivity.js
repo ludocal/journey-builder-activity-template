@@ -171,7 +171,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
             loadAppTemplate();
             connection.trigger('updateSteps', steps);
         }
-        else if (currentStep === 'step3')
+        else if (currentStep.key === 'step3')
         {
             save();
         }
@@ -339,7 +339,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
                 });
                 connection.trigger('updateButton', {
                     button: 'next',
-                    text: 'next',
+                    text: 'done',
                     visible: false
                 });
                 break;
