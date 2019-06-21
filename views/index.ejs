@@ -46,7 +46,9 @@
       console.log('click option');
            
       $(input).closest('.slds-combobox').find('.slds-input').attr('value', $(input).children('.slds-media__body').children()[0].title);
+      $(input).closest('.slds-combobox').find('.slds-input').attr('data-id', $(input).children('.slds-media__body').children()[0].id);
       console.log($(input).children('.slds-media__body').children()[0].title);      
+      console.log($(input).children('.slds-media__body').children()[0].id);      
     }
   </script>
 </head>
