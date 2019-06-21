@@ -208,8 +208,9 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
                     tempReplace = tempReplace.replace(/{{index}}/ig, index);
                     tempReplace = tempReplace.replace(/{{appName}}/ig, appItem.name);
                     $('#containerTemplate').append(tempReplace);
+                    connection.trigger('ready');
                 });
-                connection.trigger('ready');
+                
         });
         $("#step3 .slds-dropdown-trigger_click").click(function(input) {
             console.log('click ');
