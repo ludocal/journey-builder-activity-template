@@ -8,6 +8,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
 
     var formatSelection = ""; //selection d'un nouveau template ou existant
     var messageConfiguration;
+    var overrideMessage = false;
     var config = [];
     var lastStepEnabled = false;
     var steps = [ // initialize to the same value as what's set in config.json for consistency
@@ -47,6 +48,12 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
             connection.trigger('updateButton', { button: 'next', enabled: true });            
         });
         
+        
+
+        $('#step3 input[type=checkbox]').change(function() {
+            overrideMessage = this.checked;
+            // do stuff here. It will fire on any checkbox change
+        }); 
 
         
 
@@ -161,7 +168,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         if (currentStep.key === 'step2' && formatSelection === 'new')
         {        
             steps[2].active = false;
-            steps[3].active = false;
+            steps[3].active = true;
             connection.trigger('updateSteps', steps);
            
         }
@@ -171,9 +178,15 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
             loadAppTemplate();
             connection.trigger('updateSteps', steps);
         }
-        else if (currentStep.key === 'step3')
+        else if (currentStep.key === 'step3' && overrideMessage === false)
         {
             save();
+        }
+        else if (currentStep.key === 'step3' && overrideMessage === true)
+        {
+            steps[2].active = true;
+            steps[3].active = true;
+            connection.trigger('updateSteps', steps);
         }
         else if (currentStep.key === 'step4')
         {        
@@ -391,7 +404,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
                 "deepLink": deepLink,
                 "imageUrl": imageUrl,
                 "contactIdentifier": "{{Contact.Key}}",
-                "overrideMessage": false
+                "overrideMessage": overrideMessage
             }
         ];
 
