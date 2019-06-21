@@ -194,6 +194,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
     }
     function loadAppTemplate()
     {
+        $('#containerTemplate').empty();
         appSelected = getAppSelected();
         $.each(appSelected, function(index, appItem) {
             var temp = $.trim($('#containerTemplateItem').html());
