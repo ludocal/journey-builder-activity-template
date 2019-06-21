@@ -209,6 +209,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
                     tempReplace = tempReplace.replace(/{{appName}}/ig, appItem.name);
                     $('#containerTemplate').append(tempReplace);
                 });
+                connection.trigger('ready');
         });
         $("#step3 .slds-dropdown-trigger_click").click(function(input) {
             console.log('click ');
@@ -251,7 +252,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
 
     function onGotoStep (step) {
         showStep(step);
-        connection.trigger('ready');
+        //connection.trigger('ready');
     }
 
     function showStep(step, stepIndex) {
@@ -273,7 +274,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
                 connection.trigger('updateButton', {
                     button: 'back',
                     visible: false
-                });
+                });                
                 break;
             case 'step2':
                 $('#step2').show();
@@ -286,7 +287,8 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
                     text: 'next',
                     visible: true
                 });
-                break;
+                connection.trigger('ready');
+                break;                
             case 'step3':
                 loadAppTemplate();
                 $('#step3').show();
@@ -319,9 +321,11 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
                         visible: true
                     });
                 }
+                connection.trigger('ready');
                 break;
             case 'step5':
                 $('#step5').show();
+                connection.trigger('ready');
                 break;
         }
     }
