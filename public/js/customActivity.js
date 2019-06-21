@@ -162,17 +162,16 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         {        
             steps[2].active = false;
             connection.trigger('updateSteps', steps);
-            connection.trigger('nextStep');
+           
         }
         if (currentStep.key === 'step3'){
             loadAppTemplate();
         }
         if (currentStep.key === 'step4')
         {        
-            save();
-            connection.trigger('nextStep');
+            save();            
         }
-        
+        connection.trigger('nextStep');
     }
     function loadAppSelection(applicationList){
         var containerItem = $.trim($('#templateAppSelectionItem').html());
