@@ -15,7 +15,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         { "label": "App", "key": "step1" },
         { "label": "template vs new", "key": "step2" },
         { "label": "Template selection", "key": "step3" },
-        { "label": "New push", "key": "step4" }
+        { "label": "push message", "key": "step4" }
     ];
     var token = "";
     var endpoint= "";
