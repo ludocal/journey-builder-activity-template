@@ -102,20 +102,20 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
                     formatSelection = val;
                 }
                 if (key === 'appSelection') {
-                    appSelection = val;
+                    appSelected = val;
                 }
             });
         });
         console.log(formatSelection);
-        console.log(appSelection);
+        console.log(appSelected);
 
         if (formatSelection)
         {
             $('#step2').find('input[type=radio]').filter('[value=' + formatSelection + ']').prop('checked', true);
         }
-        if (appSelection)
+        if (appSelected)
         {
-            appSelection.forEach(function(element){
+            appSelected.forEach(function(element){
                 var stringSelector = '.slds-checkbox_toggle>input[id="' + element.id + '"]';
                 console.log(stringSelector);
                 try {
