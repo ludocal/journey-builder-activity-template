@@ -222,7 +222,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         appSelected.forEach(element => {
             var input = $('#step3').find('.slds-combobox').find('.slds-input[id=' + element.id + ']');
             if (input.get(0)){
-                $(input.get(0)).attr('data-id', element.data-id);
+                $(input.get(0)).attr('data-id', element.templateId);
                 $(input.get(0)).attr('value', element.name);
             }            
         }); 
@@ -249,6 +249,9 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
     }
 
     function getAppSelected(){
+        if (appSelected){
+            return appSelected;
+        }        
         var returnArray = [];
         $("#step1").find("input[type=checkbox]:checked").each(function(i) {
             var item = {};
