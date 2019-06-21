@@ -255,6 +255,16 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         appSelected = returnArray;
         return returnArray;
     }
+
+    function updateAppSelected(){
+        appSelected.forEach(element => {
+            var input = $('#step3').find('.slds-combobox').find('.slds-input[id=' + element.id + ']');
+            if (input){
+                element.templateId = input.data-id;
+            }            
+        });        
+    }
+
     function onClickedBack () {
         connection.trigger('prevStep');
     }
@@ -340,19 +350,9 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
     }
 
     function save() {
-        // appSelection = [];
-        // $('.slds-checkbox_toggle>input:checked').each(function(i){
-        //     appSelection.push({
-        //         id: this.id,
-        //         templateId: undefined
-        //     });
-        // });
-        // 'payload' is initialized on 'initActivity' above.
-        // Journey Builder sends an initial payload with defaults
-        // set by this activity's config.json file.  Any property
-        // may be overridden as desired.
-        
-      
+        if (formatSelection === "template"){
+            updateAppSelected();
+        }      
         var title = $('#messageTitle').val();
         var body = $('#messageBody').val();
         var deepLink = $('#messageDeepLink').val();
@@ -362,7 +362,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         payload['arguments'].execute.inArguments = [
             {
                 "formatSelection": formatSelection,
-                "appSelection": appSelection,
+                "appSelection": appSelected,
                 "title": title,
                 "body": body,
                 "deepLink": deepLink,
