@@ -211,7 +211,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
                         options = options + x;
                     });                    
                     var tempReplace = temp.replace(/{{optionContainerTemplate}}/ig, options);
-                    tempReplace = tempReplace.replace(/{{index}}/ig, index);
+                    tempReplace = tempReplace.replace(/{{index}}/ig, appItem.id);
                     tempReplace = tempReplace.replace(/{{appName}}/ig, appItem.name);
                     $('#containerTemplate').append(tempReplace);
                     connection.trigger('ready');
