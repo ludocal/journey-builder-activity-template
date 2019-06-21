@@ -389,7 +389,8 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
                 "body": body,
                 "deepLink": deepLink,
                 "imageUrl": imageUrl,
-                "contactIdentifier": "{{Contact.Key}}"
+                "contactIdentifier": "{{Contact.Key}}",
+                "overrideMessage": false
             }
         ];
 
