@@ -215,17 +215,19 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
                     tempReplace = tempReplace.replace(/{{appName}}/ig, appItem.name);
                     $('#containerTemplate').append(tempReplace);
                     connection.trigger('ready');
+
+                    //initiate value for combobox
+                    appSelected.forEach(element => {
+                        var input = $('#step3').find('.slds-combobox').find('.slds-input[id=' + element.id + ']');
+                        if (input.get(0)){
+                            $(input.get(0)).attr('data-id', element.templateId);
+                            $(input.get(0)).attr('value', element.name);
+                        }            
+                    }); 
                 });
                 
         });
-        //initiate value for combobox
-        appSelected.forEach(element => {
-            var input = $('#step3').find('.slds-combobox').find('.slds-input[id=' + element.id + ']');
-            if (input.get(0)){
-                $(input.get(0)).attr('data-id', element.templateId);
-                $(input.get(0)).attr('value', element.name);
-            }            
-        }); 
+        
         $("#step3 .slds-dropdown-trigger_click").click(function(input) {
             console.log('click ');
            
