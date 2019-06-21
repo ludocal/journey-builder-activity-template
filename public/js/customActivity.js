@@ -93,24 +93,29 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         $.each(inArguments, function(index, inArgument) {
             $.each(inArgument, function(key, val) {
                 console.log('Key :' + key + ' val : ' + val);
-                if (key === 'title') {
-                    title = val;
-                }
-                if (key === 'body') {
-                    body = val;
-                }
-                if (key === 'deepLink') {
-                    deepLink = val;
-                }
-                if (key === 'imageUrl') {
-                    imageUrl = val;
-                }
-                if (key === 'formatSelection') {
-                    formatSelection = val;
-                }
-                if (key === 'appSelection') {
-                    appSelected = val;
-                }
+                switch(key){
+                    case 'title':
+                        title = val;
+                        break;
+                    case 'body':
+                        body = val;
+                        break;
+                    case 'deepLink':
+                        deepLink = val;
+                        break;
+                    case 'imageUrl':
+                        imageUrl = val;
+                        break;
+                    case 'formatSelection':
+                        formatSelection = val;
+                        break;
+                    case 'appSelection':
+                        appSelected = val;
+                        break;
+                    case 'overrideMessage':
+                        overrideMessage = val;
+                        break; 
+                }             
             });
         });
         console.log(formatSelection);
@@ -139,6 +144,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         $('#messageBody').val(body);
         $('#messageDeepLink').val(deepLink);
         $('#messageImage').val(imageUrl);
+        $('#checkboxOverrideMessage').prop("checked", overrideMessage);
     }
 
     function onGetTokens (tokens) {
