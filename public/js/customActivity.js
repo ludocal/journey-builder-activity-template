@@ -218,6 +218,14 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
                 });
                 
         });
+        //initiate value for combobox
+        appSelected.forEach(element => {
+            var input = $('#step3').find('.slds-combobox').find('.slds-input[id=' + element.id + ']');
+            if (input.get(0)){
+                $(input.get(0)).attr('data-id', element.data-id);
+                $(input.get(0)).attr('value', element.name);
+            }            
+        }); 
         $("#step3 .slds-dropdown-trigger_click").click(function(input) {
             console.log('click ');
            
