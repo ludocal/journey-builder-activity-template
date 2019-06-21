@@ -232,6 +232,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
             console.log('click option');
            
             $("#step3 .slds-combobox__input").attr('value', $(this).children('.slds-media__body').children()[0].title);
+            $("#step3 .slds-combobox__input").attr('data-selectedTemplateId', $(this).children('.slds-media__body').children()[0].id);
             console.log($(this).children()[0].title);
             $(this).hasClass('slds-is-selected');
         });
