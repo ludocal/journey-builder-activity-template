@@ -56,3 +56,9 @@ This guide covers Heroku, skip this step if you are familiar on how to deploy a 
 If you'd like to learn more about building custom Journey Builder Activities and our collection of Custom Activities available to you today, email us at [info@devsutd.com](mailto:info@devsutd.com)
 
 Also, follow us on [LinkedIn](https://www.linkedin.com/company/10701607/) to get the latest updates and great articles about Salesforce Marketing Cloud!
+
+# Staging
+
+- playbook: https://gitlab.b47ch.com/ansible/ansible/blob/8d11905534bf6c3aee5668214c256f1c3a3be2d0/playbooks/salesforce-marketing-cloud-custom-activity.yml
+  - target: jabba.b47ch.com
+- domain: https://salesforce-marketing-cloud.b47ch.com
