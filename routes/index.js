@@ -4,21 +4,8 @@
 var activity = require('./activity');
 var https = require('https');
 
-var configApplication = [{
-    apiRestToken: 'dcee600f7a7be131481e28ddb40ae1b0',
-    domain: 'mcwd-d2pprjfdcksy88llpp9dv-4',
-    jwt: 'op8QmUhBtKVlOU2HS6sczo0SnSLxmBp_YllUAYv5hscd9xANRqV1aFdsmqWrP7_5wQ14Luj5pVIBhTdj84Wuf4LdwtfybXu123_BNnhfLWXeiuIj5_kfyvpf7KXkwYIVhFnQtJDNQxpmzP-HhqKSBAtoC-CSGhyDJA6yI2b0vMrCTeSyaLemy8MoOG5YiU3B_TPPFq4KdYEPyz24PSxCBBODlAMLcOSG4XXR5tfLz1CYk2QIExWM1hySosElPQ2',
-    mid: 500008428,
-    appAvailable: [
-        {
-            name: 'Batch STORE IOS',
-            id: '5CDD1B576095D88F6FE92DA49189D2'
-        },
-        {
-            name: 'BATCH STORE ANDROID',
-            id: '454DD1B576095D88F6FE92DA49189D2'
-        }]
-}];
+//CUSTOM_ACTIVITY_CONFIGURATION
+var configApplication = JSON.parse(process.env.CUSTOM_ACTIVITY_CONFIGURATION);
 
 /*
  * GET home page.
@@ -28,16 +15,12 @@ exports.index = function (req, res) {
     if (req.session && !req.session.token) {
         res.render('index', {
             title: 'Unauthenticated',
-            errorMessage: 'This app may only be loaded via Salesforce Marketing Cloud',
-            configVar: configApplication,
-            configVarJson: JSON.stringify(configApplication)
+            errorMessage: 'This app may only be loaded via Salesforce Marketing Cloud'
         });
     } else {
         res.render('index', {
             title: 'Journey Builder Activity',
-            results: activity.logExecuteData,
-            configVar: configApplication,
-            configVarJson: JSON.stringify(configApplication)
+            results: activity.logExecuteData
         });
     }
 };
