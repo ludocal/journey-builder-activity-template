@@ -181,12 +181,13 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         else if (currentStep.key === 'step2' && formatSelection === 'template'){
             steps[2].active = true;
             steps[3].active = false;
-            //loadAppTemplate();
-            connection.trigger('updateSteps', steps);
+            loadAppTemplate();
+           // connection.trigger('updateSteps', steps);
         }
         else if (currentStep.key === 'step3' && overrideMessage === false)
         {
             save();
+            connection.trigger('nextStep');
         }
         else if (currentStep.key === 'step3' && overrideMessage === true)
         {
@@ -197,8 +198,12 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         else if (currentStep.key === 'step4')
         {        
             save();            
+            connection.trigger('nextStep');
         }
-        connection.trigger('nextStep');
+        else{
+            connection.trigger('nextStep');
+        }
+        
     }
     function loadAppSelection(applicationList){
         var containerItem = $.trim($('#templateAppSelectionItem').html());
@@ -242,7 +247,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
                     tempReplace = tempReplace.replace(/{{index}}/ig, appItem.id);
                     tempReplace = tempReplace.replace(/{{appName}}/ig, appItem.name);
                     $('#containerTemplate').append(tempReplace);
-                    connection.trigger('ready');
+                    connection.trigger('nextStep');
 
                     //initiate value for combobox
                     appSelected.forEach(element => {
@@ -351,7 +356,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
                 connection.trigger('ready');
                 break;                
             case 'step3':
-                loadAppTemplate();
+                //loadAppTemplate();
                 $('#step3').show();
                 connection.trigger('updateButton', {
                     button: 'back',
