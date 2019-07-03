@@ -181,7 +181,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         else if (currentStep.key === 'step2' && formatSelection === 'template'){
             steps[2].active = true;
             steps[3].active = false;
-            loadAppTemplate();
+            //loadAppTemplate();
             connection.trigger('updateSteps', steps);
         }
         else if (currentStep.key === 'step3' && overrideMessage === false)
@@ -351,7 +351,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
                 connection.trigger('ready');
                 break;                
             case 'step3':
-                //loadAppTemplate();
+                loadAppTemplate();
                 $('#step3').show();
                 connection.trigger('updateButton', {
                     button: 'back',
