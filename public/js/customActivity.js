@@ -279,7 +279,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
     }
 
     function getAppSelected(){
-        if (appSelected){
+        if (appSelected && appSelected.length > 0){
             return appSelected;
         }        
         var returnArray = [];
