@@ -224,18 +224,16 @@ function sendPush(appKey, pushWrapper, decoded) {
             responseObject = JSON.parse(responseString);
             if (res.statusCode >= 400) {
                 logPushEvent({api_key: appKey, contact_key: pushWrapper.recipients.custom_ids[0], 
-                    token: pushWrapper.group_id + Date.now(), accepted_state: false, 
-                    api_error: responseObject.message, group_id: pushWrapper.group_id, request_date: new Date().toISOString(),
-                journey_id: decoded.journeyId, activity_id: decoded.activityId,
-                open_state:false,sent_state:false},(err, msg) => {});  
+                    token: pushWrapper.group_id + Date.now(), event: 'accepted', 
+                    api_error: responseObject.message, group_id: pushWrapper.group_id, event_date: new Date().toISOString(),
+                journey_id: decoded.journeyId, activity_id: decoded.activityId},(err, msg) => {});  
             }
             console.log(responseString);
             if (res.statusCode === 201) {
                   logPushEvent({api_key: appKey, contact_key: pushWrapper.recipients.custom_ids[0], 
-                    token: responseObject.token, accepted_state: true, 
-                    group_id: pushWrapper.group_id, request_date: new Date().toISOString(),
-                    journey_id: decoded.journeyId, activity_id: decoded.activityId,
-                    open_state:false,sent_state:false},(err, msg) => {});
+                    token: responseObject.token, event: 'error', 
+                    group_id: pushWrapper.group_id, event_date: new Date().toISOString(),
+                    journey_id: decoded.journeyId, activity_id: decoded.activityId},(err, msg) => {});
             }
         });
     });
