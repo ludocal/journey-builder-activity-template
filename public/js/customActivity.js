@@ -176,6 +176,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
             steps[2].active = false;
             steps[3].active = true;
             connection.trigger('updateSteps', steps);
+            connection.trigger('nextStep');
            
         }
         else if (currentStep.key === 'step2' && formatSelection === 'template'){
