@@ -175,6 +175,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         {        
             steps[2].active = false;
             steps[3].active = true;
+            appSelected = getAppSelected();
             connection.trigger('updateSteps', steps);
             connection.trigger('nextStep');
            
