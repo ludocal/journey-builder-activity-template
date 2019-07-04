@@ -224,14 +224,14 @@ function sendPush(appKey, pushWrapper, decoded) {
             responseObject = JSON.parse(responseString);
             if (res.statusCode >= 400) {
                 logPushEvent({api_key: appKey, contact_key: pushWrapper.recipients.custom_ids[0], 
-                    token: pushWrapper.group_id + Date.now(), event: 'accepted', 
+                    token: pushWrapper.group_id + Date.now(), event: 'error', 
                     api_error: responseObject.message, group_id: pushWrapper.group_id, event_date: new Date().toISOString(),
                 journey_id: decoded.journeyId, activity_id: decoded.activityId},(err, msg) => {});  
             }
             console.log(responseString);
             if (res.statusCode === 201) {
                   logPushEvent({api_key: appKey, contact_key: pushWrapper.recipients.custom_ids[0], 
-                    token: responseObject.token, event: 'error', 
+                    token: responseObject.token, event: 'accepted', 
                     group_id: pushWrapper.group_id, event_date: new Date().toISOString(),
                     journey_id: decoded.journeyId, activity_id: decoded.activityId},(err, msg) => {});
             }
