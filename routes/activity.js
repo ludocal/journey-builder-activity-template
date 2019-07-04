@@ -150,7 +150,7 @@ exports.execute = function (req, res) {
                         pushWrapper.skip_media_check = true;
                     }
                 }
-                sendPush(element.id, pushWrapper);
+                sendPush(element.id, pushWrapper, decoded);
             });
 
             //logData(req);
@@ -204,7 +204,7 @@ function getClientByJWT(reqBody, callback) {
     // return;
 }
 
-function sendPush(appKey, pushWrapper) {
+function sendPush(appKey, pushWrapper, decoded) {
     const options = {
         hostname: 'labs.api.batch.com',
         path: '/1.1/' + appKey + '/transactional/send',
@@ -225,13 +225,15 @@ function sendPush(appKey, pushWrapper) {
             if (res.statusCode >= 400) {
                 logPushEvent({app_key: appKey, contact_key: pushWrapper.recipients.custom_ids[0], 
                     token: pushWrapper.group_id + Date.now(), accepted_state: false, 
-                    api_error: responseObject.message, group_id: pushWrapper.group_id, request_date: new Date().toISOString()},(err, msg) => {});  
+                    api_error: responseObject.message, group_id: pushWrapper.group_id, request_date: new Date().toISOString(),
+                journey_id: decoded.journeyId, activity_id: decoded.activityId},(err, msg) => {});  
             }
             console.log(responseString);
             if (res.statusCode === 201) {
                   logPushEvent({app_key: appKey, contact_key: pushWrapper.recipients.custom_ids[0], 
                     token: responseObject.token, accepted_state: true, 
-                    group_id: pushWrapper.group_id, request_date: new Date().toISOString()},(err, msg) => {});
+                    group_id: pushWrapper.group_id, request_date: new Date().toISOString(),
+                    journey_id: decoded.journeyId, activity_id: decoded.activityId},(err, msg) => {});
             }
         });
     });
