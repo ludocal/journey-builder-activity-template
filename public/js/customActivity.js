@@ -1,4 +1,4 @@
-define(['postmonger', 'callout'], function(Postmonger, callout) {
+define(['postmonger', 'callout'], function (Postmonger, callout) {
     'use strict';
     //var appConfiguration = module.config().appConfiguration;
     var connection = new Postmonger.Session();
@@ -18,15 +18,15 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         { "label": "push message", "key": "step4" }
     ];
     var token = "";
-    var endpoint= "";
+    var endpoint = "";
     var currentStep = steps[0].key;
 
     $(window).ready(onRender);
-    
+
     connection.on('initActivity', initialize);
     connection.on('requestedEndpoints', onGetEndpoints);
     connection.on('requestedTokens', onGetTokens);
-    
+
 
     connection.on('clickedNext', onClickedNext);
     connection.on('clickedBack', onClickedBack);
@@ -41,25 +41,25 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         connection.trigger('requestEndpoints');
         connection.trigger('requestTriggerEventDefinition');
 
-        
-        $("#step2 input[type=radio]").change(function(input) {
-            console.log('change : '+ input.currentTarget.value);
-            formatSelection = input.currentTarget.value;
-            connection.trigger('updateButton', { button: 'next', enabled: true });            
-        });
-        
-        
 
-        $('#step3 input[type=checkbox]').change(function() {
+        $("#step2 input[type=radio]").change(function (input) {
+            console.log('change : ' + input.currentTarget.value);
+            formatSelection = input.currentTarget.value;
+            connection.trigger('updateButton', { button: 'next', enabled: true });
+        });
+
+
+
+        $('#step3 input[type=checkbox]').change(function () {
             overrideMessage = this.checked;
             // do stuff here. It will fire on any checkbox change
-        }); 
+        });
 
-        
+
 
         // Toggle step 4 active/inactive
         // If inactive, wizard hides it and skips over it during navigation
-        $('#toggleLastStep').click(function() {
+        $('#toggleLastStep').click(function () {
             lastStepEnabled = !lastStepEnabled; // toggle status
             steps[3].active = !steps[3].active; // toggle active
 
@@ -68,7 +68,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         // loadAppTemplate();
     }
 
-     function initialize (data) {
+    function initialize(data) {
         if (data) {
             payload = data;
         }
@@ -78,6 +78,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         var body;
         var deepLink;
         var imageUrl;
+        var groupid;
         //var formatSelection;
         //var appSelection;
 
@@ -90,10 +91,10 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
 
         var inArguments = hasInArguments ? payload['arguments'].execute.inArguments : {};
 
-        $.each(inArguments, function(index, inArgument) {
-            $.each(inArgument, function(key, val) {
+        $.each(inArguments, function (index, inArgument) {
+            $.each(inArgument, function (key, val) {
                 console.log('Key :' + key + ' val : ' + val);
-                switch(key){
+                switch (key) {
                     case 'title':
                         title = val;
                         break;
@@ -114,40 +115,42 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
                         break;
                     case 'overrideMessage':
                         overrideMessage = val;
-                        break; 
-                }             
+                        break;
+                    case 'groupid':
+                        groupid = val;
+                        break;
+                }
             });
         });
         console.log(formatSelection);
         console.log(appSelected);
 
-        if (formatSelection)
-        {
+        if (formatSelection) {
             $('#step2').find('input[type=radio]').filter('[value=' + formatSelection + ']').prop('checked', true);
         }
-        if (appSelected)
-        {
-            appSelected.forEach(function(element){
+        if (appSelected) {
+            appSelected.forEach(function (element) {
                 var stringSelector = '.slds-checkbox_toggle>input[id="' + element.id + '"]';
                 console.log(stringSelector);
                 try {
-                    $(stringSelector).prop("checked","true");
+                    $(stringSelector).prop("checked", "true");
                 } catch (error) {
-                    
+
                 }
             });
             connection.trigger('updateButton', { button: 'next', enabled: true });
-        }else{
+        } else {
             connection.trigger('updateButton', { button: 'next', enabled: false });
         }
         $('#messageTitle').val(title);
         $('#messageBody').val(body);
         $('#messageDeepLink').val(deepLink);
         $('#messageImage').val(imageUrl);
+        $('#groupid').val(groupid);
         $('#checkboxOverrideMessage').prop("checked", overrideMessage);
     }
 
-    function onGetTokens (tokens) {
+    function onGetTokens(tokens) {
         // Response: tokens = { token: <legacy token>, fuel2token: <fuel api token> }
         token = tokens.fuel2token;
         console.log('Token : ' + token);
@@ -161,142 +164,135 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         console.log(tokens);
     }
 
-    function onGetEndpoints (endpoints) {
+    function onGetEndpoints(endpoints) {
         // Response: endpoints = { restHost: <url> } i.e. "rest.s1.qa1.exacttarget.com"
         endpoint = endpoints.fuelapiRestHost;
-         console.log(endpoints);
-         console.log(endpoint);
+        console.log(endpoints);
+        console.log(endpoint);
     }
-    function onRequestedTriggerEventDefinition(requestDefinition){
+    function onRequestedTriggerEventDefinition(requestDefinition) {
         console.log(requestDefinition);
     }
-    function onClickedNext () {
-        if (currentStep.key === 'step2' && formatSelection === 'new')
-        {        
+    function onClickedNext() {
+        if (currentStep.key === 'step2' && formatSelection === 'new') {
             steps[2].active = false;
             steps[3].active = true;
             appSelected = getAppSelected();
             connection.trigger('updateSteps', steps);
             connection.trigger('nextStep');
-           
+
         }
-        else if (currentStep.key === 'step2' && formatSelection === 'template'){
+        else if (currentStep.key === 'step2' && formatSelection === 'template') {
             steps[2].active = true;
             steps[3].active = false;
             loadAppTemplate();
-           // connection.trigger('updateSteps', steps);
+            // connection.trigger('updateSteps', steps);
         }
-        else if (currentStep.key === 'step3' && overrideMessage === false)
-        {
+        else if (currentStep.key === 'step3' && overrideMessage === false) {
             save();
             connection.trigger('nextStep');
         }
-        else if (currentStep.key === 'step3' && overrideMessage === true)
-        {
+        else if (currentStep.key === 'step3' && overrideMessage === true) {
             steps[2].active = true;
             steps[3].active = true;
             connection.trigger('updateSteps', steps);
             connection.trigger('nextStep');
         }
-        else if (currentStep.key === 'step4')
-        {        
-            save();            
+        else if (currentStep.key === 'step4') {
+            save();
             connection.trigger('nextStep');
         }
-        else{
+        else {
             connection.trigger('nextStep');
         }
-        
+
     }
-    function loadAppSelection(applicationList){
+    function loadAppSelection(applicationList) {
         var containerItem = $.trim($('#templateAppSelectionItem').html());
-        $.each(applicationList, function(index, appItem) {
+        $.each(applicationList, function (index, appItem) {
             var x = containerItem.replace(/{{id}}/ig, appItem.id);
-                x = x.replace(/{{name}}/ig, appItem.name);
-                $('#appSelectionContainer').append(x);
+            x = x.replace(/{{name}}/ig, appItem.name);
+            $('#appSelectionContainer').append(x);
         });
         // Disable the next button if a value isn't selected
-        $("#step1 input[type=checkbox]").change(function(input) {
-            console.log('change : '+ input.currentTarget.value);
-            if ($("#step1 input[type=checkbox]:checked").length === 0){
-               connection.trigger('updateButton', { button: 'next', enabled: false }); 
-            }else{
-                connection.trigger('updateButton', { button: 'next', enabled: true }); 
+        $("#step1 input[type=checkbox]").change(function (input) {
+            console.log('change : ' + input.currentTarget.value);
+            if ($("#step1 input[type=checkbox]:checked").length === 0) {
+                connection.trigger('updateButton', { button: 'next', enabled: false });
+            } else {
+                connection.trigger('updateButton', { button: 'next', enabled: true });
             }
-            
+
         });
         connection.trigger('ready');
     }
-    function loadAppTemplate()
-    {
+    function loadAppTemplate() {
         console.log('Start load App Template');
-        
-    $('#step3').find('#containerTemplate').find('.slds-col').remove();
+
+        $('#step3').find('#containerTemplate').find('.slds-col').remove();
         appSelected = getAppSelected();
-        $.each(appSelected, function(index, appItem) {
+        $.each(appSelected, function (index, appItem) {
             var temp = $.trim($('#containerTemplateItem').html());
             var tempOption = $.trim($('#optionContainerTemplateItem').html());
-            callout.getTemplateAvailable(endpoint, token, appItem.id).then(function(data){
+            callout.getTemplateAvailable(endpoint, token, appItem.id).then(function (data) {
                 console.log('success');
-                    console.log(JSON.stringify(data));
-                    var options = '';
+                console.log(JSON.stringify(data));
+                var options = '';
 
-                    $.each(data, function(index, optionItem) {
-                        var x = tempOption.replace(/{{optionId}}/ig, optionItem.campaign_token);
-                        x = x.replace(/{{optionName}}/ig, optionItem.name);
-                        options = options + x;
-                    });                    
-                    var tempReplace = temp.replace(/{{optionContainerTemplate}}/ig, options);
-                    tempReplace = tempReplace.replace(/{{index}}/ig, appItem.id);
-                    tempReplace = tempReplace.replace(/{{appName}}/ig, appItem.name);
-                    $('#containerTemplate').append(tempReplace);
-                    connection.trigger('nextStep');
-
-                    //initiate value for combobox
-                    appSelected.forEach(element => {
-                        var input = $('#step3').find('.slds-combobox').find('.slds-input[id=' + element.id + ']');
-                        if (input.get(0)){
-                            $(input.get(0)).attr('data-id', element.templateId);
-                            $(input.get(0)).attr('value', element.templateName);
-                        }            
-                    }); 
+                $.each(data, function (index, optionItem) {
+                    var x = tempOption.replace(/{{optionId}}/ig, optionItem.campaign_token);
+                    x = x.replace(/{{optionName}}/ig, optionItem.name);
+                    options = options + x;
                 });
-                
+                var tempReplace = temp.replace(/{{optionContainerTemplate}}/ig, options);
+                tempReplace = tempReplace.replace(/{{index}}/ig, appItem.id);
+                tempReplace = tempReplace.replace(/{{appName}}/ig, appItem.name);
+                $('#containerTemplate').append(tempReplace);
+                connection.trigger('nextStep');
+
+                //initiate value for combobox
+                appSelected.forEach(element => {
+                    var input = $('#step3').find('.slds-combobox').find('.slds-input[id=' + element.id + ']');
+                    if (input.get(0)) {
+                        $(input.get(0)).attr('data-id', element.templateId);
+                        $(input.get(0)).attr('value', element.templateName);
+                    }
+                });
+            });
+
         });
-        
-        $("#step3 .slds-dropdown-trigger_click").click(function(input) {
+
+        $("#step3 .slds-dropdown-trigger_click").click(function (input) {
             console.log('click ');
-           
-            if ($(this).hasClass('slds-is-open'))
-            {
-                 $(this).removeClass('slds-is-open');
-            }else{
+
+            if ($(this).hasClass('slds-is-open')) {
+                $(this).removeClass('slds-is-open');
+            } else {
                 $(this).addClass('slds-is-open');
             }
         });
-        $("#step3 .slds-listbox__option").click(function(input) {
+        $("#step3 .slds-listbox__option").click(function (input) {
             console.log('click option');
-           
+
             $("#step3 .slds-combobox__input").attr('value', $(this).children('.slds-media__body').children()[0].title);
             $("#step3 .slds-combobox__input").attr('data-id', $(this).children('.slds-media__body').children()[0].id);
             console.log($(this).children()[0].id);
             console.log($(this).children()[0].title);
             $(this).hasClass('slds-is-selected');
         });
-        
+
     }
 
-    function getAppSelected(){
-        if (appSelected && appSelected.length > 0){
+    function getAppSelected() {
+        if (appSelected && appSelected.length > 0) {
             return appSelected;
-        }        
+        }
         var returnArray = [];
-        $("#step1").find("input[type=checkbox]:checked").each(function(i) {
+        $("#step1").find("input[type=checkbox]:checked").each(function (i) {
             var item = {};
             item.id = this.id;
             var app = appSelection.find(searchApp => searchApp.id === item.id);
-            if (app)
-            {
+            if (app) {
                 item.name = app.name;
             }
             returnArray.push(item);
@@ -305,35 +301,35 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         return returnArray;
     }
 
-    function updateAppSelected(){
+    function updateAppSelected() {
         appSelected.forEach(element => {
             var input = $('#step3').find('.slds-combobox').find('.slds-input[id=' + element.id + ']');
-            if (input.get(0)){
+            if (input.get(0)) {
                 element.templateId = $(input.get(0)).attr('data-id');
                 element.templateName = $(input.get(0)).attr('value');
-            }            
-        });        
+            }
+        });
     }
 
-    function onClickedBack () {
+    function onClickedBack() {
         connection.trigger('prevStep');
     }
 
-    function onGotoStep (step) {
+    function onGotoStep(step) {
         showStep(step);
         //connection.trigger('ready');
     }
 
     function showStep(step, stepIndex) {
         if (stepIndex && !step) {
-            step = steps[stepIndex-1];
+            step = steps[stepIndex - 1];
         }
 
         currentStep = step;
 
         $('.step').hide();
 
-        switch(currentStep.key) {
+        switch (currentStep.key) {
             case 'step1':
                 $('#step1').show();
                 connection.trigger('updateButton', {
@@ -343,7 +339,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
                 connection.trigger('updateButton', {
                     button: 'back',
                     visible: false
-                });                
+                });
                 break;
             case 'step2':
                 $('#step2').show();
@@ -357,7 +353,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
                     visible: true
                 });
                 connection.trigger('ready');
-                break;                
+                break;
             case 'step3':
                 //loadAppTemplate();
                 $('#step3').show();
@@ -374,8 +370,8 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
             case 'step4':
                 $('#step4').show();
                 connection.trigger('updateButton', {
-                     button: 'back',
-                     visible: true
+                    button: 'back',
+                    visible: true
                 });
                 if (lastStepEnabled) {
                     connection.trigger('updateButton', {
@@ -400,15 +396,15 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
     }
 
     function save() {
-        if (formatSelection === "template"){
+        if (formatSelection === "template") {
             updateAppSelected();
-        }      
+        }
         var title = $('#messageTitle').val();
         var body = $('#messageBody').val();
         var deepLink = $('#messageDeepLink').val();
         var imageUrl = $('#messageImage').val();
         var groupid = $('#groupid').val();
-        
+
 
         payload['arguments'].execute.inArguments = [
             {
