@@ -12,8 +12,15 @@ var contextUser = {};
 var clientMC = {};
 
 exports.logExecuteData = [];
+var configApplication = [];
 //CUSTOM_ACTIVITY_CONFIGURATION
-var configApplication = JSON.parse(process.env.CUSTOM_ACTIVITY_CONFIGURATION);
+if (process.env.CUSTOM_ACTIVITY_CONFIGURATION === undefined){
+    console.log('Required Env variables is not set: CUSTOM_ACTIVITY_CONFIGURATION');
+    throw new Error('Required Env variables is not set: CUSTOM_ACTIVITY_CONFIGURATION');
+}
+else{
+    configApplication = JSON.parse(process.env.CUSTOM_ACTIVITY_CONFIGURATION);
+}
 
 // var configApplication = [{
 //     apiRestToken: 'dcee600f7a7be131481e28ddb40ae1b0',
