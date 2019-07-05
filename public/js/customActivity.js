@@ -185,8 +185,8 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
         else if (currentStep.key === 'step2' && formatSelection === 'template') {
             steps[2].active = true;
             steps[3].active = false;
+            connection.trigger('updateSteps', steps);
             loadAppTemplate();
-            // connection.trigger('updateSteps', steps);
         }
         else if (currentStep.key === 'step3' && overrideMessage === false) {
             save();
