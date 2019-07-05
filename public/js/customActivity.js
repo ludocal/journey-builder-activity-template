@@ -407,6 +407,7 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
         var body = $('#messageBody').val();
         var deepLink = $('#messageDeepLink').val();
         var imageUrl = $('#messageImage').val();
+        var groupid = $('#groupid').val();
         
 
         payload['arguments'].execute.inArguments = [
@@ -418,7 +419,8 @@ define(['postmonger', 'callout'], function(Postmonger, callout) {
                 "deepLink": deepLink,
                 "imageUrl": imageUrl,
                 "contactIdentifier": "{{Contact.Key}}",
-                "overrideMessage": overrideMessage
+                "overrideMessage": overrideMessage,
+                "groupid": groupid
             }
         ];
 

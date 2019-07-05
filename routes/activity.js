@@ -120,7 +120,7 @@ exports.execute = function (req, res) {
             decodedArgs.appSelection.forEach(element => {
                 //set common values
                 var pushWrapper = {};
-                pushWrapper.group_id = decoded.activityId;
+                pushWrapper.group_id = decodedArgs.groupid || decoded.activityId;
                 pushWrapper.recipients = {};
                 pushWrapper.recipients.custom_ids = [decodedArgs.contactIdentifier];
                 //set values with template selection
@@ -191,8 +191,6 @@ function getClientByJWT(reqBody, callback) {
         try {
             var decoded = JWT.verifySync(reqBody, configApplication[key].jwtSecret);
             contextUser = configApplication[key];
-            // var decoded = JSON.parse('{"inArguments":[{"formatSelection":"template","appSelection":[{"id":"5CDD1B576095D88F6FE92DA49189D2","templateId":"8bd691a95ab70db950df46a2e44df1f2"}],"title":"Title test","body":"111111111","deepLink":"","imageUrl":"","contactIdentifier":"ludovic@texei.com","overrideMessage":true}],"outArguments":[],"activityObjectID":"9a3e7454-eec9-45c2-914f-5c8c09fab1cf","journeyId":"00a5cbdf-cb71-44fa-92ab-94c436451b65","activityId":"9a3e7454-eec9-45c2-914f-5c8c09fab1cf","definitionInstanceId":"77ac2cf8-f685-4a6c-b826-a7cc6425a9d4","activityInstanceId":"b651971b-47d0-4134-b995-483584e32fa2","keyValue":"ludovic@texei.com","mode":0}');
-            // contextUser = configApplication[0];
             initMarketingCloud();
             callback(null, decoded);
             return;
