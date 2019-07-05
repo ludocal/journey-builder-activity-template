@@ -22,25 +22,6 @@ else{
     configApplication = JSON.parse(process.env.CUSTOM_ACTIVITY_CONFIGURATION);
 }
 
-// var configApplication = [{
-//     apiRestToken: 'dcee600f7a7be131481e28ddb40ae1b0',
-//     domain: 'mcwd-d2pprjfdcksy88llpp9dv-4',
-//     jwtSecret: 'jntkXQazwsJZq_dIZsgz3YRGRMs9jpU-AKEhA3BN42WRmWYAT1jcb3aW5J4lzEmidqtHqc6vqY4Z-qEFIOFQv-GtOUDq4e5D-baF4Tk2mSy4aF66zOSX-vH9GpeFjR2r5VasSAYBC42MYui1GJHZ0mLEVkZbaNfT6sZfH2mth58A9-thITgLqgYXFjJ14V3dFtG8uoERp1RKZXeG_l8n9_iWPtG6DaNPFQWVLV-srtiKpZCe68Qw1NSAWBBc3A2',
-//     mid: 500008428,
-//     clientId: '75ltplaovygkrhqzrkbi27yj',
-//     clientSecret: 'guaLsbOmBEUc6cf11F7npGM3',
-//     authOrigin: "https://mcwd-d2pprjfdcksy88llpp9dv-4.auth.marketingcloudapis.com",
-//     soapOrigin: "https://mcwd-d2pprjfdcksy88llpp9dv-4.soap.marketingcloudapis.com",
-//     appAvailable: [
-//         {
-//             name: 'Batch STORE IOS',
-//             id: '5CDD1B576095D88F6FE92DA49189D2'
-//         },
-//         {
-//             name: 'BATCH STORE ANDROID',
-//             id: '5CDD1B576095D88F6FE92DA49189D2'
-//         }]
-// }];
 
 function logData(req) {
     exports.logExecuteData.push({
