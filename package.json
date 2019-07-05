@@ -24,6 +24,7 @@
     "require": "^2.4.20",
     "ejs": "1.0.0",
     "cors": "^2.8.5",
-    "sfmc-fuelsdk-node": "^2.3.1"
+    "sfmc-fuelsdk-node": "^2.3.1",
+    "winston": "3.2.1"
   }
 }

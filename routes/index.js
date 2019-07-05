@@ -3,6 +3,14 @@
 // Deps
 var activity = require('./activity');
 var https = require('https');
+const winston = require('winston');
+const logger = winston.createLogger({
+    format: winston.format.simple(),
+    transports: [
+        new winston.transports.Console()
+    ]
+});
+
 var configApplication = [];
 //CUSTOM_ACTIVITY_CONFIGURATION
 if (process.env.CUSTOM_ACTIVITY_CONFIGURATION === undefined){
@@ -19,6 +27,7 @@ else{
  */
 exports.index = function (req, res) {
     //console.log(req);
+    logger.info('Get Home page');
     if (req.session && !req.session.token) {
         res.render('index', {
             title: 'Unauthenticated',
