@@ -4,7 +4,12 @@ var https = require('https');
 const ET_Client = require('sfmc-fuelsdk-node');
 const winston = require('winston');
 const logger = winston.createLogger({
-    format: winston.format.simple(),
+    format: winston.format.combine(
+        winston.format.timestamp(),
+        winston.format.printf((info) => {
+            return `[${info.timestamp}] - ${info.level}: ${info.message}`;
+        })
+    ),
     transports: [
         new winston.transports.Console()
     ]
@@ -22,7 +27,7 @@ exports.logExecuteData = [];
 var configApplication = [];
 //CUSTOM_ACTIVITY_CONFIGURATION
 if (process.env.CUSTOM_ACTIVITY_CONFIGURATION === undefined){
-    console.log('Required Env variables is not set: CUSTOM_ACTIVITY_CONFIGURATION');
+    logger.error('Required Env variables is not set: CUSTOM_ACTIVITY_CONFIGURATION');
     throw new Error('Required Env variables is not set: CUSTOM_ACTIVITY_CONFIGURATION');
 }
 else{
@@ -63,15 +68,14 @@ exports.execute = function (req, res) {
 
         // verification error -> unauthorized request
         if (err) {
-            console.error(err);
+            logger.error(err);
             return res.status(401).end();
         }
 
         if (decoded && decoded.inArguments && decoded.inArguments.length > 0) {
-            console.log(JSON.stringify(decoded));
+            logger.debug(JSON.stringify(decoded));
             // decoded in arguments
             var decodedArgs = decoded.inArguments[0];
-            console.log(JSON.stringify(decodedArgs));
 
             decodedArgs.appSelection.forEach(element => {
                 //set common values
@@ -109,7 +113,7 @@ exports.execute = function (req, res) {
             res.send(200, 'Execute');
 
         } else {
-            console.error('inArguments invalid.');
+            logger.error('inArguments invalid.');
             return res.status(400).end();
         }
     });
@@ -147,7 +151,7 @@ function getClientByJWT(reqBody, callback) {
             callback(null, decoded);
             return;
         } catch (error) {
-            console.log(error);
+            logger.error(error);
         }
     });
     // callback("JWT NOT FOUND", null);
@@ -164,7 +168,7 @@ function sendPush(appKey, pushWrapper, decoded) {
     var responseString = "";
     var responseObject;
     const req = https.request(options, (res) => {
-        console.log('statusCode:', res.statusCode);
+        logger.debug('statusCode:', res.statusCode);
         //console.log('headers:', res.headers);
         var str;
         res.on('data', (d) => {
@@ -180,7 +184,7 @@ function sendPush(appKey, pushWrapper, decoded) {
                     journey_id: decoded.journeyId, activity_id: decoded.activityId
                 }, (err, msg) => { });
             }
-            console.log(responseString);
+            logger.debug(responseString);
             if (res.statusCode === 201) {
                 logPushEvent({
                     api_key: appKey, contact_key: pushWrapper.recipients.custom_ids[0],
@@ -193,15 +197,15 @@ function sendPush(appKey, pushWrapper, decoded) {
     });
 
     req.on('error', (e) => {
-        console.error(e);
+        logger.error(e);
     });
-    console.log(JSON.stringify(pushWrapper));
+    logger.debug(JSON.stringify(pushWrapper));
     req.write(JSON.stringify(pushWrapper));
     req.end();
 }
 
 function initMarketingCloud() {
-    console.log('Init Marketing Cloud Token');
+    logger.info('Init Marketing Cloud Token');
     clientMC = new ET_Client(contextUser.clientId, contextUser.clientSecret, null,
         {
             authOrigin: contextUser.authOrigin,
@@ -212,15 +216,15 @@ function initMarketingCloud() {
         });
 }
 function logPushEvent(props, callback) {
-    console.log('Insert BATCH_PUSH EVENT');
+    logger.info('Insert BATCH_PUSH EVENT');
     const Name = 'BATCH_PUSH';
     clientMC.dataExtensionRow({ Name, props }).post((err, response) => {
         if (err) {
-            console.log('Error inserting to BATCH_PUSH');
+            logger.info('Error inserting to BATCH_PUSH');
             console.log(err);
             throw new Error(err);
         }
-        console.log('[DEBUG] INSERTED BATCH_PUSH ROW');
+        logger.debug('INSERTED BATCH_PUSH ROW');
         callback(err, response);
     });
 }
