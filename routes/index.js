@@ -60,9 +60,9 @@ exports.getApplicationList = function (req, res) {
 };
 
 exports.getTemplateList = function (req, res) {
-    console.log('getTemplateList');
-    console.log('req.query.endpoint: ', req.query.endpoint);
-    console.log('req.query.token: ', req.query.token);
+    logger.info('Request Template List');
+    logger.debug('req.query.endpoint: ', req.query.endpoint);
+    logger.debug('req.query.token: ', req.query.token);
     var endpoint = req.query.endpoint;
     var token = req.query.token;
     var appKey = req.query.appKey;
@@ -77,11 +77,9 @@ exports.getTemplateList = function (req, res) {
                     }
                     return res.json(response).end();
                 })
-
             }
         });
     });
-    //res.json( 'ERROR' );
 };
 
 function getMIDfromToken(token, host, callback) {
