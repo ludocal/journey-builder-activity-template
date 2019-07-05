@@ -141,7 +141,7 @@ exports.execute = function (req, res) {
                     }
                     if (decodedArgs.deepLink !== null && decodedArgs.deepLink !== '')
                     {
-                      pushWrapper.deepLink = decodedArgs.deepLink;  
+                      pushWrapper.deeplink = decodedArgs.deepLink;  
                     }
                     if (decodedArgs.imageUrl !== null && decodedArgs.imageUrl !== '')
                     {
