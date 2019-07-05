@@ -4,6 +4,7 @@
 var activity = require('./activity');
 var https = require('https');
 const winston = require('winston');
+const CATEGORY = 'example-7';
 const logger = winston.createLogger({
     format: winston.format.combine(
         winston.format.label({
