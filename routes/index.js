@@ -5,7 +5,15 @@ var activity = require('./activity');
 var https = require('https');
 const winston = require('winston');
 const logger = winston.createLogger({
-    format: winston.format.simple(),
+    format: winston.format.combine(
+        winston.format.label({
+            label: CATEGORY
+        }),
+        winston.format.timestamp(),
+        winston.format.printf((info) => {
+            return `${info.timestamp} - ${info.label}:[${info.level}]: ${info.message}`;
+        })
+    ),
     transports: [
         new winston.transports.Console()
     ]
@@ -13,11 +21,11 @@ const logger = winston.createLogger({
 
 var configApplication = [];
 //CUSTOM_ACTIVITY_CONFIGURATION
-if (process.env.CUSTOM_ACTIVITY_CONFIGURATION === undefined){
-    console.log('Required Env variables is not set: CUSTOM_ACTIVITY_CONFIGURATION');
+if (process.env.CUSTOM_ACTIVITY_CONFIGURATION === undefined) {
+    logger.error('Required Env variables is not set: CUSTOM_ACTIVITY_CONFIGURATION');
     throw new Error('Required Env variables is not set: CUSTOM_ACTIVITY_CONFIGURATION');
 }
-else{
+else {
     configApplication = JSON.parse(process.env.CUSTOM_ACTIVITY_CONFIGURATION);
 }
 
