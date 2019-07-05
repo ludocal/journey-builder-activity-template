@@ -117,7 +117,6 @@ exports.execute = function (req, res) {
                 }
                 //set values for new template
                 if (decodedArgs.formatSelection === "new" || (decodedArgs.overrideMessage && decodedArgs.overrideMessage === true)) {
-                    pushWrapper.message = {};
                     if (decodedArgs.title !== null && decodedArgs.title !== '') {
                         pushWrapper.message = pushWrapper.message === undefined ? {} : pushWrapper.message;
                         pushWrapper.message.title = decodedArgs.title;
