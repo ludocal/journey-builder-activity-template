@@ -6,7 +6,7 @@ var https = require('https');
 
 //CUSTOM_ACTIVITY_CONFIGURATION
 if (process.env.CUSTOM_ACTIVITY_CONFIGURATION === undefined){
-    console.log('Required var CUSTOM_ACTIVITY_CONFIGURATION is missing');
+    console.log('Required var: CUSTOM_ACTIVITY_CONFIGURATION is missing');
 }
 var configApplication = JSON.parse(process.env.CUSTOM_ACTIVITY_CONFIGURATION);
 
