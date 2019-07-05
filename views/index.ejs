@@ -30,22 +30,20 @@
     $("#step2 input[type=radio]").change(function () {
       alert("Handler for .change() called.");
     });
-    function comboboxClick(input)
-    {
-      if ($(input).hasClass('slds-is-open'))
-      {
-           $(input).removeClass('slds-is-open');
-      }else{
-          $(input).addClass('slds-is-open');
+    function comboboxClick(input) {
+      if ($(input).hasClass('slds-is-open')) {
+        $(input).removeClass('slds-is-open');
+      } else {
+        $(input).addClass('slds-is-open');
       }
     }
-    function comboboxSelected(input){
+    function comboboxSelected(input) {
       console.log('click option');
-           
+
       $(input).closest('.slds-combobox').find('.slds-input').attr('value', $(input).children('.slds-media__body').children()[0].title);
       $(input).closest('.slds-combobox').find('.slds-input').attr('data-id', $(input).children('.slds-media__body').children()[0].id);
-      console.log($(input).children('.slds-media__body').children()[0].title);      
-      console.log($(input).children('.slds-media__body').children()[0].id);      
+      console.log($(input).children('.slds-media__body').children()[0].title);
+      console.log($(input).children('.slds-media__body').children()[0].id);
     }
   </script>
 </head>
@@ -53,21 +51,30 @@
 <body>
   <div id="step1" class="step">
     <div class="slds-grid">
-      <main class="slds-col" id="appSelectionContainer">
-      <template id="templateAppSelectionItem">
+      <div class="slds-col">
         <div class="slds-form-element">
-          <label class="slds-checkbox_toggle slds-grid">
-            <span class="slds-form-element__label slds-m-bottom_none">{{name}}</span>
-            <input id="{{id}}" type="checkbox" name="checkbox-toggle-14" value="{{id}}"
-              aria-describedby="checkbox-toggle-14" />
-            <span id="checkbox-toggle-14" class="slds-checkbox_faux_container" aria-live="assertive">
-              <span class="slds-checkbox_faux"></span>
-              <span class="slds-checkbox_on">Enabled</span>
-              <span class="slds-checkbox_off">Disabled</span>
-            </span>
-          </label>
+          <label class="slds-form-element__label" for="text-input-id-1">
+            <abbr class="slds-required" title="required">* </abbr>Input Label</label>
+          <div class="slds-form-element__control">
+            <input type="text" id="text-input-id-1" placeholder="Placeholder Text" required="" class="slds-input" />
+          </div>
         </div>
-      </template>
+      </div>
+      <main class="slds-col" id="appSelectionContainer">
+        <template id="templateAppSelectionItem">
+          <div class="slds-form-element">
+            <label class="slds-checkbox_toggle slds-grid">
+              <span class="slds-form-element__label slds-m-bottom_none">{{name}}</span>
+              <input id="{{id}}" type="checkbox" name="checkbox-toggle-14" value="{{id}}"
+                aria-describedby="checkbox-toggle-14" />
+              <span id="checkbox-toggle-14" class="slds-checkbox_faux_container" aria-live="assertive">
+                <span class="slds-checkbox_faux"></span>
+                <span class="slds-checkbox_on">Enabled</span>
+                <span class="slds-checkbox_off">Disabled</span>
+              </span>
+            </label>
+          </div>
+        </template>
       </main>
     </div>
   </div>
@@ -169,7 +176,8 @@
         <div class="slds-form-element">
           <label class="slds-checkbox_toggle slds-grid">
             <span class="slds-form-element__label slds-m-bottom_none">Override template?</span>
-            <input id="checkboxOverrideMessage" type="checkbox" name="checkboxOverrideMessage" value="checkboxOverrideMessage" aria-describedby="checkboxOverrideMessage" />
+            <input id="checkboxOverrideMessage" type="checkbox" name="checkboxOverrideMessage"
+              value="checkboxOverrideMessage" aria-describedby="checkboxOverrideMessage" />
             <span id="checkboxOverrideMessage" class="slds-checkbox_faux_container" aria-live="assertive">
               <span class="slds-checkbox_faux"></span>
               <span class="slds-checkbox_on">Enabled</span>
@@ -220,21 +228,21 @@
     });
   </script>
   <template id="optionContainerTemplateItem">
-      <li role="presentation" class="slds-listbox__item">
-        <div id="listbox-option-unique-id-01"
-          class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center"
-          role="option" onclick="comboboxSelected(this)">
-          <span class="slds-media__figure">
-            <svg class="slds-icon slds-icon_x-small slds-listbox__icon-selected" aria-hidden="true">
-              <use xlink:href="images/symbols.svg#check"></use>
-            </svg>
-          </span>
-          <span class="slds-media__body">
-            <span class="slds-truncate" id="{{optionId}}" title="{{optionName}}">{{optionName}}</span>
-          </span>
-        </div>
-      </li>
-    </template>            
+    <li role="presentation" class="slds-listbox__item">
+      <div id="listbox-option-unique-id-01"
+        class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center"
+        role="option" onclick="comboboxSelected(this)">
+        <span class="slds-media__figure">
+          <svg class="slds-icon slds-icon_x-small slds-listbox__icon-selected" aria-hidden="true">
+            <use xlink:href="images/symbols.svg#check"></use>
+          </svg>
+        </span>
+        <span class="slds-media__body">
+          <span class="slds-truncate" id="{{optionId}}" title="{{optionName}}">{{optionName}}</span>
+        </span>
+      </div>
+    </li>
+  </template>
 </body>
 
 </html>
