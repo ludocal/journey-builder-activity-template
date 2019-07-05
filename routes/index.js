@@ -47,9 +47,9 @@ exports.index = function (req, res) {
 };
 
 exports.getApplicationList = function (req, res) {
-    console.log('getApplicationList');
-    console.log('req.query.endpoint: ', req.query.endpoint);
-    console.log('req.query.token: ', req.query.token);
+    logger.info('Request ApplicationList');
+    logger.debug('req.query.endpoint: ', req.query.endpoint);
+    logger.debug('req.query.token: ', req.query.token);
     var endpoint = req.query.endpoint;
     var token = req.query.token;
     var host = endpoint.replace("https://", "").replace("/", "");
@@ -98,8 +98,8 @@ function getMIDfromToken(token, host, callback) {
         var responseString = "";
         var responseObject;
         const req = https.request(options, (res) => {
-            console.log('statusCode:', res.statusCode);
-            console.log('headers:', res.headers);
+            //console.log('statusCode:', res.statusCode);
+            //console.log('headers:', res.headers);
             var str;
             res.on('data', (d) => {
                 responseString += d;
@@ -108,7 +108,7 @@ function getMIDfromToken(token, host, callback) {
                 if (res.statusCode >= 400) {
                     callback(null, 0);
                 }
-                console.log(responseString);
+                //console.log(responseString);
                 if (res.statusCode === 200) {
                     responseObject = JSON.parse(responseString);
                     callback(null, responseObject.organization.id);
@@ -117,7 +117,7 @@ function getMIDfromToken(token, host, callback) {
         });
 
         req.on('error', (e) => {
-            console.error(e);
+            logger.error(e);
         });
         req.end();
     });
@@ -133,7 +133,7 @@ function getTemplateFromBatch(appKey, apiRestToken, callback) {
     var responseString = "";
     var responseObject;
     const req = https.request(options, (res) => {
-        console.log('statusCode:', res.statusCode);
+        logger.debug('statusCode:', res.statusCode);
         //console.log('headers:', res.headers);
         var str;
         res.on('data', (d) => {
@@ -142,10 +142,10 @@ function getTemplateFromBatch(appKey, apiRestToken, callback) {
         res.on('end', (d) => {
             responseObject = JSON.parse(responseString);
             if (res.statusCode >= 400) {
-                console.error(responseObject);
+                logger.error(responseObject);
                 callback(responseObject, null);
             }
-            console.log(responseString);
+            logger.debug(responseString);
             if (res.statusCode === 200) {
                 callback(null, responseObject);
             }
@@ -153,14 +153,14 @@ function getTemplateFromBatch(appKey, apiRestToken, callback) {
     });
 
     req.on('error', (e) => {
-        console.error(e);
+        logger.error(e);
     });
     req.end();
 }
 
 
 exports.login = function (req, res) {
-    console.log('req.body: ', req.body);
+    logger.debug('req.body: ', req.body);
     res.redirect('/');
 };
 
