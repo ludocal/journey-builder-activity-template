@@ -73,7 +73,7 @@ exports.execute = function (req, res) {
         }
 
         if (decoded && decoded.inArguments && decoded.inArguments.length > 0) {
-            logger.debug(JSON.stringify(decoded));
+            logger.info(JSON.stringify(decoded));
             // decoded in arguments
             var decodedArgs = decoded.inArguments[0];
 
@@ -159,6 +159,7 @@ function getClientByJWT(reqBody, callback) {
 }
 
 function sendPush(appKey, pushWrapper, decoded) {
+    logger.info(JSON.stringify(pushWrapper));
     const options = {
         hostname: 'labs.api.batch.com',
         path: '/1.1/' + appKey + '/transactional/send',
