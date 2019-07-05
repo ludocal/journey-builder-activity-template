@@ -7,12 +7,9 @@ const winston = require('winston');
 const CATEGORY = 'example-7';
 const logger = winston.createLogger({
     format: winston.format.combine(
-        winston.format.label({
-            label: CATEGORY
-        }),
         winston.format.timestamp(),
         winston.format.printf((info) => {
-            return `${info.timestamp} - ${info.label}:[${info.level}]: ${info.message}`;
+            return `[${info.timestamp}] - ${info.level}: ${info.message}`;
         })
     ),
     transports: [
