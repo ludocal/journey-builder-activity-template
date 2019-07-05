@@ -124,27 +124,24 @@ exports.execute = function (req, res) {
                 pushWrapper.recipients = {};
                 pushWrapper.recipients.custom_ids = [decodedArgs.contactIdentifier];
                 //set values with template selection
-                if (decodedArgs.formatSelection === "template")
-                {
+                if (decodedArgs.formatSelection === "template") {
                     pushWrapper.template_id = element.templateId;
                 }
                 //set values for new template
-                if (decodedArgs.formatSelection === "new" || (decodedArgs.overrideMessage && decodedArgs.overrideMessage === true )) {
+                if (decodedArgs.formatSelection === "new" || (decodedArgs.overrideMessage && decodedArgs.overrideMessage === true)) {
                     pushWrapper.message = {};
-                    if (decodedArgs.title !== null && decodedArgs.title !== '')
-                    {
-                      pushWrapper.message.title = decodedArgs.title;  
+                    if (decodedArgs.title !== null && decodedArgs.title !== '') {
+                        pushWrapper.message = pushWrapper.message === undefined ? {} : pushWrapper.message;
+                        pushWrapper.message.title = decodedArgs.title;
                     }
-                    if (decodedArgs.body !== null && decodedArgs.body !== '')
-                    {
-                      pushWrapper.message.body = decodedArgs.body;  
+                    if (decodedArgs.body !== null && decodedArgs.body !== '') {
+                        pushWrapper.message = pushWrapper.message === undefined ? {} : pushWrapper.message;
+                        pushWrapper.message.body = decodedArgs.body;
                     }
-                    if (decodedArgs.deepLink !== null && decodedArgs.deepLink !== '')
-                    {
-                      pushWrapper.deeplink = decodedArgs.deepLink;  
+                    if (decodedArgs.deepLink !== null && decodedArgs.deepLink !== '') {
+                        pushWrapper.deeplink = decodedArgs.deepLink;
                     }
-                    if (decodedArgs.imageUrl !== null && decodedArgs.imageUrl !== '')
-                    {
+                    if (decodedArgs.imageUrl !== null && decodedArgs.imageUrl !== '') {
                         pushWrapper.media = {};
                         pushWrapper.media.picture = decodedArgs.imageUrl;
                         pushWrapper.skip_media_check = true;
@@ -154,8 +151,8 @@ exports.execute = function (req, res) {
             });
 
             //logData(req);
-        res.send(200, 'Execute');
-            
+            res.send(200, 'Execute');
+
         } else {
             console.error('inArguments invalid.');
             return res.status(400).end();
@@ -221,17 +218,21 @@ function sendPush(appKey, pushWrapper, decoded) {
         res.on('end', (d) => {
             responseObject = JSON.parse(responseString);
             if (res.statusCode >= 400) {
-                logPushEvent({api_key: appKey, contact_key: pushWrapper.recipients.custom_ids[0], 
-                    token: pushWrapper.group_id + Date.now(), event: 'error', 
+                logPushEvent({
+                    api_key: appKey, contact_key: pushWrapper.recipients.custom_ids[0],
+                    token: pushWrapper.group_id + Date.now(), event: 'error',
                     api_error: responseObject.message, group_id: pushWrapper.group_id, event_date: new Date().toISOString(),
-                journey_id: decoded.journeyId, activity_id: decoded.activityId},(err, msg) => {});  
+                    journey_id: decoded.journeyId, activity_id: decoded.activityId
+                }, (err, msg) => { });
             }
             console.log(responseString);
             if (res.statusCode === 201) {
-                  logPushEvent({api_key: appKey, contact_key: pushWrapper.recipients.custom_ids[0], 
-                    token: responseObject.token, event: 'accepted', 
+                logPushEvent({
+                    api_key: appKey, contact_key: pushWrapper.recipients.custom_ids[0],
+                    token: responseObject.token, event: 'accepted',
                     group_id: pushWrapper.group_id, event_date: new Date().toISOString(),
-                    journey_id: decoded.journeyId, activity_id: decoded.activityId},(err, msg) => {});
+                    journey_id: decoded.journeyId, activity_id: decoded.activityId
+                }, (err, msg) => { });
             }
         });
     });
@@ -244,8 +245,7 @@ function sendPush(appKey, pushWrapper, decoded) {
     req.end();
 }
 
-function initMarketingCloud()
-{
+function initMarketingCloud() {
     console.log('Init Marketing Cloud Token');
     clientMC = new ET_Client(contextUser.clientId, contextUser.clientSecret, null,
         {
@@ -256,7 +256,7 @@ function initMarketingCloud()
             }
         });
 }
-function logPushEvent(props, callback) { 
+function logPushEvent(props, callback) {
     console.log('Insert BATCH_PUSH EVENT');
     const Name = 'BATCH_PUSH';
     clientMC.dataExtensionRow({ Name, props }).post((err, response) => {
@@ -270,14 +270,14 @@ function logPushEvent(props, callback) {
     });
 }
 
-function string_to_slug (str) {
+function string_to_slug(str) {
     str = str.replace(/^\s+|\s+$/g, ''); // trim
     str = str.toLowerCase();
-  
+
     // remove accents, swap ñ for n, etc
     var from = "àáäâèéëêìíïîòóöôùúüûñç·/_,:;";
-    var to   = "aaaaeeeeiiiioooouuuunc------";
-    for (var i=0, l=from.length ; i<l ; i++) {
+    var to = "aaaaeeeeiiiioooouuuunc------";
+    for (var i = 0, l = from.length; i < l; i++) {
         str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
     }
 
