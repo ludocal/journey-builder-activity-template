@@ -284,9 +284,9 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
     }
 
     function getAppSelected() {
-        if (appSelected && appSelected.length > 0) {
-            return appSelected;
-        }
+       // if (appSelected && appSelected.length > 0) {
+         //   return appSelected;
+        //}
         var returnArray = [];
         $("#step1").find("input[type=checkbox]:checked").each(function (i) {
             var item = {};
