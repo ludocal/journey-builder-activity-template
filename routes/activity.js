@@ -110,7 +110,7 @@ exports.execute = function (req, res) {
             });
 
             //logData(req);
-            res.send(200, 'Execute');
+            res.status(200).send('Execute');
 
         } else {
             logger.error('inArguments invalid.');
