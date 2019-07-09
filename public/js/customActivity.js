@@ -1,6 +1,5 @@
 define(['postmonger', 'callout'], function (Postmonger, callout) {
     'use strict';
-    //var appConfiguration = module.config().appConfiguration;
     var connection = new Postmonger.Session();
     var payload = {};
     var appSelection = [];
@@ -68,7 +67,6 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
 
             connection.trigger('updateSteps', steps);
         });
-        // loadAppTemplate();
     }
 
     function initialize(data) {
@@ -261,6 +259,7 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
                         $(input.get(0)).attr('value', element.templateName);
                     }
                 });
+                validateStep3();
             });
 
         });
