@@ -131,7 +131,7 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
         if (formatSelection) {
             $('#step2').find('input[type=radio]').filter('[value=' + formatSelection + ']').prop('checked', true);
         }
-        else{
+        else {
             formatSelection = "new";
             $('#step2').find('input[type=radio]').filter('[value=' + formatSelection + ']').prop('checked', true);
         }
@@ -145,9 +145,9 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
 
                 }
             });
-        //     connection.trigger('updateButton', { button: 'next', enabled: true });
-        // } else {
-        //     connection.trigger('updateButton', { button: 'next', enabled: false });
+            //     connection.trigger('updateButton', { button: 'next', enabled: true });
+            // } else {
+            //     connection.trigger('updateButton', { button: 'next', enabled: false });
         }
         $('#messageTitle').val(title);
         $('#messageBody').val(body);
@@ -283,12 +283,15 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
             console.log($(this).children()[0].title);
             $(this).hasClass('slds-is-selected');
         });
+        $('#step3 .slds-combobox__input').change(function (input){
+            validateStep3();
+        });
 
     }
 
     function getAppSelected() {
-       // if (appSelected && appSelected.length > 0) {
-         //   return appSelected;
+        // if (appSelected && appSelected.length > 0) {
+        //   return appSelected;
         //}
         var returnArray = [];
         $("#step1").find("input[type=checkbox]:checked").each(function (i) {
@@ -431,8 +434,7 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
     }
 
     //Functions for validation
-    function validateStep1()
-    {
+    function validateStep1() {
         if ($("#step1 input[type=checkbox]:checked").length > 0 && ($.trim($('#groupid').val()) !== '')) {
             connection.trigger('updateButton', { button: 'next', enabled: true });
         } else {
@@ -440,4 +442,14 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
         }
     }
 
+    function validateStep3() {
+
+        $('#step3 .slds-combobox__input').each(function () {
+            if ($(this).val() === "") {
+                connection.trigger('updateButton', { button: 'next', enabled: false });
+                return;
+            }
+        });
+        connection.trigger('updateButton', { button: 'next', enabled: true });
+    }
 });
