@@ -142,10 +142,8 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
                 } catch (error) {
 
                 }
+                validateStep1();
             });
-            //     connection.trigger('updateButton', { button: 'next', enabled: true });
-            // } else {
-            //     connection.trigger('updateButton', { button: 'next', enabled: false });
         }
         $('#messageTitle').val(title);
         $('#messageBody').val(body);
@@ -156,7 +154,6 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
     }
 
     function onGetTokens(tokens) {
-        // Response: tokens = { token: <legacy token>, fuel2token: <fuel api token> }
         token = tokens.fuel2token;
         console.log('Token : ' + token);
         console.log('Token : ' + endpoint);
@@ -224,7 +221,6 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
             console.log('change : ' + input.currentTarget.value);
             validateStep1();
         });
-        $("#step1 input[type=checkbox]").trigger('change');
         connection.trigger('ready');
     }
     function loadAppTemplate() {
