@@ -24,7 +24,7 @@ const Path = require('path');
 var configApplicationRaw, configApplication = [];
 
 // try to get configuration from CUSTOM_ACTIVITY_CONFIGURATION env var
-if (typeof(process.env.CUSTOM_ACTIVITY_CONFIGURATION) !== 'undefined') {
+if (typeof (process.env.CUSTOM_ACTIVITY_CONFIGURATION) !== 'undefined') {
     configApplicationRaw = process.env.CUSTOM_ACTIVITY_CONFIGURATION;
     logger.info('Get application configuration from `CUSTOM_ACTIVITY_CONFIGURATION` environment variable');
 }
@@ -35,7 +35,7 @@ else {
     try {
         configApplicationRaw = fs.readFileSync(Path.join(Path.dirname(__dirname), configApplicationFilename));
     }
-    catch(e) {
+    catch (e) {
         logger.error('Failed to get or open ' + configApplicationFilename + ' file');
         process.exit(1);
     }
@@ -103,6 +103,8 @@ exports.getTemplateList = function (req, res) {
 
 function getMIDfromToken(token, host, callback) {
     logger.info('Start getMIDfromToken');
+    logger.debug('Token : ' + token);
+    logger.debug('Host : ' + host);
     configApplication.forEach(element => {
         const options = {
             hostname: host,
@@ -113,12 +115,13 @@ function getMIDfromToken(token, host, callback) {
         var responseString = "";
         var responseObject;
         const req = https.request(options, (res) => {
-            logger.debug('Response status code : ' + res.statusCode);
-            logger.debug('Response status message : ' + res.statusMessage);
+
             res.on('data', (d) => {
                 responseString += d;
             });
             res.on('end', (d) => {
+                logger.debug('Response status code : ' + res.statusCode);
+                logger.debug('Response status message : ' + res.statusMessage);
                 if (res.statusCode >= 400) {
                     callback(null, 0);
                 }
