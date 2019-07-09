@@ -48,6 +48,9 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
             connection.trigger('updateButton', { button: 'next', enabled: true });
         });
 
+        $("#groupid").change(function (input) {
+            validateStep1();
+        });
 
 
         $('#step3 input[type=checkbox]').change(function () {
