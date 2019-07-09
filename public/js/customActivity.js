@@ -56,17 +56,6 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
             overrideMessage = this.checked;
             // do stuff here. It will fire on any checkbox change
         });
-
-
-
-        // Toggle step 4 active/inactive
-        // If inactive, wizard hides it and skips over it during navigation
-        $('#toggleLastStep').click(function () {
-            lastStepEnabled = !lastStepEnabled; // toggle status
-            steps[3].active = !steps[3].active; // toggle active
-
-            connection.trigger('updateSteps', steps);
-        });
     }
 
     function initialize(data) {
@@ -332,14 +321,8 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
         switch (currentStep.key) {
             case 'step1':
                 $('#step1').show();
-                connection.trigger('updateButton', {
-                    button: 'next',
-                    enabled: true
-                });
-                connection.trigger('updateButton', {
-                    button: 'back',
-                    visible: false
-                });
+                connection.trigger('updateButton', {button: 'next', enabled: true});
+                connection.trigger('updateButton', {button: 'back', visible: false});
                 validateStep1();
                 break;
             case 'step2':
