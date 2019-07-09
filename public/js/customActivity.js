@@ -322,7 +322,7 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
         switch (currentStep.key) {
             case 'step1':
                 $('#step1').show();
-                connection.trigger('updateButton', {button: 'next', enabled: true});
+                connection.trigger('updateButton', {button: 'next', enabled: false});
                 connection.trigger('updateButton', {button: 'back', visible: false});
                 break;
             case 'step2':
