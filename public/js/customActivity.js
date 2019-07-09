@@ -427,7 +427,7 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
     //Functions for validation
     function validateStep1()
     {
-        if ($("#step1 input[type=checkbox]:checked").length === 0 && !$('#step1 > #groupid').is(':empty')) {
+        if ($("#step1 input[type=checkbox]:checked").length === 0 && !$('#groupid').is(':empty')) {
             connection.trigger('updateButton', { button: 'next', enabled: false });
         } else {
             connection.trigger('updateButton', { button: 'next', enabled: true });
