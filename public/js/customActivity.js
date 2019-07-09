@@ -334,7 +334,7 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
                 $('#step1').show();
                 connection.trigger('updateButton', {
                     button: 'next',
-                    enabled: false
+                    enabled: true
                 });
                 connection.trigger('updateButton', {
                     button: 'back',
