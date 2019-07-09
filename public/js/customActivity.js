@@ -141,9 +141,9 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
 
                 }
             });
-            connection.trigger('updateButton', { button: 'next', enabled: true });
-        } else {
-            connection.trigger('updateButton', { button: 'next', enabled: false });
+        //     connection.trigger('updateButton', { button: 'next', enabled: true });
+        // } else {
+        //     connection.trigger('updateButton', { button: 'next', enabled: false });
         }
         $('#messageTitle').val(title);
         $('#messageBody').val(body);
