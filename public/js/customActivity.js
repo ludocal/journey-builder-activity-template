@@ -226,6 +226,7 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
             console.log('change : ' + input.currentTarget.value);
             validateStep1();
         });
+        validateStep1();
         connection.trigger('ready');
     }
     function loadAppTemplate() {
