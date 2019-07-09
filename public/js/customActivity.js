@@ -259,7 +259,9 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
                         $(input.get(0)).attr('value', element.templateName);
                     }
                 });
-                validateStep3();
+                $('#step3 .slds-combobox__input').on('input', function(item){
+                    validateStep3();
+                });
             });
 
         });
