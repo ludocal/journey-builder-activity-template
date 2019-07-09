@@ -332,7 +332,7 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
                 $('#step1').show();
                 connection.trigger('updateButton', {
                     button: 'next',
-                    enabled: Boolean(getMessage())
+                    enabled: false
                 });
                 connection.trigger('updateButton', {
                     button: 'back',
@@ -421,10 +421,6 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
         payload['metaData'].isConfigured = true;
 
         connection.trigger('updateActivity', payload);
-    }
-
-    function getMessage() {
-        return 'Send Push';
     }
 
     //Functions for validation
