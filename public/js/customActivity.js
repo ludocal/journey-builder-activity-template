@@ -258,9 +258,9 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
                         $(input.get(0)).attr('data-id', element.templateId);
                         $(input.get(0)).attr('value', element.templateName);
                     }
-                });
-                $('#step3 .slds-combobox__input').on('input', function(item){
-                    validateStep3();
+                    $(input).change(function(){
+                        validateStep3();
+                    });
                 });
             });
 
