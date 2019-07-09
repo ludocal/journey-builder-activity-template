@@ -342,6 +342,7 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
                     button: 'back',
                     visible: false
                 });
+                validateStep1();
                 break;
             case 'step2':
                 $('#step2').show();
