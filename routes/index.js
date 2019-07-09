@@ -41,6 +41,14 @@ else {
     }
 }
 
+try {
+    configApplication = JSON.parse(configApplicationRaw);
+}
+catch(e) {
+    logger.error('Failed to parse application configuration JSON');
+    process.exit(1);
+}
+
 /*
  * GET home page.
  */
