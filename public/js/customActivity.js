@@ -112,6 +112,12 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
                 }
             });
         });
+        $('#messageTitle').val(title);
+        $('#messageBody').val(body);
+        $('#messageDeepLink').val(deepLink);
+        $('#messageImage').val(imageUrl);
+        $('#groupid').val(groupid);
+        $('#checkboxOverrideMessage').prop("checked", overrideMessage);
         console.log(formatSelection);
         console.log(appSelected);
 
@@ -134,12 +140,7 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
                 validateStep1();
             });
         }
-        $('#messageTitle').val(title);
-        $('#messageBody').val(body);
-        $('#messageDeepLink').val(deepLink);
-        $('#messageImage').val(imageUrl);
-        $('#groupid').val(groupid);
-        $('#checkboxOverrideMessage').prop("checked", overrideMessage);
+        
     }
 
     function onGetTokens(tokens) {
