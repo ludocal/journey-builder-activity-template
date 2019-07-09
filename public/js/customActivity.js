@@ -442,13 +442,13 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
     }
 
     function validateStep3() {
-
+        connection.trigger('updateButton', { button: 'next', enabled: true });
         $('#step3 .slds-combobox__input').each(function () {
             if ($(this).val() === "") {
                 connection.trigger('updateButton', { button: 'next', enabled: false });
                 return;
             }
         });
-        connection.trigger('updateButton', { button: 'next', enabled: true });
+        
     }
 });
