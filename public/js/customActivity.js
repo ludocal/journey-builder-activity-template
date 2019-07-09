@@ -352,7 +352,7 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
                 connection.trigger('updateButton', {
                     button: 'next',
                     text: 'next',
-                    enabled: false,
+                    enabled: true,
                     visible: true
                 });
                 connection.trigger('ready');
