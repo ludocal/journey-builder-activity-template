@@ -217,12 +217,7 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
         // Disable the next button if a value isn't selected
         $("#step1 input[type=checkbox]").change(function (input) {
             console.log('change : ' + input.currentTarget.value);
-            if ($("#step1 input[type=checkbox]:checked").length === 0) {
-                connection.trigger('updateButton', { button: 'next', enabled: false });
-            } else {
-                connection.trigger('updateButton', { button: 'next', enabled: true });
-            }
-
+            validateStep1();
         });
         connection.trigger('ready');
     }
@@ -427,6 +422,16 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
 
     function getMessage() {
         return 'Send Push';
+    }
+
+    //Functions for validation
+    function validateStep1()
+    {
+        if ($("#step1 input[type=checkbox]:checked").length === 0 && !$('#step1 #groupid').is(':empty')) {
+            connection.trigger('updateButton', { button: 'next', enabled: false });
+        } else {
+            connection.trigger('updateButton', { button: 'next', enabled: true });
+        }
     }
 
 });
