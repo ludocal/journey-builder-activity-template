@@ -283,7 +283,7 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
             console.log($(this).children()[0].title);
             $(this).hasClass('slds-is-selected');
         });
-        $('#step3 .slds-combobox__input').change(function (input){
+        $('#step3 .slds-combobox').on('input', function (input){
             validateStep3();
         });
 
