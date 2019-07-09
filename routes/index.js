@@ -73,7 +73,6 @@ exports.getApplicationList = function (req, res) {
             }
         });
     });
-    //res.json( 'ERROR' );
 };
 
 exports.getTemplateList = function (req, res) {
@@ -100,6 +99,7 @@ exports.getTemplateList = function (req, res) {
 };
 
 function getMIDfromToken(token, host, callback) {
+    logger.info('Start getMIDfromToken');
     configApplication.forEach(element => {
         const options = {
             hostname: host,
@@ -120,7 +120,7 @@ function getMIDfromToken(token, host, callback) {
                 if (res.statusCode >= 400) {
                     callback(null, 0);
                 }
-                //console.log(responseString);
+                logger.debug(responseString);
                 if (res.statusCode === 200) {
                     responseObject = JSON.parse(responseString);
                     callback(null, responseObject.organization.id);
