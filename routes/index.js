@@ -62,6 +62,7 @@ exports.index = function (req, res) {
 
 exports.getApplicationList = function (req, res) {
     logger.info('Request ApplicationList');
+    logger.debug('request query: ' + JSON.stringify(req.query));
     logger.debug('req.query.endpoint: ', req.query.endpoint);
     logger.debug('req.query.token: ', req.query.token);
     var endpoint = req.query.endpoint;
