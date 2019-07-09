@@ -56,7 +56,10 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
             overrideMessage = this.checked;
             // do stuff here. It will fire on any checkbox change
         });
-        $('#step4 .slds-input').change(function () {
+        $('#messageBody').on('input', function () {
+            validateStep4();
+        });
+        $('#messageTitle').on('input', function () {
             validateStep4();
         });
     }
@@ -143,7 +146,7 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
                 validateStep1();
             });
         }
-
+       
     }
 
     function onGetTokens(tokens) {
