@@ -110,9 +110,8 @@ function getMIDfromToken(token, host, callback) {
         var responseString = "";
         var responseObject;
         const req = https.request(options, (res) => {
-            //console.log('statusCode:', res.statusCode);
-            //console.log('headers:', res.headers);
-            var str;
+            logger.debug('Response status code : ' + res.statusCode);
+            logger.debug('Response status message : ' + res.statusMessage);
             res.on('data', (d) => {
                 responseString += d;
             });
