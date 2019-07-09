@@ -56,6 +56,9 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
             overrideMessage = this.checked;
             // do stuff here. It will fire on any checkbox change
         });
+        $('#step4 .slds-input').change(function () {
+            validateStep4();
+        });
     }
 
     function initialize(data) {
@@ -140,7 +143,7 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
                 validateStep1();
             });
         }
-        
+
     }
 
     function onGetTokens(tokens) {
@@ -244,7 +247,7 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
                         $(input.get(0)).attr('data-id', element.templateId);
                         $(input.get(0)).attr('value', element.templateName);
                     }
-                    $(input).change(function(){
+                    $(input).change(function () {
                         validateStep3();
                     });
                 });
@@ -322,8 +325,8 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
         switch (currentStep.key) {
             case 'step1':
                 $('#step1').show();
-                connection.trigger('updateButton', {button: 'next', enabled: false});
-                connection.trigger('updateButton', {button: 'back', visible: false});
+                connection.trigger('updateButton', { button: 'next', enabled: false });
+                connection.trigger('updateButton', { button: 'back', visible: false });
                 break;
             case 'step2':
                 $('#step2').show();
@@ -359,19 +362,13 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
                     button: 'back',
                     visible: true
                 });
-                if (lastStepEnabled) {
-                    connection.trigger('updateButton', {
-                        button: 'next',
-                        text: 'next',
-                        visible: true
-                    });
-                } else {
-                    connection.trigger('updateButton', {
-                        button: 'next',
-                        text: 'done',
-                        visible: true
-                    });
-                }
+                connection.trigger('updateButton', {
+                    button: 'next',
+                    text: 'done',
+                    visible: true,
+                    enabled: false
+                });
+                validateStep4();
                 connection.trigger('ready');
                 break;
             case 'step5':
@@ -428,6 +425,14 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
                 return;
             }
         });
-        
+
+    }
+
+    function validateStep4() {
+        if (($.trim($('#messageBody').val()) !== '') && ($.trim($('#messageTitle').val()) !== '')) {
+            connection.trigger('updateButton', { button: 'next', enabled: true });
+        } else {
+            connection.trigger('updateButton', { button: 'next', enabled: false });
+        }
     }
 });
