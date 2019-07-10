@@ -20,14 +20,15 @@ exports.index = function (req, res) {
     //console.log(req);
     logger.info('Get Home page');
     if (req.session && !req.session.token) {
+    logger.debug('Unauthenticated app');
         res.render('index', {
             title: 'Unauthenticated',
             errorMessage: 'This app may only be loaded via Salesforce Marketing Cloud'
         });
     } else {
+        logger.debug('Authenticated app');
         res.render('index', {
-            title: 'Journey Builder Activity',
-            results: activity.logExecuteData
+            title: 'Journey Builder Activity'
         });
     }
 };
