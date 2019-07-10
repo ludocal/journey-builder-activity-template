@@ -44,7 +44,7 @@ app.post('/journeybuilder/publish/', activity.publish );
 app.post('/journeybuilder/execute/', activity.execute );
 
 app.get('*', function(req, res){
-  res.status(404).send('not authorized');
+  res.status(401).send('not authorized');
 });
 
 http.createServer(app).listen(app.get('port'), function(){
