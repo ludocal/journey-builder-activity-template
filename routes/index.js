@@ -66,8 +66,9 @@ exports.getTemplateList = function (req, res) {
                 getTemplateFromBatch(appKey, element.apiRestToken, (err, response) => {
                     if (err) {
                         return res.status(400).end();
+                    }else{
+                        return res.json(response).end();
                     }
-                    return res.json(response).end();
                 })
             }
         });
