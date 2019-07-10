@@ -4,7 +4,6 @@
 var express     = require('express');
 var bodyParser  = require('body-parser');
 var errorhandler = require('errorhandler');
-var http        = require('http');
 var https        = require('https');
 var path        = require('path');
 var routes      = require('./routes');
