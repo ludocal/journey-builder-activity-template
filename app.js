@@ -9,6 +9,9 @@ var path        = require('path');
 var routes      = require('./routes');
 var activity    = require('./routes/activity');
 
+const logUtility = require(path.join(__dirname, '..', 'lib', 'logUtility.js'));
+const logger = logUtility.getLogger();
+
 var app = express();
 
 // set the view engine to ejs
@@ -41,9 +44,9 @@ app.post('/journeybuilder/publish/', activity.publish );
 app.post('/journeybuilder/execute/', activity.execute );
 
 app.get('*', function(req, res){
-  res.status(404).send('NOT AUTHORIZED');
+  res.status(404).send('not authorized');
 });
 
 http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+  logger.info('Express server listening on port ' + app.get('port'));
 });
