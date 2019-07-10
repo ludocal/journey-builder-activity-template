@@ -9,7 +9,7 @@ var path        = require('path');
 var routes      = require('./routes');
 var activity    = require('./routes/activity');
 
-const logUtility = require(path.join(__dirname, '..', 'lib', 'logUtility.js'));
+const logUtility = require(path.join(__dirname, 'lib', 'logUtility.js'));
 const logger = logUtility.getLogger();
 
 var app = express();
