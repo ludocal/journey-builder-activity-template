@@ -8,8 +8,8 @@
   "type": "REST",
   "lang": {
     "en-US": {
-      "name": "Send Push",
-      "description": "A Template for a custom Journey Builder activity",
+      "name": "Batch Push",
+      "description": "",
       "step1Label": "Configure Activity"
     }
   },
@@ -21,7 +21,7 @@
         }
       ],
       "outArguments": [],
-      "url": "https://customactivitymarketingcloud.herokuapp.com/journeybuilder/execute",
+      "url": "https://salesforce-marketing-cloud.b47ch.com/journeybuilder/execute",
       "verb": "POST",
       "body": "",
       "header": "",
@@ -32,22 +32,22 @@
   },
   "configurationArguments": {
     "save": {
-      "url": "https://customactivitymarketingcloud.herokuapp.com/journeybuilder/save",
+      "url": "https://salesforce-marketing-cloud.b47ch.com/journeybuilder/save",
       "verb": "POST",
       "useJwt": true
     },
     "publish": {
-      "url": "https://customactivitymarketingcloud.herokuapp.com/journeybuilder/publish",
+      "url": "https://salesforce-marketing-cloud.b47ch.com/journeybuilder/publish",
       "verb": "POST",
       "useJwt": true
     },
     "stop": {
-      "url": "https://customactivitymarketingcloud.herokuapp.com/journeybuilder/stop",
+      "url": "https://salesforce-marketing-cloud.b47ch.com/journeybuilder/stop",
       "verb": "POST",
       "useJwt": true
     },
     "validate": {
-      "url": "https://customactivitymarketingcloud.herokuapp.com/journeybuilder/validate",
+      "url": "https://salesforce-marketing-cloud.b47ch.com/journeybuilder/validate",
       "verb": "POST",
       "useJwt": true
     }
