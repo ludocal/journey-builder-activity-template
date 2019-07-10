@@ -4,6 +4,7 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
     var payload = {};
     var appSelection = [];
     var appSelected = [];
+    var backAction = false;
 
     var formatSelection = ""; //selection d'un nouveau template ou existant
     var messageConfiguration;
@@ -146,7 +147,7 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
                 validateStep1();
             });
         }
-       
+
     }
 
     function onGetTokens(tokens) {
@@ -308,6 +309,7 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
     }
 
     function onClickedBack() {
+        backAction = true;
         connection.trigger('prevStep');
     }
 
@@ -328,57 +330,35 @@ define(['postmonger', 'callout'], function (Postmonger, callout) {
         switch (currentStep.key) {
             case 'step1':
                 $('#step1').show();
-                connection.trigger('updateButton', { button: 'next', enabled: false });
+                if (!backAction) {
+                    connection.trigger('updateButton', { button: 'next', enabled: false });
+                }
                 connection.trigger('updateButton', { button: 'back', visible: false });
                 break;
             case 'step2':
                 $('#step2').show();
-                connection.trigger('updateButton', {
-                    button: 'back',
-                    visible: true
-                });
-                connection.trigger('updateButton', {
-                    button: 'next',
-                    text: 'next',
-                    enabled: true,
-                    visible: true
-                });
+                connection.trigger('updateButton', { button: 'back', visible: true });
+                if (!backAction) {
+                    connection.trigger('updateButton', { button: 'next', text: 'next', enabled: true, visible: true });
+                }
                 connection.trigger('ready');
                 break;
             case 'step3':
-                //loadAppTemplate();
                 $('#step3').show();
-                connection.trigger('updateButton', {
-                    button: 'back',
-                    visible: true
-                });
-                connection.trigger('updateButton', {
-                    button: 'next',
-                    text: 'done',
-                    visible: false,
-                    enabled: false
-                });
+                connection.trigger('updateButton', { button: 'back', visible: true });
+                if (!backAction) {
+                    connection.trigger('updateButton', { button: 'next', text: 'done', visible: false, enabled: false });
+                }
                 break;
             case 'step4':
                 $('#step4').show();
-                connection.trigger('updateButton', {
-                    button: 'back',
-                    visible: true
-                });
-                connection.trigger('updateButton', {
-                    button: 'next',
-                    text: 'done',
-                    visible: true,
-                    enabled: false
-                });
+                connection.trigger('updateButton', { button: 'back', visible: true });
+                connection.trigger('updateButton', { button: 'next', text: 'done', visible: true, enabled: false });
                 validateStep4();
                 connection.trigger('ready');
                 break;
-            case 'step5':
-                $('#step5').show();
-                connection.trigger('ready');
-                break;
         }
+        backAction = false;
     }
 
     function save() {
