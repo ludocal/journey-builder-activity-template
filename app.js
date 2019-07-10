@@ -43,9 +43,9 @@ app.post('/journeybuilder/validate/', activity.validate );
 app.post('/journeybuilder/publish/', activity.publish );
 app.post('/journeybuilder/execute/', activity.execute );
 
-app.get('*', function(req, res){
-  res.status(401).send('not authorized');
-});
+// app.get('*', function(req, res){
+//   res.status(401).send('not authorized');
+// });
 
 http.createServer(app).listen(app.get('port'), function(){
   logger.info('Express server listening on port ' + app.get('port'));
