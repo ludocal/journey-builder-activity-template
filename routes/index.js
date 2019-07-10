@@ -4,20 +4,9 @@
 var activity = require('./activity');
 var https = require('https');
 const Path = require('path');
-const winston = require('winston');
-const logger = winston.createLogger({
-    format: winston.format.combine(
-        winston.format.timestamp(),
-        winston.format.printf((info) => {
-            return `[${info.timestamp}] - ${info.level}: ${info.message}`;
-        })
-    ),
-    transports: [
-        new winston.transports.Console({
-            level: 'debug'
-        })
-    ]
-});
+
+const logUtility = require(Path.join(__dirname, '..', 'lib', 'logUtility.js'));
+const logger = logUtility.getLogger();
 
 const envUtility = require(Path.join(__dirname, '..', 'lib', 'envUtility.js'));
 var configApplication = envUtility.getEnv();
