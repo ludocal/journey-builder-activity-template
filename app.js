@@ -19,7 +19,7 @@ app.set('view engine', 'ejs');
 
 // Configure Express
 app.disable('x-powered-by');
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 8080);
 app.use(bodyParser.raw({type: 'application/jwt'}));
 
 app.use(express.static(path.join(__dirname, 'public')));
