@@ -3,6 +3,7 @@
 // Deps
 var activity = require('./activity');
 var https = require('https');
+const Path = require('path');
 const winston = require('winston');
 const logger = winston.createLogger({
     format: winston.format.combine(
