@@ -1,31 +1,15 @@
 'use strict';
-var util = require('util');
 var https = require('https');
 const ET_Client = require('sfmc-fuelsdk-node');
-const winston = require('winston');
-const logger = winston.createLogger({
-    format: winston.format.combine(
-        winston.format.timestamp(),
-        winston.format.printf((info) => {
-            return `[${info.timestamp}] - ${info.level}: ${info.message}`;
-        })
-    ),
-    transports: [
-        new winston.transports.Console()
-    ]
-});
-
-// Deps
-const fs = require('fs');
 const Path = require('path');
 const JWT = require(Path.join(__dirname, '..', 'lib', 'jwtDecoder.js'));
-var util = require('util');
-var http = require('https');
-var contextUser = {};
-var clientMC = {};
+
+const logUtility = require(Path.join(__dirname, '..', 'lib', 'logUtility.js'));
+const logger = logUtility.getLogger();
 
 const envUtility = require(Path.join(__dirname, '..', 'lib', 'envUtility.js'));
 var configApplication = envUtility.getEnv();
+var contextUser, clientMC = {};
 
 /*
  * POST Handler for / route of Activity (this is the edit route).
